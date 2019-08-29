@@ -1,4 +1,0 @@
-objects\PlayerRegistrationRequest.class
-services\PlayerService.class
-RESTServiceClient.class
-security\ResponseCorsFilter.class
