@@ -2,10 +2,10 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace = "Player">
+<mapper namespace = "GuestPlayer">
 
-   <insert id = "insert" parameterType = "Player">
-      	INSERT INTO players (USERNAME, PASSWORD, EMAIL, PROFILE_PIC, LOCATION ) VALUES (#{username}, #{password}, #{email}, #{profile_pic}, #{location});
+   <insert id = "insert" parameterType = "GuestPlayer">
+      	INSERT INTO guest_players (PLAYER_ID, TOURNAMENT_ID) VALUES (#{player_id}, #{tournament_id});
 			
       	<selectKey keyProperty = "id" resultType = "int" order = "AFTER">
         	select last_insert_id() as id
@@ -30,14 +30,10 @@
 	
 	
     	
-	<resultMap id = "result" type = "Player">
+	<resultMap id = "result" type = "GuestPlayer">
+	   	<result property = "guest_id" column = "GUEST_ID"/>
    		<result property = "player_id" column = "PLAYER_ID"/>
-   		<result property = "username" column = "USERNAME"/>
-   		<result property = "password" column = "PASSWORD"/>
-   		<result property = "email" column = "EMAIL"/>
-   		<result property = "profile_pic" column = "PROFILE_PIC"/>
-   		<result property = "location" column = "LOCATION"/>
-   		<result property = "device_key" column = "DEVICE_KEY"/>
+   		<result property = "tournament_id" column = "TOURNAMENT_ID"/>
 	</resultMap>
 
 	

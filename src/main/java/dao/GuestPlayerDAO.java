@@ -9,7 +9,7 @@ import objects.Player;
 import objects.PlayerSearchResult;
 import objects.User;
 
-public class PlayerDAO {
+public class GuestPlayerDAO {
 	public static void insert(Player player) throws Exception{
 		SqlSessionContainer.getSession().insert("Player.insert", player);
 		System.out.println("Player successfully inserted");

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import objects.Player;
-import objects.PlayerSearchQuery;
 import objects.PlayerSearchResult;
 import objects.TournamentAlpha;
 

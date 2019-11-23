@@ -1,5 +1,6 @@
 package services;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +46,14 @@ public class PlayerService {
 		
 		try {
 			PlayerDAO.insert(player);
+			result = "Successfully inserted player: " + json.getString("username");
+		} catch (SQLIntegrityConstraintViolationException e) {
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			result = "Database failure";
 		}
-		result = "Successfully inserted player: " + json.getString("username");
+		
 		System.out.println(result);
 		
 		return Response.status(201).entity(result).build();
@@ -57,11 +61,22 @@ public class PlayerService {
 	}
 	
 	@POST
+	@Path("/set_device")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@CrossOrigin
+	public Response setDeviceKey(String request) {
+		JSONObject json = new JSONObject(request);
+		PlayerDAO.setDeviceKey(json.getInt("id"), json.getString("device"));
+		String result = "Set Device Key Success!";
+		return Response.status(201).entity(result).build();
+	}
+	
+	@POST
 	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin
 	public Response getPlayerSearchResults(String request) {
-		ArrayList<PlayerSearchResult> result_list = (ArrayList<PlayerSearchResult>) PlayerDAO.search(request);
+		ArrayList<PlayerSearchResult> result_list =  (ArrayList<PlayerSearchResult>) PlayerDAO.search(request);
 
 		String JSONArray = "[";
 

@@ -7,6 +7,7 @@ public class Player {
 	private String email;
 	private String profile_pic;
 	private String location;
+	private String device_key;
 	
 	public Player() {
 		
@@ -68,9 +69,16 @@ public class Player {
 		this.location = location;
 	}
 	
+	public String getDeviceKey() {
+		return device_key;
+	}
+	
+	public void setDeviceKey(String device_key) {
+		this.device_key = device_key;
+	}
+	
 	@Override
 	public String toString() {
-		return "{username=" + username + ", email=" + email + ", profile_pic=" + profile_pic + ", location="
-				+ location + "}";
+		return "{username=" + username + ", email=" + email + ", location="	+ location + "}";
 	}
 }

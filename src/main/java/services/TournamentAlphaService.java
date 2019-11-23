@@ -52,7 +52,8 @@ public class TournamentAlphaService {
 		ArrayList<TournamentAlpha> result_list = (ArrayList<TournamentAlpha>) TournamentAlphaDAO.search(request);
 		
 		String return_string = TournamentAlpha.toJSONArray(result_list);
-
+		System.out.println(return_string);
+		
 		return Response.status(200).entity(return_string).build();
 		//return "Get Success!";
 		//return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("GET Success!").build();
@@ -91,7 +92,6 @@ public class TournamentAlphaService {
 		//LatLng latlng = new LatLng(38.8251348, -77.3140449);
 		
 		LatLng latlng = LocationUtility.geocode(address);
-		System.out.println("Checkpoint 0");
 		
 		return Response.status(200).entity(latlng.toJSON()).build();		
 	}
