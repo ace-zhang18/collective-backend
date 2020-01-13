@@ -1,6 +1,10 @@
 package objects;
 
-public class Player {
+import java.util.Calendar;
+
+import utilities.JSONInterface;
+
+public class Player implements JSONInterface{
 	private int player_id;
 	private String username;
 	private String password;
@@ -75,6 +79,39 @@ public class Player {
 	
 	public void setDeviceKey(String device_key) {
 		this.device_key = device_key;
+	}
+	
+	public String toJSON() {
+		String json = "{";
+		int items = 0;
+		
+		if(player_id > 0) {
+			json += "\"player_id\":\"" + player_id + "\"";
+			items++;
+		}
+		if(username != null) {
+			if(items > 0) json += ",";
+			json += "\"username\":\"" + username + "\"";
+			items++;
+		}
+		if(email != null) {
+			if(items > 0) json += ",";
+			json += "\"email\":\"" + email + "\"";
+			items++;
+		}
+		if(profile_pic != null) {
+			if(items > 0) json += ",";
+			json += "\"profile_pic\":\"" + profile_pic + "\"";
+			items++;
+		}
+		if(location != null) {
+			if(items > 0) json += ",";
+			json += "\"location\":\"" + location + "\"";
+			items++;
+		}
+		json += "}";
+
+		return json;
 	}
 	
 	@Override

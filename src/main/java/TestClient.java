@@ -17,17 +17,24 @@ import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyInvocation;
 import org.glassfish.jersey.client.JerseyWebTarget;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
+import dao.GuestPlayerDAO;
 import dao.PlayerDAO;
 import dao.SqlSessionContainer;
 import dao.TournamentAlphaDAO;
+import objects.GuestPlayer;
 import objects.LatLng;
 import objects.Player;
 import objects.TournamentAlpha;
+import utilities.JSONUtility;
 import utilities.LocationUtility;
+import utilities.TournamentUtility;
 
 public class TestClient {
 	public static void main(String[] args) {
@@ -38,7 +45,7 @@ public class TestClient {
 			JerseyInvocation.Builder invocationBuilder;
 			Response response;
 			String input, output;
-			int test = 2;
+			int test = 11;
 			switch(test)
 			{
 			case 0:
@@ -106,16 +113,30 @@ public class TestClient {
 				System.out.println(login);
 				break;
 			case 5:
-				Player player1 = new Player("penny", "petarded", "jamesgriffith@gmail.com", null , null );
-				Player player2 = new Player("jacoblist", "loJ", "jlist@gmail.com", null, null);
-				Player player3 = new Player("masterblake", "blm", "blakemaster@gmail.com", null, null);
-				Player player4 = new Player("terabix", "anzarta", "tetra.oculus@gmail.com", null, null);
+				ArrayList<Player> players = new ArrayList<Player>();
+				/*players.add(new Player("alex_jones", "sameness", "alex_jones@gmail.com", null , null )); //1
+				players.add(new Player("mike_smith", "slimshady", "mike_smith@gmail.com", null , null ));  //2
+				players.add(new Player("tyler_banes", "circulation", "tyler_banes@gmail.com", null , null ));  //3
+				players.add(new Player("alex_bradley", "platinum", "alex_bradley@gmail.com", null , null ));  //4
+				players.add(new Player("zach_foster", "disco", "zach_foster@gmail.com", null , null ));  //5
+				players.add(new Player("alex_banes", "shark", "alex_banes@gmail.com", null , null ));  //6
+				players.add(new Player("mason_jones", "teeth", "mason_jones@gmail.com", null , null ));  //7
+				players.add(new Player("alex_smith", "firebase", "alex_smith@gmail.com", null , null ));  //8
+				players.add(new Player("tyler_foster", "kilgore", "tyler_foster@gmail.com", null , null ));  //9
+				players.add(new Player("alex_kilgore", "icecube", "alex_kilgore@gmail.com", null , null ));  //10
+				players.add(new Player("james_bradley", "flounder", "james_bradley@gmail.com", null , null ));  //11
+				players.add(new Player("issac_smith", "rocket", "issac_smith@gmail.com", null , null ));  //12
+				players.add(new Player("mike_lennox", "soccerball", "mike_lennox@gmail.com", null , null ));  //13
+				players.add(new Player("tyler_frack", "tsunami", "tyler_frack@gmail.com", null , null ));  //14
+				players.add(new Player("zach_markel", "gambino", "zach_markel@gmail.com", null , null ));  //15
+				players.add(new Player("james_banes", "redline", "james_banes@gmail.com", null , null ));   //16
+				players.add(new Player("jeffrey_winkler", "mastery", "jeffrey_winkler@gmail.com", null , null ));   //17
+				players.add(new Player("simon_marshall", "orange", "simon_marshall@gmail.com", null , null ));   //18*/
 				
 				try {
-					//PlayerDAO.insert(player1);
-					//PlayerDAO.insert(player2);
-					//PlayerDAO.insert(player3);
-					PlayerDAO.insert(player4);
+					for(Player p: players) {
+						PlayerDAO.insert(p);
+					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -185,12 +206,28 @@ public class TestClient {
 				System.out.println(output);
 				break;
 			case 9:
-				Player p = PlayerDAO.get(24);
-				System.out.println(p);
+				ArrayList<Player> p = (ArrayList<Player>) PlayerDAO.getAll();
+				ArrayList<TournamentAlpha> t = (ArrayList<TournamentAlpha>) TournamentAlphaDAO.getAll();
+				
+				System.out.println(JSONUtility.ToJSONArray(p));
+				System.out.println(JSONUtility.ToJSONArray(t));
+				
+				break;
+			case 10:
+				GuestPlayer g1 = new GuestPlayer(21, 8);
+				GuestPlayer g2 = new GuestPlayer(22, 8);
+				GuestPlayerDAO.insert(g1);
+				GuestPlayerDAO.insert(g2);
+				break;
+			case 11:
+				ArrayList<Player> c = (ArrayList<Player>) PlayerDAO.getAll();
+				
+				//Collections.shuffle(c);
+
+				TournamentUtility.generateSeedings(c);
+				
 				break;
 			}
-			/*
- */
 			/*
 
 			 */

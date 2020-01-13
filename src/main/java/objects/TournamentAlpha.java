@@ -7,9 +7,11 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import utilities.JSONInterface;
 
 
-public class TournamentAlpha {
+
+public class TournamentAlpha implements JSONInterface{
 	int tournament_id;
 	String name;
 	String organization;
@@ -17,6 +19,7 @@ public class TournamentAlpha {
 	String game;
 	String style;
 	String location;
+	int locked;
 	
 	public TournamentAlpha() {
 		super();
@@ -30,6 +33,7 @@ public class TournamentAlpha {
 		this.game = game;
 		this.style = style;
 		this.location = location;
+		this.locked = 0;
 	}
 
 	public TournamentAlpha(int tournament_id, String name, String organization, Date date, String game, String style,
@@ -42,6 +46,7 @@ public class TournamentAlpha {
 		this.game = game;
 		this.style = style;
 		this.location = location;
+		this.locked = 0;
 	}
 
 	public TournamentAlpha(String s) {
@@ -80,6 +85,8 @@ public class TournamentAlpha {
 					style = jo.getString(key);
 				}else if(key.equals("location")) {
 					location = jo.getString(key);
+				}else if(key.equals("locked")) {
+					locked = jo.getInt(key);
 				}
 			}
 
@@ -147,6 +154,14 @@ public class TournamentAlpha {
 		this.location = location;
 	}
 
+	public int getLocked() {
+		return locked;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
+	}
+
 	@Override
 	public String toString() {
 		return "TournamentAlpha [tournament_id=" + tournament_id + ", name=" + name + ", organization=" + organization
@@ -203,22 +218,15 @@ public class TournamentAlpha {
 			json += "\"location\":\"" + location + "\"";
 			items++;
 		}
+		if(items > 0) json += ",";
+		if(locked > 0) {
+			json += "\"locked\":\"true\"";
+		}else{
+			json += "\"locked\":\"false\"";
+		}
+		items++;
 		json += "}";
 
 		return json;
-	}
-
-	public static String toJSONArray(List<TournamentAlpha> list) {
-		String JSONArray = "[";
-		
-		int items = 0;
-		for(TournamentAlpha item: list) {
-			if(items > 0) JSONArray += ",";
-			JSONArray += item.toJSON();
-			items++;
-		}
-		JSONArray += "]";
-		
-		return JSONArray;
 	}
 }

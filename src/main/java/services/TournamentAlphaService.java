@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import dao.TournamentAlphaDAO;
 import objects.*;
+import utilities.JSONUtility;
 import utilities.LocationUtility;
 
 @Path("tournaments")
@@ -51,7 +52,7 @@ public class TournamentAlphaService {
 	public Response getTournamentSearchResults(String request) {
 		ArrayList<TournamentAlpha> result_list = (ArrayList<TournamentAlpha>) TournamentAlphaDAO.search(request);
 		
-		String return_string = TournamentAlpha.toJSONArray(result_list);
+		String return_string = JSONUtility.ToJSONArray(result_list);
 		System.out.println(return_string);
 		
 		return Response.status(200).entity(return_string).build();

@@ -5,18 +5,19 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import objects.GuestPlayer;
 import objects.Player;
 import objects.PlayerSearchResult;
 import objects.User;
 
 public class GuestPlayerDAO {
-	public static void insert(Player player) throws Exception{
-		SqlSessionContainer.getSession().insert("Player.insert", player);
-		System.out.println("Player successfully inserted");
+	public static void insert(GuestPlayer gp) throws Exception{
+		SqlSessionContainer.getSession().insert("GuestPlayer.insert", gp);
+		System.out.println("Guest entry successfully inserted");
 	    SqlSessionContainer.getSession().commit();
 	    SqlSessionContainer.getSession().close();
 	}
-	
+	/*
 	public static void update(Player player) throws Exception{
 		SqlSessionContainer.getSession().update("Player.update", player);
 		System.out.println("Player successfully updated");
@@ -86,5 +87,5 @@ public class GuestPlayerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

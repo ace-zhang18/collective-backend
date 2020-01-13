@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "GuestPlayer">
+
+   <insert id = "insert" parameterType = "GuestPlayer">
+      	INSERT INTO guest_players_alpha (PLAYER_ID, TOURNAMENT_ID) VALUES (#{player_id}, #{tournament_id});
+			
+      	<selectKey keyProperty = "guest_id" resultType = "int" order = "AFTER">
+        	select last_insert_id() as guest_id
+		</selectKey>   
+	</insert> 
+	
+	<update id = "update" parameterType = "GuestPlayer">
+    	UPDATE guest_players_alpha SET PLAYER_ID = #{player_id}, TOURNAMENT_ID = #{tournament_id} WHERE GUEST_ID = #{guest_id};
+	</update>
+    
+    <select id="get" parameterType = "int" resultType="GuestPlayer">
+    	SELECT * FROM guest_players_alpha where GUEST_ID = #{guest_id};
+	</select>
+    
+    <select id="getTournamentGuests" parameterType = "int" resultType="GuestPlayer">
+    	SELECT * FROM guest_players_alpha where TOURNAMENT_ID = #{tournament_id};
+	</select>
+    	
+    <select id="getTournamentsAttended" parameterType = "int" resultType="GuestPlayer">
+    	SELECT * FROM guest_players_alpha where PLAYER_ID = #{player_id};
+	</select>
+	
+	
+    	
+	<resultMap id = "result" type = "GuestPlayer">
+	   	<result property = "guest_id" column = "GUEST_ID"/>
+   		<result property = "player_id" column = "PLAYER_ID"/>
+   		<result property = "tournament_id" column = "TOURNAMENT_ID"/>
+	</resultMap>
+
+	
+</mapper>

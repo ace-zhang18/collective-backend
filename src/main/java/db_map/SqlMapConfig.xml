@@ -7,6 +7,7 @@
 
       <typeAlias alias = "Player" type = "objects.Player"/>
       <typeAlias alias = "TournamentAlpha" type = "objects.TournamentAlpha"/>
+	  <typeAlias alias = "GuestPlayer" type = "objects.GuestPlayer"/>
    </typeAliases>
 		
 
@@ -28,6 +29,7 @@
 
       <mapper resource = "db_map/Player.xml"/>
       <mapper resource = "db_map/TournamentAlpha.xml"/>
+      <mapper resource = "db_map/GuestPlayer.xml"/>
    </mappers>
    
 </configuration>

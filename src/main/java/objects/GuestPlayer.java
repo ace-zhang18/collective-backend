@@ -10,6 +10,14 @@ public class GuestPlayer {
 		this.tournament_id = tournament_id;
 	}
 
+	public GuestPlayer(int player_id, int tournament_id) {
+		super();
+		this.player_id = player_id;
+		this.tournament_id = tournament_id;
+	}
+
+
+
 	public int getGuest_id() {
 		return guest_id;
 	}

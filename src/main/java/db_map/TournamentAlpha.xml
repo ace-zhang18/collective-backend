@@ -5,7 +5,7 @@
 <mapper namespace = "TournamentAlpha">
 
    <insert id = "insert" parameterType = "TournamentAlpha">
-      	INSERT INTO tournaments_alpha (NAME, ORGANIZATION, DATE, GAME, STYLE, LOCATION) VALUES (#{name}, #{organization}, #{date}, #{game}, #{style}, #{location});
+      	INSERT INTO tournaments_alpha (NAME, ORGANIZATION, DATE, GAME, STYLE, LOCATION, LOCKED) VALUES (#{name}, #{organization}, #{date}, #{game}, #{style}, #{location}, #{locked});
 			
       	<selectKey keyProperty = "tournament_id" resultType = "int" order = "AFTER">
         	select last_insert_id() as tournament_id
@@ -28,6 +28,7 @@
    		<result property = "game" column = "GAME"/>
    		<result property = "style" column = "STYLE"/>
    		<result property = "location" column = "LOCATION"/>
+   		<result property = "locked" column = "LOCKED"/>	
 	</resultMap>
 
 	
