@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "StaffRole">
+
+   <insert id = "insert" parameterType = "StaffRole" useGeneratedKeys="true" keyProperty="role_id" keyColumn="role_id">
+      	INSERT INTO staff_roles (NAME, PERMISSIONS) VALUES (#{name}, #{permissions});
+	</insert> 
+	
+	<update id = "update" parameterType = "StaffRole">
+    	UPDATE staff_roles SET NAME = #{name}, PERMISSIONS = #{permissions} WHERE ROLE_ID = #{role_id};
+	</update>
+    
+    <select id="get" parameterType = "int" resultType="StaffRole">
+    	SELECT * FROM staff_roles where ROLE_ID = #{role_id};
+	</select>
+
+	<select id="getAll" resultType="StaffRole">
+    	SELECT * FROM staff_roles
+	</select>
+    	
+	<resultMap id = "result" type = "StaffRole">
+	   	<result property = "role_id" column = "ROLE_ID"/>
+   		<result property = "name" column = "NAME"/>
+   		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+	</resultMap>
+	
+</mapper>

@@ -2,34 +2,43 @@
 
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
    <typeAliases>
-
-      <typeAlias alias = "Player" type = "objects.Player"/>
-      <typeAlias alias = "TournamentAlpha" type = "objects.TournamentAlpha"/>
-	  <typeAlias alias = "GuestPlayer" type = "objects.GuestPlayer"/>
+      <typeAlias alias = "Artwork" type = "objects.Artwork"/>
+      <typeAlias alias = "Gallery" type = "objects.Gallery"/>
+      <typeAlias alias = "Post" type = "objects.Post"/>
+      <typeAlias alias = "StaffRole" type = "objects.StaffRole"/>
+   	  <typeAlias alias = "User" type = "objects.User"/>
    </typeAliases>
-		
+
+   <typeHandlers>
+      <typeHandler handler="handlers.JSONObjectTypeHandler"/>
+      <typeHandler handler="handlers.LongArrayTypeHandler"/>
+      <typeHandler handler="handlers.PGObjectArrayTypeHandler"/>      
+      <typeHandler handler="handlers.PGObjectTypeHandler"/>
+   </typeHandlers>
 
    <environments default = "development">
       <environment id = "development">
          <transactionManager type = "MANAGED"/> 
 			
          <dataSource type = "POOLED">
-            <property name = "driver" value = "com.mysql.cj.jdbc.Driver"/>
-            <property name = "url" value = "jdbc:mysql://localhost:3306/alpha?autoReconnect=true&amp;tcpKeepAlive=true"/>
-            <property name = "username" value = "root"/>
+            <property name = "driver" value = "org.postgresql.Driver"/>
+            <property name = "url" value = "jdbc:postgresql://localhost:5432/collective?autoReconnect=true&amp;tcpKeepAlive=true"/>
+            <property name = "username" value = "postgres"/>
             <property name = "password" value = "bradley01"/>
          </dataSource>   
          
       </environment>
    </environments>
 	
+	
+	
    <mappers>
-
-      <mapper resource = "db_map/Player.xml"/>
-      <mapper resource = "db_map/TournamentAlpha.xml"/>
-      <mapper resource = "db_map/GuestPlayer.xml"/>
+   	  <mapper resource = "db_map/Artwork.xml"/>
+   	  <mapper resource = "db_map/Gallery.xml"/>      
+      <mapper resource = "db_map/Post.xml"/>   	 
+      <mapper resource = "db_map/StaffRole.xml"/> 
+   	  <mapper resource = "db_map/User.xml"/>
    </mappers>
    
 </configuration>

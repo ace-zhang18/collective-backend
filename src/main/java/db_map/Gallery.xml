@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Gallery">
+
+   <insert id = "insert" parameterType = "Gallery">
+      	INSERT INTO galleries (collection, permissions, sale, nsfw) 
+      	VALUES (#{collection}, #{permissions}, #{sale}, #{nsfw});			
+      	<selectKey keyProperty = "id" resultType = "int" order = "AFTER">
+        	select last_insert_id() as id
+		</selectKey>   
+	</insert> 
+	
+	<update id = "update" parameterType = "Gallery">
+    	UPDATE galleries SET collection = #{collection}, 
+    	permissions = #{permissions}, sale = #{sale}, nsfw = #{nsfw}
+    	WHERE gallery_id = #{gallery_id};
+	</update>
+    
+    <select id="get" resultType="Gallery">
+    	SELECT * FROM galleries where USER_ID = #{gallery_id};
+	</select>
+    
+    	
+	<select id="getAll" resultType="Gallery">
+    	SELECT * FROM galleries
+	</select>
+    
+	<resultMap id = "result" type = "Gallery">
+		<result property = "gallery_id" column = "GALLERY_ID"/>
+		<result property = "collection" column = "COLLECTION" typeHandler="handlers.LongArrayTypeHandler"/>
+		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "sale" column = "SALE" typeHandler="handlers.PGObjectArrayTypeHandler"/>
+		<result property = "nsfw" column = "NSFW"/>
+	</resultMap>
+
+	
+</mapper>
