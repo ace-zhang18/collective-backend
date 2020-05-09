@@ -10,7 +10,7 @@ import utilities.JSONUtility;
 
 public class User {
 	long user_id; 
-	String name, icon_url, profile_card, profile_page, custom_url;
+	String username, icon_url, profile_card, profile_page, custom_url;
 	long[] staff_roles, trade_roles;
 	PGobject settings, social_media, payment_info;
 	PGobject[] login_history;
@@ -32,7 +32,7 @@ public class User {
 			long[] staff_roles, long[] trade_roles, PGobject settings, PGobject social_media, PGobject payment_info,
 			PGobject[] login_history) {
 		super();
-		this.name = name;
+		this.username = name;
 		this.icon_url = icon_url;
 		this.profile_card = profile_card;
 		this.profile_page = profile_page;
@@ -54,11 +54,11 @@ public class User {
 	}
 
 	public String getName() {
-		return name;
+		return username;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.username = name;
 	}
 
 	public String getIcon_url() {
@@ -161,7 +161,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", name=" + name + ", icon_url=" + icon_url + ", profile_card="
+		return "User [user_id=" + user_id + ", username=" + username + ", icon_url=" + icon_url + ", profile_card="
 				+ profile_card + ", profile_page=" + profile_page + ", custom_url=" + custom_url + ", staff_roles="
 				+ Arrays.toString(staff_roles) + ", trade_roles=" + Arrays.toString(trade_roles) + ", settings="
 				+ settings + ", social_media=" + social_media + ", payment_info=" + payment_info + ", login_history="

@@ -19,7 +19,7 @@ public class TestClient {
 			JerseyInvocation.Builder invocationBuilder;
 			Response response;
 			String input, output;
-			int test = 0;
+			int test = 1;
 			switch(test)
 			{
 			case 0: //get Staff Role

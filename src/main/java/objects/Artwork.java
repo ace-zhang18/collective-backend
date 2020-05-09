@@ -11,26 +11,27 @@ import utilities.JSONUtility;
 
 public class Artwork {
 	long artwork_id;
-	PGobject owner, permissions;
+	PGobject owner, permissions, history;
 	PGobject[] sale;
-	String type, art;
+	String type, content;
 	boolean nsfw;
 	
 	public Artwork() {
 		super();
 	}
 	
-	public Artwork(long artwork_id, PGobject owner, PGobject[] sale, String type, String art, boolean nsfw) {
-		this(owner, sale, type, art, nsfw);
+	public Artwork(long artwork_id, PGobject owner, PGobject history, PGobject[] sale, String type, String content, boolean nsfw) {
+		this(owner, history, sale, type, content, nsfw);
 		this.artwork_id = artwork_id;
 	}
 	
-	public Artwork(PGobject owner, PGobject[] sale, String type, String art, boolean nsfw) {
+	public Artwork(PGobject owner, PGobject history, PGobject[] sale, String type, String content, boolean nsfw) {
 		super();
 		this.owner = owner;
+		this.history = history;
 		this.sale = sale;
 		this.type = type;
-		this.art = art;
+		this.content = content;
 		this.nsfw = nsfw;
 	}
 
@@ -89,7 +90,23 @@ public class Artwork {
 	public void setPermissions(JSONObject permissions) {
 		this.permissions = JSONUtility.JSONtoPG(permissions);
 	}
+	
+	public PGobject getHistory() {
+		return history;
+	}
 
+	public JSONObject getHistoryAsJSONObject() {
+		return JSONUtility.PGtoJSON(history);
+	}
+	
+	public void setHistory(PGobject history) {
+		this.history = history;
+	}
+	
+	public void setHistory(JSONObject history) {
+		this.history = JSONUtility.JSONtoPG(history);
+	}
+	
 	public String getType() {
 		return type;
 	}
@@ -98,12 +115,12 @@ public class Artwork {
 		this.type = type;
 	}
 
-	public String getArt() {
-		return art;
+	public String getContent() {
+		return content;
 	}
 
-	public void setArt(String art) {
-		this.art = art;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public boolean isNsfw() {

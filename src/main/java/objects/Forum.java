@@ -8,22 +8,22 @@ import org.postgresql.util.PGobject;
 import utilities.JSONInterface;
 import utilities.JSONUtility;
 
-public class Thread implements JSONInterface {
+public class Forum implements JSONInterface {
 	long thread_id, forum, author;
 	PGobject permissions;
 	String title;
 	Timestamp timestamp;
 	
-	public Thread() {
+	public Forum() {
 		super();
 	}
 	
-	public Thread(long thread_id, long forum, long author, PGobject permissions, String title, Timestamp timestamp) {
+	public Forum(long thread_id, long forum, long author, PGobject permissions, String title, Timestamp timestamp) {
 		this(forum, author, permissions, title, timestamp);
 		this.thread_id = thread_id;
 	}
 	
-	public Thread(long forum, long author, PGobject permissions, String title, Timestamp timestamp) {
+	public Forum(long forum, long author, PGobject permissions, String title, Timestamp timestamp) {
 		super();
 		this.forum = forum;
 		this.author = author;

@@ -11,7 +11,7 @@ import utilities.JSONUtility;
 public class Gallery {
 	long gallery_id;
 	long[] collection;
-	PGobject permissions;
+	PGobject permissions, history;
 	PGobject[] sale;
 	boolean nsfw;
 	

@@ -6,10 +6,7 @@
 
    <insert id = "insert" parameterType = "Gallery">
       	INSERT INTO galleries (collection, permissions, sale, nsfw) 
-      	VALUES (#{collection}, #{permissions}, #{sale}, #{nsfw});			
-      	<selectKey keyProperty = "id" resultType = "int" order = "AFTER">
-        	select last_insert_id() as id
-		</selectKey>   
+      	VALUES (#{collection}, #{permissions}, #{sale}, #{nsfw});
 	</insert> 
 	
 	<update id = "update" parameterType = "Gallery">

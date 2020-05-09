@@ -5,13 +5,13 @@
 <mapper namespace = "Post">
 
    <insert id = "insert" parameterType = "Post" useGeneratedKeys="true" keyProperty="role_id" keyColumn="role_id">
-      	INSERT INTO posts (POST ID, THREAD, AUTHOR, TIMESTAMP, TITLE, TEXT, RATING) 
-      	VALUES (#{post id}, #{thread}, #{author}, #{timestamp}, #{title}, #{text}, #{rating});
+      	INSERT INTO posts (POST ID, THREAD, AUTHOR, TIMESTAMP, TITLE, TEXT, RATING, HISTORY) 
+      	VALUES (#{post id}, #{thread}, #{author}, #{timestamp}, #{title}, #{text}, #{rating}, #{history});
 	</insert> 
 	
 	<update id = "update" parameterType = "Post">
     	UPDATE posts SET THREAD = #{thread}, AUTHOR = #{author}, TIMESTAMP = #{timestamp}, 
-    	TITLE = #{title}, TEXT = #{text}, RATING = #{rating} 
+    	TITLE = #{title}, TEXT = #{text}, RATING = #{rating}, HISTORY = #{history} 
     	WHERE POST ID = #{post id}; 
 	</update>
     
@@ -30,7 +30,8 @@
 		<result property = "timestamp" column = "TIMESTAMP"/>
 		<result property = "title" column = "TITLE"/>
 		<result property = "text" column = "TEXT"/>
-		<result property = "rating" column = "RATING" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>		
+		<result property = "rating" column = "RATING" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "history" column = "HISTORY" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>		
 	</resultMap>
 	
 </mapper>

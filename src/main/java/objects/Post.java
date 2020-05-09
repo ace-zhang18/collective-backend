@@ -12,19 +12,19 @@ public class Post implements JSONInterface {
 	long post_id, thread, author;
 	Timestamp timestamp;
 	String title, text;
-	PGobject rating;
+	PGobject rating, history;
 	
 	public Post() {
 		super();
 	}
 	
 	public Post(long post_id, long thread, long author, Timestamp timestamp, String title, String text,
-			PGobject rating) {
-		this(thread, author, timestamp, title, text, rating);
+			PGobject rating, PGobject history) {
+		this(thread, author, timestamp, title, text, rating, history);
 		this.post_id = post_id;
 	}
 
-	public Post(long thread, long author, Timestamp timestamp, String title, String text, PGobject rating) {
+	public Post(long thread, long author, Timestamp timestamp, String title, String text, PGobject rating, PGobject history) {
 		super();
 		this.thread = thread;
 		this.author = author;
@@ -32,6 +32,7 @@ public class Post implements JSONInterface {
 		this.title = title;
 		this.text = text;
 		this.rating = rating;
+		this.history = history;
 	}
 
 	public long getPost_id() {
@@ -98,5 +99,20 @@ public class Post implements JSONInterface {
 		this.rating = JSONUtility.JSONtoPG(rating);
 	}
 	
+	public PGobject getHistory() {
+		return history;
+	}
+
+	public JSONObject getHistoryAsJSONObject() {
+		return JSONUtility.PGtoJSON(history);
+	}
+	
+	public void setHistory(PGobject history) {
+		this.history = history;
+	}
+	
+	public void setHistory(JSONObject history) {
+		this.history = JSONUtility.JSONtoPG(history);
+	}
 	
 }

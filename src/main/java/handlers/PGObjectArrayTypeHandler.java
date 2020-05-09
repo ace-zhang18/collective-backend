@@ -27,6 +27,7 @@ public class PGObjectArrayTypeHandler extends BaseTypeHandler<PGobject[]> {
     @Override
     public PGobject[] getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String jsonSource = rs.getString(columnName);
+        if(jsonSource == null) return null;
         jsonSource = jsonSource.substring(2, jsonSource.length() - 2);
         jsonSource = jsonSource.replaceAll("\\\\","");
         jsonSource = jsonSource.replace("\"}\",", "\"}\"=+=");
@@ -43,6 +44,7 @@ public class PGObjectArrayTypeHandler extends BaseTypeHandler<PGobject[]> {
     @Override
     public PGobject[] getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String jsonSource = rs.getString(columnIndex);
+        if(jsonSource == null) return null;
         jsonSource = jsonSource.substring(2, jsonSource.length() - 2);
         jsonSource = jsonSource.replaceAll("\\\\","");
         jsonSource = jsonSource.replace("\"}\",", "\"}\"=+=");
@@ -59,6 +61,7 @@ public class PGObjectArrayTypeHandler extends BaseTypeHandler<PGobject[]> {
     @Override
     public PGobject[] getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String jsonSource = cs.getString(columnIndex);
+        if(jsonSource == null) return null;
         jsonSource = jsonSource.substring(2, jsonSource.length() - 2);
         jsonSource = jsonSource.replaceAll("\\\\","");
         jsonSource = jsonSource.replace("\"}\",", "\"}\"=+=");
