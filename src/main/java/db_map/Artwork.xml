@@ -15,7 +15,7 @@
     	WHERE artwork_id = #{artwork_id};
 	</update>
     
-    <select id="get" resultType="Artwork">
+    <select id="get" parameterType = "int" resultType="Artwork">
     	SELECT * FROM artworks where artwork_ID = #{artwork_id};
 	</select>
     

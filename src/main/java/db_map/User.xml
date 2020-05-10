@@ -16,7 +16,7 @@
     	WHERE USER_ID = #{user_id};
 	</update>
     
-    <select id="get" resultType="User">
+    <select id="get" parameterType = "int" resultType="User">
     	SELECT * FROM users WHERE USER_ID = #{user_id};
 	</select>
     	

@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Forum">
+
+   <insert id = "insert" parameterType = "Forum">
+      	INSERT INTO forums (forum_id, name, parent, permissions) 
+      	VALUES (#{forum_id}, #{name} #{parent}, #{permissions});
+	</insert> 
+	
+	<update id = "update" parameterType = "Forum">
+    	UPDATE forums SET name = #{name}, parent = #{parent}, permissions = #{permissions}
+    	WHERE forum_id = #{forum_id};
+	</update>
+    
+    <select id="get" parameterType = "int" resultType="Forum">
+    	SELECT * FROM forums where forum_id = #{forum_id};
+	</select>
+    
+    	
+	<select id="getAll" resultType="Forum">
+    	SELECT * FROM forums
+	</select>
+	
+	<select id="getSub" resultType = "Forum">
+		SELECT * FROM forums WHERE parent = #{parent};
+	</select>
+    
+	<resultMap id = "result" type = "Forum">
+		<result property = "forum_id" column = "FORUM_ID"/>
+		<result property = "name" column = "NAME"/>
+		<result property = "parent" column = "PARENT"/>
+		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+	</resultMap>
+
+	
+</mapper>

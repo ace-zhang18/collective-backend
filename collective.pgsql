@@ -66,7 +66,8 @@ ALTER SEQUENCE public.artwork_artwork_id_seq OWNED BY public.artwork.artwork_id;
 CREATE TABLE public.forums (
     forum_id bigint NOT NULL,
     parent bigint,
-    permissions json
+    permissions json,
+    name text
 );
 
 
@@ -343,7 +344,10 @@ COPY public.artwork (artwork_id, owners, permissions, history, art_type, content
 -- Data for Name: forums; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.forums (forum_id, parent, permissions) FROM stdin;
+COPY public.forums (forum_id, parent, permissions, name) FROM stdin;
+0	\N	\N	Main Hub
+1	0	\N	Sub-interest 1
+2	0	\N	Sub-interest 2
 \.
 
 
@@ -368,6 +372,9 @@ COPY public.staff_roles (role_id, name, permissions) FROM stdin;
 --
 
 COPY public.threads (thread_id, forum, permissions, title, author, "timestamp") FROM stdin;
+1	0	\N	This Topic	1	2020-05-10 09:30:20-04
+2	0	\N	That Topic	1	2020-04-10 09:30:20-04
+3	0	\N	The Other Topic	1	2020-03-10 09:30:20-04
 \.
 
 
@@ -384,7 +391,7 @@ COPY public.trade_roles (role_id, parent_role, name, description) FROM stdin;
 --
 
 COPY public.users (user_id, username, staff_roles, trade_roles, icon_url, settings, payment_info, profile_card, profile_page, join_date, login_history, social_media, custom_url) FROM stdin;
-1	terabix	\N	\N	\N	\N	\N	\N	<b>Hello World!</b>	\N	\N	\N	\N
+1	terabix	\N	\N	\N	\N	\N	\N	<h1><u>Jesus Christ</u></h1>	\N	\N	\N	\N
 \.
 
 
@@ -399,7 +406,7 @@ SELECT pg_catalog.setval('public.artwork_artwork_id_seq', 1, false);
 -- Name: forums_forum_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.forums_forum_id_seq', 1, false);
+SELECT pg_catalog.setval('public.forums_forum_id_seq', 2, true);
 
 
 --
@@ -420,7 +427,7 @@ SELECT pg_catalog.setval('public.staff_roles_role_id_seq', 1, false);
 -- Name: threads_thread_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.threads_thread_id_seq', 1, false);
+SELECT pg_catalog.setval('public.threads_thread_id_seq', 3, true);
 
 
 --

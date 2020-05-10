@@ -4,6 +4,7 @@
 <configuration>
    <typeAliases>
       <typeAlias alias = "Artwork" type = "objects.Artwork"/>
+      <typeAlias alias = "Forum" type = "objects.Forum"/>
       <typeAlias alias = "Gallery" type = "objects.Gallery"/>
       <typeAlias alias = "Post" type = "objects.Post"/>
       <typeAlias alias = "StaffRole" type = "objects.StaffRole"/>
@@ -11,7 +12,6 @@
    </typeAliases>
 
    <typeHandlers>
-      <typeHandler handler="handlers.JSONObjectTypeHandler"/>
       <typeHandler handler="handlers.LongArrayTypeHandler"/>
       <typeHandler handler="handlers.PGObjectArrayTypeHandler"/>      
       <typeHandler handler="handlers.PGObjectTypeHandler"/>
@@ -35,6 +35,7 @@
 	
    <mappers>
    	  <mapper resource = "db_map/Artwork.xml"/>
+   	  <mapper resource = "db_map/Forum.xml"/>
    	  <mapper resource = "db_map/Gallery.xml"/>      
       <mapper resource = "db_map/Post.xml"/>   	 
       <mapper resource = "db_map/StaffRole.xml"/> 

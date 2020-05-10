@@ -1,14 +1,18 @@
 import java.util.ArrayList;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyInvocation;
 import org.glassfish.jersey.client.JerseyWebTarget;
 import org.json.JSONObject;
 
 import dao.*;
 import objects.*;
+import utilities.JSONUtility;
 
 public class TestClient {
 	public static void main(String[] args) {
@@ -23,22 +27,42 @@ public class TestClient {
 			switch(test)
 			{
 			case 0: //get Staff Role
-				User test_role = UserDAO.get(1);
-				
-				long[] ln = {1,2,3,4};
-				test_role.setStaff_roles(ln);
-				
-				UserDAO.update(test_role);
-				
-				break;
+				Forum forum = new Forum();
+				forum.setName("Main Hub");
+				forum.setForum_id(0);
+				ForumDAO.update(forum);
+				break;				
 			case 1: //get All Staff Roles
-				ArrayList<User> list = (ArrayList<User>) UserDAO.getAll();
+				ArrayList<Forum> list = (ArrayList<Forum>) ForumDAO.getSub(0);
 				
-				for(User role : list) {
-					System.out.println(role);
-				}
+				
+				String s = JSONUtility.ToJSONArray(list);
+				System.out.println(s);
 				
 				break;
+			case 2:			
+				client = JerseyClientBuilder.createClient();
+
+				webTarget = client.target("http://localhost:8080/collective-backend/api").path("forums").path("1");
+
+				invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+
+				input = "10621 Braddock Road – Ste B, Fairfax, VA 22032";
+
+
+				response = invocationBuilder
+						.post(Entity.entity(input, MediaType.TEXT_PLAIN));
+				//.get(Response.class);
+
+				if (response.getStatus()/100 != 2) {
+					throw new RuntimeException("Failed : HTTP error code : "
+							+ response.getStatus());
+				}
+
+				System.out.println("Output from Server .... \n");
+				output = response.readEntity(String.class);
+				System.out.println(output);
+				break;			
 			}
 		} catch (Exception e) {
 

@@ -14,25 +14,25 @@ public class Artwork {
 	PGobject owner, permissions, history;
 	PGobject[] sale;
 	String type, content;
-	boolean nsfw;
+	long[] tags;
 	
 	public Artwork() {
 		super();
 	}
 	
-	public Artwork(long artwork_id, PGobject owner, PGobject history, PGobject[] sale, String type, String content, boolean nsfw) {
-		this(owner, history, sale, type, content, nsfw);
+	public Artwork(long artwork_id, PGobject owner, PGobject history, PGobject[] sale, String type, String content, long[] tags) {
+		this(owner, history, sale, type, content, tags);
 		this.artwork_id = artwork_id;
 	}
 	
-	public Artwork(PGobject owner, PGobject history, PGobject[] sale, String type, String content, boolean nsfw) {
+	public Artwork(PGobject owner, PGobject history, PGobject[] sale, String type, String content, long[] tags) {
 		super();
 		this.owner = owner;
 		this.history = history;
 		this.sale = sale;
 		this.type = type;
 		this.content = content;
-		this.nsfw = nsfw;
+		this.tags = tags;
 	}
 
 	public long getArtwork_id() {
@@ -123,12 +123,12 @@ public class Artwork {
 		this.content = content;
 	}
 
-	public boolean isNsfw() {
-		return nsfw;
+	public long[] getTags() {
+		return tags;
 	}
 
-	public void setNsfw(boolean nsfw) {
-		this.nsfw = nsfw;
+	public void setTags(long[] tags) {
+		this.tags = tags;
 	}
 	
 }

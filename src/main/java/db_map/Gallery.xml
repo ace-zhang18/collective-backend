@@ -15,7 +15,7 @@
     	WHERE gallery_id = #{gallery_id};
 	</update>
     
-    <select id="get" resultType="Gallery">
+    <select id="get" parameterType = "int" resultType="Gallery">
     	SELECT * FROM galleries where USER_ID = #{gallery_id};
 	</select>
     

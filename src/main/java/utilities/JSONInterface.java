@@ -1,7 +1,9 @@
 package utilities;
 
+import org.json.JSONObject;
+
 public interface JSONInterface {
-	public default String toJSON() {
-		return null;
+	public default JSONObject toJSON() {
+		return new JSONObject(this);
 	}
 }

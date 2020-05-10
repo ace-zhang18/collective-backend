@@ -18,7 +18,7 @@ import dao.UserDAO;
 import objects.*;
 import utilities.JSONUtility;
 
-@Path("user")
+@Path("users")
 public class UserService {	
 	
 	@POST
