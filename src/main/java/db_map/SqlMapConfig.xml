@@ -8,6 +8,7 @@
       <typeAlias alias = "Gallery" type = "objects.Gallery"/>
       <typeAlias alias = "Post" type = "objects.Post"/>
       <typeAlias alias = "StaffRole" type = "objects.StaffRole"/>
+      <typeAlias alias = "Thread" type = "objects.Thread"/>
    	  <typeAlias alias = "User" type = "objects.User"/>
    </typeAliases>
 
@@ -39,6 +40,7 @@
    	  <mapper resource = "db_map/Gallery.xml"/>      
       <mapper resource = "db_map/Post.xml"/>   	 
       <mapper resource = "db_map/StaffRole.xml"/> 
+      <mapper resource = "db_map/Thread.xml"/> 
    	  <mapper resource = "db_map/User.xml"/>
    </mappers>
    

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import dao.*;
 import objects.*;
+import objects.Thread;
 import utilities.JSONUtility;
 
 public class TestClient {
@@ -33,7 +34,7 @@ public class TestClient {
 				ForumDAO.update(forum);
 				break;				
 			case 1: //get All Staff Roles
-				ArrayList<Forum> list = (ArrayList<Forum>) ForumDAO.getSub(0);
+				ArrayList<Thread> list = (ArrayList<Thread>) ThreadDAO.getForumThreads(0);
 				
 				
 				String s = JSONUtility.ToJSONArray(list);

@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Thread">
+
+   <insert id = "insert" parameterType = "Thread">
+      	INSERT INTO threads (thread_id, forum, author, permissions, title, timestamp) 
+      	VALUES (#{thread_id}, #{forum}, #{author}, #{permissions}, #{title}, #{timestamp});
+	</insert> 
+	
+	<update id = "update" parameterType = "Thread">
+    	UPDATE threads SET forum = #{forum}, author = #{author}, permissions = #{permissions}, title = #{title}, timestamp = #{timestamp}
+    	WHERE thread_id = #{thread_id};
+	</update>
+    
+    <select id="get" parameterType = "int" resultType="Thread">
+    	SELECT * FROM threads where forum_id = #{forum_id};
+	</select>
+    
+    	
+	<select id="getAll" resultType="Thread">
+    	SELECT * FROM threads
+	</select>
+	
+	<select id="getForumThreads" parameterType = "int" resultType = "Thread">
+		SELECT * FROM threads WHERE forum = #{forum} ORDER BY timestamp DESC;
+	</select>
+    
+	<resultMap id = "result" type = "Thread">
+		<result property = "thread_id" column = "THREAD_ID"/>
+		<result property = "forum" column = "FORUM"/>
+		<result property = "author" column = "AUTHOR"/>
+		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "title" column = "TITLE"/>
+		<result property = "timestamp" column = "TIMESTAMP"/>	
+	</resultMap>
+
+	
+</mapper>

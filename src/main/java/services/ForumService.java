@@ -57,6 +57,22 @@ public class ForumService {
 		return Response.status(200).entity(return_string).build();
 	}
 	
-	
+	@GET
+	@Path("/threads/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@CrossOrigin
+	public Response getForumThreads(@PathParam("id") String id) {
+		int forum_id = Integer.parseInt(id);
+		ArrayList<Forum> list = null;
+		try {
+			list = (ArrayList<Forum>) ForumDAO.getSub(forum_id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String return_string = JSONUtility.ToJSONArray(list);
+
+		return Response.status(200).entity(return_string).build();
+	}
 	
 }
