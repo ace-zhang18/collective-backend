@@ -21,28 +21,29 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: artwork; Type: TABLE; Schema: public; Owner: postgres
+-- Name: artworks; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.artwork (
+CREATE TABLE public.artworks (
     artwork_id bigint NOT NULL,
     owners json,
     permissions json,
     history json,
-    art_type text,
-    content text,
     sale json[],
-    tags bigint[]
+    tags bigint[],
+    file_type text,
+    metadata json,
+    title text
 );
 
 
-ALTER TABLE public.artwork OWNER TO postgres;
+ALTER TABLE public.artworks OWNER TO postgres;
 
 --
--- Name: artwork_artwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: artworks_artwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.artwork_artwork_id_seq
+CREATE SEQUENCE public.artworks_artwork_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -50,13 +51,13 @@ CREATE SEQUENCE public.artwork_artwork_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.artwork_artwork_id_seq OWNER TO postgres;
+ALTER TABLE public.artworks_artwork_id_seq OWNER TO postgres;
 
 --
--- Name: artwork_artwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: artworks_artwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.artwork_artwork_id_seq OWNED BY public.artwork.artwork_id;
+ALTER SEQUENCE public.artworks_artwork_id_seq OWNED BY public.artworks.artwork_id;
 
 
 --
@@ -284,10 +285,10 @@ ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 
 
 --
--- Name: artwork artwork_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: artworks artwork_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.artwork ALTER COLUMN artwork_id SET DEFAULT nextval('public.artwork_artwork_id_seq'::regclass);
+ALTER TABLE ONLY public.artworks ALTER COLUMN artwork_id SET DEFAULT nextval('public.artworks_artwork_id_seq'::regclass);
 
 
 --
@@ -333,10 +334,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 
 
 --
--- Data for Name: artwork; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: artworks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.artwork (artwork_id, owners, permissions, history, art_type, content, sale, tags) FROM stdin;
+COPY public.artworks (artwork_id, owners, permissions, history, sale, tags, file_type, metadata, title) FROM stdin;
+1	{"users":[0]}	\N	\N	\N	\N	jpg	\N	Staff of Flowing Water
+3	{"users":[0]}	\N	\N	\N	\N	jpg	\N	Apple
+4	{"users":[0]}	\N	\N	\N	\N	jpg	\N	Orange
 \.
 
 
@@ -356,6 +360,9 @@ COPY public.forums (forum_id, parent, permissions, name) FROM stdin;
 --
 
 COPY public.posts (post_id, thread, author, history, "timestamp", title, text, rating) FROM stdin;
+1	1	1	\N	2020-05-14 09:30:20-04	Eminem	Rap God	\N
+2	1	1	\N	2020-05-16 09:30:20-04	Dr. Dre	The Doctor	\N
+3	1	1	\N	2020-05-13 09:30:20-04	Snoop Dogg	High AF	\N
 \.
 
 
@@ -396,10 +403,10 @@ COPY public.users (user_id, username, staff_roles, trade_roles, icon_url, settin
 
 
 --
--- Name: artwork_artwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: artworks_artwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.artwork_artwork_id_seq', 1, false);
+SELECT pg_catalog.setval('public.artworks_artwork_id_seq', 4, true);
 
 
 --
@@ -413,7 +420,7 @@ SELECT pg_catalog.setval('public.forums_forum_id_seq', 2, true);
 -- Name: posts_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.posts_post_id_seq', 1, false);
+SELECT pg_catalog.setval('public.posts_post_id_seq', 3, true);
 
 
 --
@@ -442,14 +449,6 @@ SELECT pg_catalog.setval('public.trade_roles_role_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.users_user_id_seq', 1, true);
-
-
---
--- Name: artwork artwork_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.artwork
-    ADD CONSTRAINT artwork_pkey PRIMARY KEY (artwork_id);
 
 
 --

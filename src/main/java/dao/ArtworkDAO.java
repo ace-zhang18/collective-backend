@@ -1,8 +1,7 @@
 package dao;
 
 import java.util.List;
-
-import objects.*;
+import objects.Artwork;
 
 public class ArtworkDAO {
 	public static void insert(Artwork art){
@@ -17,6 +16,13 @@ public class ArtworkDAO {
 		System.out.println("Artwork successfully updated");
 	    SqlSessionContainer.getSession().commit();
 	    SqlSessionContainer.getSession().close();
+	}
+	
+	public static void delete(int id) {
+		SqlSessionContainer.getSession().update("Artwork.delete", id);
+		System.out.println("Artwork successfully deleted");
+		SqlSessionContainer.getSession().commit();
+		SqlSessionContainer.getSession().close();
 	}
 	
 	public static Artwork get(int art_id){

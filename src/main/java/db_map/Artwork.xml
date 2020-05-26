@@ -17,6 +17,10 @@
     	WHERE artwork_id = #{artwork_id};
 	</update>
     
+    <delete id = "delete" parameterType = "int">
+    	DELETE FROM artworks WHERE artwork_id = #{artwork_id}
+    </delete>
+    
     <select id="get" parameterType = "int" resultType="Artwork">
     	SELECT * FROM artworks where artwork_ID = #{artwork_id};
 	</select>

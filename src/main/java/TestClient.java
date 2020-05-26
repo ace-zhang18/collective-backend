@@ -17,6 +17,7 @@ import objects.*;
 import objects.Thread;
 import utilities.ImageUtility;
 import utilities.JSONUtility;
+import utilities.TemplateDAO;
 
 public class TestClient {
 	public static void main(String[] args) {
@@ -40,16 +41,7 @@ public class TestClient {
 				r.close();
 				break;				
 			case 1: //get All Staff Roles
-				Artwork art = ArtworkDAO.get(4);
-				
-				long art_id = art.getArtwork_id();
-				int thumb_size = 75;
-				
-				String path = "C:\\collective-backend\\assets\\" + art_id + "\\"+ art_id + "." + art.getFile_type();
-				String thumb_path = "C:\\collective-backend\\assets\\" + art_id + "\\"+ art_id + "_" + thumb_size +  "px." + art.getFile_type();
-				
-				ImageUtility.generateThumbnail(path, thumb_path, thumb_size);
-				
+				new Artwork().printClass();
 				break;
 			case 2:			
 				client = JerseyClientBuilder.createClient();
@@ -71,7 +63,7 @@ public class TestClient {
 				System.out.println("Output from Server .... \n");
 				output = response.readEntity(String.class);
 				System.out.println(output);
-				break;			
+				break;
 			}
 		} catch (Exception e) {
 

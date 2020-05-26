@@ -1,9 +1,5 @@
 package objects;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Arrays;
-
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
@@ -148,6 +144,10 @@ public class Artwork implements JSONInterface{
 
 	public void setTags(long[] tags) {
 		this.tags = tags;
+	}
+	
+	public void printClass() {
+		System.out.println(this.getClass().getName());
 	}
 	
 }
