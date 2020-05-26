@@ -5,8 +5,10 @@
 <mapper namespace = "Artwork">
 
    <insert id = "insert" parameterType = "Artwork">
-      	INSERT INTO artworks (artwork_id, owners, permissions, history, sale, tags, type, content, nsfw) 
-      	VALUES (#{artwork_id}, #{owners}, #{permissions}, #{history}, #{sale}, #{tags}, #{type}, #{content}, #{nsfw});
+      	INSERT INTO artworks (artwork_id, owners, permissions, metadata
+      				metadata, history, sale, tags, type, content, nsfw) 
+      	VALUES (	#{artwork_id}, #{owners}, #{permissions}, #{history},
+      				#{metadata}, #{sale}, #{tags}, #{type}, #{content}, #{nsfw});
 	</insert> 
 	
 	<update id = "update" parameterType = "Artwork">
@@ -19,6 +21,9 @@
     	SELECT * FROM artworks where artwork_ID = #{artwork_id};
 	</select>
     
+    <select id="getByTitle" parameterType = "String" resultType="Artwork">
+    	SELECT * FROM artworks where title = #{title};
+	</select>
     	
 	<select id="getAll" resultType="Artwork">
     	SELECT * FROM artworks
@@ -27,12 +32,12 @@
 	<resultMap id = "result" type = "Artwork">
 		<result property = "artwork_id" column = "ARTWORK_ID"/>
 		<result property = "owners" column = "OWNERS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "metadata" column = "METADATA" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>	
 		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
 		<result property = "history" column = "HISTORY" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
 		<result property = "sale" column = "SALE" typeHandler="handlers.PGObjectArrayTypeHandler"/>
 		<result property = "tags" column = "TAGS" typeHandler="handlers.LongArrayTypeHandler"/>	
-		<result property = "type" column = "TYPE"/>
-		<result property = "content" column = "CONTENT"/>
+		<result property = "file_type" column = "FILE_TYPE"/>
 	</resultMap>
 
 	

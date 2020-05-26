@@ -16,7 +16,11 @@
 	</update>
     
     <select id="get" parameterType = "int" resultType="Post">
-    	SELECT * FROM posts where POST_ID = #{POST_id};
+    	SELECT * FROM posts where POST_ID = #{POST_ID};
+	</select>
+
+    <select id="getThreadPosts" parameterType = "int" resultType="Post">
+    	SELECT * FROM posts WHERE thread = #{thread} ORDER BY timestamp;
 	</select>
 
 	<select id="getAll" resultType="Post">

@@ -1,5 +1,0 @@
-{
-    "username": "Jquack",
-    "password": "egg",
-    "email": "duck@gaming.gg"
-}

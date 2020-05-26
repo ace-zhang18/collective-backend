@@ -7,31 +7,34 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
+import utilities.JSONInterface;
 import utilities.JSONUtility;
 
-public class Artwork {
+public class Artwork implements JSONInterface{
 	long artwork_id;
-	PGobject owner, permissions, history;
+	PGobject owner, permissions, history, metadata;
 	PGobject[] sale;
-	String type, content;
+	String file_type, title;
 	long[] tags;
 	
 	public Artwork() {
 		super();
 	}
 	
-	public Artwork(long artwork_id, PGobject owner, PGobject history, PGobject[] sale, String type, String content, long[] tags) {
-		this(owner, history, sale, type, content, tags);
+	public Artwork(long artwork_id, PGobject owner, PGobject permissions, PGobject history, PGobject metadata, PGobject[] sale, String file_type, String title, long[] tags) {
+		this(owner, permissions, history, metadata, sale, file_type, title, tags);
 		this.artwork_id = artwork_id;
 	}
 	
-	public Artwork(PGobject owner, PGobject history, PGobject[] sale, String type, String content, long[] tags) {
+	public Artwork(PGobject owner, PGobject permissions, PGobject history, PGobject metadata, PGobject[] sale, String file_type, String title, long[] tags) {
 		super();
 		this.owner = owner;
+		this.permissions = permissions;
 		this.history = history;
+		this.metadata = metadata;
 		this.sale = sale;
-		this.type = type;
-		this.content = content;
+		this.file_type = file_type;
+		this.title = title;
 		this.tags = tags;
 	}
 
@@ -58,7 +61,23 @@ public class Artwork {
 	public void setOwner(JSONObject owner) {
 		this.owner = JSONUtility.JSONtoPG(owner);
 	}
+	
+	public PGobject getMetadata() {
+		return metadata;
+	}
+	
+	public JSONObject getMetadataAsJSONObject() {
+		return JSONUtility.PGtoJSON(metadata);
+	}
 
+	public void setMetadata(PGobject metadata) {
+		this.metadata = metadata;
+	}
+
+	public void setMetadata(JSONObject metadata) {
+		this.metadata = JSONUtility.JSONtoPG(metadata);
+	}
+	
 	public PGobject[] getSale() {
 		return sale;
 	}
@@ -106,21 +125,21 @@ public class Artwork {
 	public void setHistory(JSONObject history) {
 		this.history = JSONUtility.JSONtoPG(history);
 	}
-	
-	public String getType() {
-		return type;
+
+	public String getFile_type() {
+		return file_type;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setFile_type(String file_type) {
+		this.file_type = file_type;
 	}
 
-	public String getContent() {
-		return content;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public long[] getTags() {

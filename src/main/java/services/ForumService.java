@@ -15,8 +15,10 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import dao.ForumDAO;
+import dao.ThreadDAO;
 import dao.UserDAO;
 import objects.*;
+import objects.Thread;
 import utilities.JSONUtility;
 
 @Path("forums")
@@ -63,9 +65,9 @@ public class ForumService {
 	@CrossOrigin
 	public Response getForumThreads(@PathParam("id") String id) {
 		int forum_id = Integer.parseInt(id);
-		ArrayList<Forum> list = null;
+		ArrayList<Thread> list = null;
 		try {
-			list = (ArrayList<Forum>) ForumDAO.getSub(forum_id);
+			list = (ArrayList<Thread>) ThreadDAO.getForumThreads(forum_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

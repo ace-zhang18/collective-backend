@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Entity;
@@ -13,6 +15,7 @@ import org.json.JSONObject;
 import dao.*;
 import objects.*;
 import objects.Thread;
+import utilities.ImageUtility;
 import utilities.JSONUtility;
 
 public class TestClient {
@@ -28,33 +31,38 @@ public class TestClient {
 			switch(test)
 			{
 			case 0: //get Staff Role
-				Forum forum = new Forum();
-				forum.setName("Main Hub");
-				forum.setForum_id(0);
-				ForumDAO.update(forum);
+				BufferedReader r = new BufferedReader(new FileReader("pom.xml"));
+				String s = r.readLine();
+				while (s != null) {
+				    System.out.println(s);
+				    s = r.readLine();
+				}
+				r.close();
 				break;				
 			case 1: //get All Staff Roles
-				ArrayList<Thread> list = (ArrayList<Thread>) ThreadDAO.getForumThreads(0);
+				Artwork art = ArtworkDAO.get(4);
 				
+				long art_id = art.getArtwork_id();
+				int thumb_size = 75;
 				
-				String s = JSONUtility.ToJSONArray(list);
-				System.out.println(s);
+				String path = "C:\\collective-backend\\assets\\" + art_id + "\\"+ art_id + "." + art.getFile_type();
+				String thumb_path = "C:\\collective-backend\\assets\\" + art_id + "\\"+ art_id + "_" + thumb_size +  "px." + art.getFile_type();
+				
+				ImageUtility.generateThumbnail(path, thumb_path, thumb_size);
 				
 				break;
 			case 2:			
 				client = JerseyClientBuilder.createClient();
 
-				webTarget = client.target("http://localhost:8080/collective-backend/api").path("forums").path("1");
+				webTarget = client.target("http://localhost:8080/collective-backend/api").path("artworks/file").path("1");
 
-				invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-
-				input = "10621 Braddock Road – Ste B, Fairfax, VA 22032";
-
+				invocationBuilder = webTarget.request(MediaType.APPLICATION_OCTET_STREAM);
 
 				response = invocationBuilder
-						.post(Entity.entity(input, MediaType.TEXT_PLAIN));
-				//.get(Response.class);
+						.get(Response.class);
 
+				System.out.println(response);
+				
 				if (response.getStatus()/100 != 2) {
 					throw new RuntimeException("Failed : HTTP error code : "
 							+ response.getStatus());

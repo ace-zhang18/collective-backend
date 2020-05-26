@@ -6,9 +6,10 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
+import utilities.JSONInterface;
 import utilities.JSONUtility;
 
-public class Gallery {
+public class Gallery implements JSONInterface {
 	long gallery_id;
 	long[] collection;
 	PGobject permissions, history;
