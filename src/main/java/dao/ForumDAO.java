@@ -19,7 +19,7 @@ public class ForumDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static Forum get(int forum_id){
+	public static Forum get(long forum_id){
 		return SqlSessionContainer.getSession().selectOne("Forum.get", forum_id);
 	}
 	

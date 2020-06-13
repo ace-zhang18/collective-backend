@@ -13,21 +13,24 @@
     	UPDATE forums SET name = #{name}, parent = #{parent}, permissions = #{permissions}
     	WHERE forum_id = #{forum_id};
 	</update>
+
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM forums WHERE forum_id = #{forum_id}
+    </delete>
     
-    <select id="get" parameterType = "int" resultType="Forum">
+    <select id="get" parameterType = "long" resultMap="forumMap">
     	SELECT * FROM forums where forum_id = #{forum_id};
 	</select>
-    
-    	
-	<select id="getAll" resultType="Forum">
+      	
+	<select id="getAll" resultMap="forumMap">
     	SELECT * FROM forums
 	</select>
 	
-	<select id="getSub" resultType = "Forum">
+	<select id="getSub" resultMap="forumMap">
 		SELECT * FROM forums WHERE parent = #{parent};
 	</select>
     
-	<resultMap id = "result" type = "Forum">
+	<resultMap id = "forumMap" type = "Forum">
 		<result property = "forum_id" column = "FORUM_ID"/>
 		<result property = "name" column = "NAME"/>
 		<result property = "parent" column = "PARENT"/>

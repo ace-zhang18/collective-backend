@@ -5,31 +5,38 @@
 <mapper namespace = "Gallery">
 
    <insert id = "insert" parameterType = "Gallery">
-      	INSERT INTO galleries (collection, permissions, sale, nsfw) 
-      	VALUES (#{collection}, #{permissions}, #{sale}, #{nsfw});
+      	INSERT INTO galleries (gallery_id, cover, title, collection, tags, permissions, history, owners, sale) 
+      	VALUES (#{gallery_id}, #{cover}, #{title}, #{collection}, #{tags}, #{permissions}, #{history}, #{owners}, #{sale});
 	</insert> 
 	
 	<update id = "update" parameterType = "Gallery">
-    	UPDATE galleries SET collection = #{collection}, 
-    	permissions = #{permissions}, sale = #{sale}, nsfw = #{nsfw}
+    	UPDATE galleries SET cover = #{cover}, title = #{title}, collection = #{collection}, tags = #{tags}, 
+    	permissions = #{permissions}, history = #{history}, owners = #{owners}, sale = #{sale}
     	WHERE gallery_id = #{gallery_id};
 	</update>
     
-    <select id="get" parameterType = "int" resultType="Gallery">
-    	SELECT * FROM galleries where USER_ID = #{gallery_id};
+	<delete id = "delete" parameterType = "long">
+    	DELETE FROM galleries WHERE gallery_id = #{gallery_id};
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="galleryMap">
+    	SELECT * FROM galleries WHERE gallery_id = #{gallery_id};
 	</select>
     
-    	
-	<select id="getAll" resultType="Gallery">
-    	SELECT * FROM galleries
+	<select id="getAll" resultMap="galleryMap">
+    	SELECT * FROM galleries;
 	</select>
     
-	<resultMap id = "result" type = "Gallery">
+	<resultMap id = "galleryMap" type = "Gallery">
 		<result property = "gallery_id" column = "GALLERY_ID"/>
+		<result property = "cover" column = "COVER"/>
+		<result property = "title" column = "TITLE"/>
 		<result property = "collection" column = "COLLECTION" typeHandler="handlers.LongArrayTypeHandler"/>
+		<result property = "tags" column = "TAGS" typeHandler="handlers.LongArrayTypeHandler"/>
 		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "history" column = "HISTORY" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "owners" column = "OWNERS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>	
 		<result property = "sale" column = "SALE" typeHandler="handlers.PGObjectArrayTypeHandler"/>
-		<result property = "nsfw" column = "NSFW"/>
 	</resultMap>
 
 	

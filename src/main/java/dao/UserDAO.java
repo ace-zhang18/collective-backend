@@ -20,8 +20,8 @@ public class UserDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static User get(int user_id){
-		return SqlSessionContainer.getSession().selectOne("User.get", user_id);
+	public static User get(long l){
+		return SqlSessionContainer.getSession().selectOne("User.get", l);
 	}
 	
 	

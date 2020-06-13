@@ -1,8 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -10,14 +5,12 @@ import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyInvocation;
 import org.glassfish.jersey.client.JerseyWebTarget;
-import org.json.JSONObject;
 
-import dao.*;
-import objects.*;
-import objects.Thread;
-import utilities.ImageUtility;
-import utilities.JSONUtility;
-import utilities.TemplateDAO;
+import dao.GalleryDAO;
+import dao.UserDAO;
+import objects.ArtworkPreview;
+import objects.Gallery;
+import objects.User;
 
 public class TestClient {
 	public static void main(String[] args) {
@@ -28,22 +21,21 @@ public class TestClient {
 			JerseyInvocation.Builder invocationBuilder;
 			Response response;
 			String input, output;
-			int test = 1;
+			int test = 0;
 			switch(test)
 			{
 			case 0: //get Staff Role
-				BufferedReader r = new BufferedReader(new FileReader("pom.xml"));
-				String s = r.readLine();
-				while (s != null) {
-				    System.out.println(s);
-				    s = r.readLine();
-				}
-				r.close();
+				ArtworkPreview preview = new ArtworkPreview(1, 75);
 				break;				
 			case 1: //get All Staff Roles
-				new Artwork().printClass();
+				Gallery g = GalleryDAO.get(1);
+				System.out.println(g.getCollection()[0]);
 				break;
-			case 2:			
+			case 2: //get All Staff Roles
+				User u = UserDAO.get(1);
+				System.out.println(u.getUsername());
+				break;
+			case 10:			
 				client = JerseyClientBuilder.createClient();
 
 				webTarget = client.target("http://localhost:8080/collective-backend/api").path("artworks/file").path("1");

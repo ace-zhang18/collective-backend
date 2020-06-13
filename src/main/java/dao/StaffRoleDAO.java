@@ -20,7 +20,7 @@ public class StaffRoleDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static StaffRole get(int role_id){
+	public static StaffRole get(long role_id){
 		return SqlSessionContainer.getSession().selectOne("StaffRole.get", role_id);
 	}
 	

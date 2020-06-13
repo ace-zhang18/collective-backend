@@ -27,6 +27,8 @@ public class LongArrayTypeHandler extends BaseTypeHandler<long[]> {
     		String[] tokens = data.split(",");
     		long[] ar = new long[tokens.length];
     		for(int i = 0; i < tokens.length; i++) {
+    			tokens[i] = tokens[i].replaceAll("\"", "");
+    			System.out.println(tokens[i]);
     			ar[i] = Long.parseLong(tokens[i]);
     		}
     		return ar;

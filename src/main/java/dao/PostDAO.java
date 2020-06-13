@@ -20,7 +20,7 @@ public class PostDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static Post get(int post_id){
+	public static Post get(long post_id){
 		return SqlSessionContainer.getSession().selectOne("Post.get", post_id);
 	}
 	

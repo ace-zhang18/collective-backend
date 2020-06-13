@@ -8,7 +8,7 @@ import utilities.JSONUtility;
 
 public class Artwork implements JSONInterface{
 	long artwork_id;
-	PGobject owner, permissions, history, metadata;
+	PGobject owners, permissions, history, metadata;
 	PGobject[] sale;
 	String file_type, title;
 	long[] tags;
@@ -24,7 +24,7 @@ public class Artwork implements JSONInterface{
 	
 	public Artwork(PGobject owner, PGobject permissions, PGobject history, PGobject metadata, PGobject[] sale, String file_type, String title, long[] tags) {
 		super();
-		this.owner = owner;
+		this.owners = owner;
 		this.permissions = permissions;
 		this.history = history;
 		this.metadata = metadata;
@@ -43,19 +43,19 @@ public class Artwork implements JSONInterface{
 	}
 
 	public PGobject getOwner() {
-		return owner;
+		return owners;
 	}
 	
 	public JSONObject getOwnerAsJSONObject() {
-		return JSONUtility.PGtoJSON(owner);
+		return JSONUtility.PGtoJSON(owners);
 	}
 		
 	public void setOwner(PGobject owner) {
-		this.owner = owner;
+		this.owners = owner;
 	}
 	
 	public void setOwner(JSONObject owner) {
-		this.owner = JSONUtility.JSONtoPG(owner);
+		this.owners = JSONUtility.JSONtoPG(owner);
 	}
 	
 	public PGobject getMetadata() {

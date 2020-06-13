@@ -14,20 +14,23 @@
     	WHERE thread_id = #{thread_id};
 	</update>
     
-    <select id="get" parameterType = "int" resultType="Thread">
+    <delete id="delete" parameterType="long">
+    	DELETE FROM threads WHERE thread_id = #{thread_id};
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="threadMap">
     	SELECT * FROM threads WHERE thread_id = #{thread_id};
 	</select>
-    
     	
-	<select id="getAll" resultType="Thread">
+	<select id="getAll" resultMap="threadMap">
     	SELECT * FROM threads
 	</select>
 	
-	<select id="getForumThreads" parameterType = "int" resultType = "Thread">
+	<select id="getForumThreads" parameterType = "int" resultMap="threadMap">
 		SELECT * FROM threads WHERE forum = #{forum} ORDER BY timestamp DESC;
 	</select>
     
-	<resultMap id = "result" type = "Thread">
+	<resultMap id = "threadMap" type = "Thread">
 		<result property = "thread_id" column = "THREAD_ID"/>
 		<result property = "forum" column = "FORUM"/>
 		<result property = "author" column = "AUTHOR"/>

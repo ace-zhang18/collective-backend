@@ -1,8 +1,5 @@
 package objects;
 
-import java.sql.Timestamp;
-import java.util.Arrays;
-
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
@@ -10,23 +7,33 @@ import utilities.JSONInterface;
 import utilities.JSONUtility;
 
 public class Gallery implements JSONInterface {
-	long gallery_id;
-	long[] collection;
-	PGobject permissions, history;
+	long gallery_id, cover;
+	String title;
+	long[] collection, tags;
+	PGobject permissions, history, owners;
 	PGobject[] sale;
-	boolean nsfw;
-	
-	public Gallery(long gallery_id, long[] collection, PGobject permissions, PGobject[] sale, boolean nsfw) {
-		this(collection, permissions, sale, nsfw);
-		this.gallery_id = gallery_id;
+
+	public Gallery() {
+		super();
 	}
 	
-	public Gallery(long[] collection, PGobject permissions, PGobject[] sale, boolean nsfw) {
+	public Gallery(	long gallery_id, long cover, String title, long[] collection, long[] tags,
+			PGobject permissions, PGobject history, PGobject owners, PGobject[] sale) {
+		this(cover, title, collection, tags, permissions, history, owners, sale);
+		this.gallery_id = gallery_id;
+	}
+
+	public Gallery(	long cover, String title, long[] collection, long[] tags,
+			PGobject permissions, PGobject history, PGobject owners, PGobject[] sale) {
 		super();
+		this.cover = cover;
+		this.title = title;
 		this.collection = collection;
+		this.tags = tags;
 		this.permissions = permissions;
+		this.history = history;
+		this.owners = owners;
 		this.sale = sale;
-		this.nsfw = nsfw;
 	}
 
 	public long getGallery_id() {
@@ -37,6 +44,22 @@ public class Gallery implements JSONInterface {
 		this.gallery_id = gallery_id;
 	}
 
+	public long getCover() {
+		return cover;
+	}
+
+	public void setCover(long cover) {
+		this.cover = cover;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public long[] getCollection() {
 		return collection;
 	}
@@ -45,20 +68,48 @@ public class Gallery implements JSONInterface {
 		this.collection = collection;
 	}
 
+	public long[] getTags() {
+		return tags;
+	}
+
+	public void setTags(long[] tags) {
+		this.tags = tags;
+	}
+
 	public PGobject getPermissions() {
 		return permissions;
 	}
-
+	
 	public JSONObject getPermissionsAsJSONObject() {
 		return JSONUtility.PGtoJSON(permissions);
 	}
-	
+
 	public void setPermissions(PGobject permissions) {
 		this.permissions = permissions;
 	}
+
+	public PGobject getHistory() {
+		return history;
+	}
 	
-	public void setPermissions(JSONObject permissions) {
-		this.permissions = JSONUtility.JSONtoPG(permissions);
+	public JSONObject getHistoryAsJSONObject() {
+		return JSONUtility.PGtoJSON(history);
+	}
+
+	public void setHistory(PGobject history) {
+		this.history = history;
+	}
+
+	public PGobject getOwners() {
+		return owners;
+	}
+	
+	public JSONObject getOwnersAsJSONObject() {
+		return JSONUtility.PGtoJSON(owners);
+	}
+
+	public void setOwners(PGobject owners) {
+		this.owners = owners;
 	}
 
 	public PGobject[] getSale() {
@@ -72,19 +123,7 @@ public class Gallery implements JSONInterface {
 	public void setSale(PGobject[] sale) {
 		this.sale = sale;
 	}
-	
-	public void setSale(JSONObject[] sale) {
-		this.sale = JSONUtility.JSONtoPG(sale);
-	}
 
-	public boolean isNsfw() {
-		return nsfw;
-	}
-
-	public void setNsfw(boolean nsfw) {
-		this.nsfw = nsfw;
-	}
-	
 	
 }
 

@@ -19,7 +19,7 @@ public class GalleryDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static Gallery get(int gallery_id){
+	public static Gallery get(long gallery_id){
 		return SqlSessionContainer.getSession().selectOne("Gallery.get", gallery_id);
 	}
 	

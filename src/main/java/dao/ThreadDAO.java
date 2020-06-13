@@ -18,10 +18,13 @@ public class ThreadDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static Thread get(int thread_id){
+	public static Thread get(long thread_id){
 		return SqlSessionContainer.getSession().selectOne("Thread.get", thread_id);
 	}
 	
+	public static void delete(long thread_id){
+		SqlSessionContainer.getSession().delete("Thread.delete", thread_id);
+	}
 	
 	public static List<Thread> getAll(){
 		return SqlSessionContainer.getSession().selectList("Thread.getAll");		

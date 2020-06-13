@@ -18,14 +18,14 @@ public class ArtworkDAO {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public static void delete(int id) {
-		SqlSessionContainer.getSession().update("Artwork.delete", id);
+	public static void delete(long id) {
+		SqlSessionContainer.getSession().delete("Artwork.delete", id);
 		System.out.println("Artwork successfully deleted");
 		SqlSessionContainer.getSession().commit();
 		SqlSessionContainer.getSession().close();
 	}
 	
-	public static Artwork get(int art_id){
+	public static Artwork get(long art_id){
 		return SqlSessionContainer.getSession().selectOne("Artwork.get", art_id);
 	}
 	

@@ -1,42 +1,33 @@
 package services;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import dao.ArtworkDAO;
-import dao.ForumDAO;
-import dao.UserDAO;
-import objects.*;
+import dao.GalleryDAO;
+import objects.Artwork;
+import objects.Gallery;
 import utilities.ImageUtility;
-import utilities.JSONUtility;
 import utilities.WebUtility;
 
-@Path("artworks")
-public class ArtworkService {	
+@Path("galleries")
+public class GalleryService {	
 	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin
-	public Response getArtwork(@PathParam("id") String id) {
-		int art_id = Integer.parseInt(id);
-		Artwork a = null;
+	public Response getGallery(@PathParam("id") String id) {
+		int gallery_id = Integer.parseInt(id);
+		Gallery a = null;
 		try {
-			a = ArtworkDAO.get(art_id);
+			a = GalleryDAO.get(gallery_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,20 +37,13 @@ public class ArtworkService {
 	}
 	
 	@GET
-	@Path("/file/{id}")
+	@Path("/thumbnails/{id}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	@CrossOrigin
-	public Response getArtworkFile(@PathParam("id") String id) {
+	public Response getThumbnails(@PathParam("id") String id) {
 		int art_id = Integer.parseInt(id);
-		Artwork a = null;
-		try {
-			a = ArtworkDAO.get(art_id);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		String path = ImageUtility.getImagePath(art_id, 0);
+		String path = ImageUtility.getThumbnail(art_id, 75).getAbsolutePath();
 		
 		try {
 			return Response.status(200).entity(WebUtility.getFileStream(path)).build();

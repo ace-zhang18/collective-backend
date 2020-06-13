@@ -81,12 +81,12 @@ public class ImageUtility {
     }
     
     
-    public static String getThumbnail(int id, int thumb_size) {
+    public static File getThumbnail(int id, int thumb_size) {
     	File f = new File(getImagePath(id, thumb_size));
     	if (!f.exists()) {
     		generateThumbnail(getImagePath(id, 0), getImagePath(id, thumb_size), thumb_size);
     	}
-    	return getImagePath(id, thumb_size);
+    	return f;
     }
     
     //Takes in an Artwork DB object and outputs the location where it's stored.
@@ -104,6 +104,12 @@ public class ImageUtility {
 		Artwork art = null;
 		art = ArtworkDAO.get(id);
 		return getImagePath(art, thumb_size);
+    }
+    
+    public static String getImagePath(int id) {
+		Artwork art = null;
+		art = ArtworkDAO.get(id);
+		return getImagePath(art, 0);
     }
     
     public static BufferedImage getImageFile(String path) {

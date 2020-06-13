@@ -17,23 +17,23 @@
     	WHERE artwork_id = #{artwork_id};
 	</update>
     
-    <delete id = "delete" parameterType = "int">
+    <delete id = "delete" parameterType = "long">
     	DELETE FROM artworks WHERE artwork_id = #{artwork_id}
     </delete>
     
-    <select id="get" parameterType = "int" resultType="Artwork">
+    <select id="get" parameterType = "long" resultMap="artworkMap">
     	SELECT * FROM artworks where artwork_ID = #{artwork_id};
 	</select>
     
-    <select id="getByTitle" parameterType = "String" resultType="Artwork">
+    <select id="getByTitle" parameterType = "String" resultMap="artworkMap">
     	SELECT * FROM artworks where title = #{title};
 	</select>
     	
-	<select id="getAll" resultType="Artwork">
+	<select id="getAll" resultMap="artworkMap">
     	SELECT * FROM artworks
 	</select>
     
-	<resultMap id = "result" type = "Artwork">
+	<resultMap id = "artworkMap" type = "Artwork">
 		<result property = "artwork_id" column = "ARTWORK_ID"/>
 		<result property = "owners" column = "OWNERS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
 		<result property = "metadata" column = "METADATA" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>	

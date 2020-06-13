@@ -96,6 +96,46 @@ ALTER SEQUENCE public.forums_forum_id_seq OWNED BY public.forums.forum_id;
 
 
 --
+-- Name: galleries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.galleries (
+    gallery_id bigint NOT NULL,
+    collection bigint[],
+    permissions json,
+    cover bigint,
+    history json,
+    tags bigint[],
+    sale json[],
+    owners json,
+    title text
+);
+
+
+ALTER TABLE public.galleries OWNER TO postgres;
+
+--
+-- Name: galleries_gallery_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.galleries_gallery_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.galleries_gallery_id_seq OWNER TO postgres;
+
+--
+-- Name: galleries_gallery_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.galleries_gallery_id_seq OWNED BY public.galleries.gallery_id;
+
+
+--
 -- Name: posts; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -299,6 +339,13 @@ ALTER TABLE ONLY public.forums ALTER COLUMN forum_id SET DEFAULT nextval('public
 
 
 --
+-- Name: galleries gallery_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.galleries ALTER COLUMN gallery_id SET DEFAULT nextval('public.galleries_gallery_id_seq'::regclass);
+
+
+--
 -- Name: posts post_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -338,9 +385,9 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 --
 
 COPY public.artworks (artwork_id, owners, permissions, history, sale, tags, file_type, metadata, title) FROM stdin;
-1	{"users":[0]}	\N	\N	\N	\N	jpg	\N	Staff of Flowing Water
-3	{"users":[0]}	\N	\N	\N	\N	jpg	\N	Apple
-4	{"users":[0]}	\N	\N	\N	\N	jpg	\N	Orange
+1	{"users":[1]}	\N	\N	\N	\N	jpg	\N	Staff of Flowing Water
+3	{"users":[1]}	\N	\N	\N	\N	jpg	\N	Apple
+4	{"users":[1]}	\N	\N	\N	\N	jpg	\N	Orange
 \.
 
 
@@ -352,6 +399,15 @@ COPY public.forums (forum_id, parent, permissions, name) FROM stdin;
 0	\N	\N	Main Hub
 1	0	\N	Sub-interest 1
 2	0	\N	Sub-interest 2
+\.
+
+
+--
+-- Data for Name: galleries; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.galleries (gallery_id, collection, permissions, cover, history, tags, sale, owners, title) FROM stdin;
+1	{3,4}	\N	\N	\N	\N	\N	{"users":[1]}	Fruits
 \.
 
 
@@ -371,6 +427,8 @@ COPY public.posts (post_id, thread, author, history, "timestamp", title, text, r
 --
 
 COPY public.staff_roles (role_id, name, permissions) FROM stdin;
+1	admin	\N
+2	moderator	\N
 \.
 
 
@@ -398,7 +456,7 @@ COPY public.trade_roles (role_id, parent_role, name, description) FROM stdin;
 --
 
 COPY public.users (user_id, username, staff_roles, trade_roles, icon_url, settings, payment_info, profile_card, profile_page, join_date, login_history, social_media, custom_url) FROM stdin;
-1	terabix	\N	\N	\N	\N	\N	\N	<h1><u>Jesus Christ</u></h1>	\N	\N	\N	\N
+1	terabix	[0:1]={1,2}	\N	\N	\N	\N	\N	Hi there <b> from Virginia</b>	\N	\N	\N	\N
 \.
 
 
@@ -417,6 +475,13 @@ SELECT pg_catalog.setval('public.forums_forum_id_seq', 2, true);
 
 
 --
+-- Name: galleries_gallery_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.galleries_gallery_id_seq', 1, true);
+
+
+--
 -- Name: posts_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -427,7 +492,7 @@ SELECT pg_catalog.setval('public.posts_post_id_seq', 3, true);
 -- Name: staff_roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.staff_roles_role_id_seq', 1, false);
+SELECT pg_catalog.setval('public.staff_roles_role_id_seq', 2, true);
 
 
 --
@@ -452,11 +517,27 @@ SELECT pg_catalog.setval('public.users_user_id_seq', 1, true);
 
 
 --
+-- Name: artworks artworks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.artworks
+    ADD CONSTRAINT artworks_pkey PRIMARY KEY (artwork_id);
+
+
+--
 -- Name: forums forums_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.forums
     ADD CONSTRAINT forums_pkey PRIMARY KEY (forum_id);
+
+
+--
+-- Name: galleries galleries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.galleries
+    ADD CONSTRAINT galleries_pkey PRIMARY KEY (gallery_id);
 
 
 --
@@ -505,6 +586,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.forums
     ADD CONSTRAINT forums_parent_fkey FOREIGN KEY (parent) REFERENCES public.forums(forum_id);
+
+
+--
+-- Name: galleries galleries_cover_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.galleries
+    ADD CONSTRAINT galleries_cover_fkey FOREIGN KEY (cover) REFERENCES public.artworks(artwork_id);
 
 
 --

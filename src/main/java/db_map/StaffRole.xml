@@ -12,15 +12,19 @@
     	UPDATE staff_roles SET NAME = #{name}, PERMISSIONS = #{permissions} WHERE ROLE_ID = #{role_id};
 	</update>
     
-    <select id="get" parameterType = "int" resultType="StaffRole">
-    	SELECT * FROM staff_roles where ROLE_ID = #{role_id};
+	<delete id = "delete" parameterType = "long">
+    	DELETE FROM staff_roles WHERE role_id = #{role_id}
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="staffRoleMap">
+    	SELECT * FROM staff_roles WHERE role_id = #{role_id};
 	</select>
 
-	<select id="getAll" resultType="StaffRole">
+	<select id="getAll" resultMap="staffRoleMap">
     	SELECT * FROM staff_roles
 	</select>
     	
-	<resultMap id = "result" type = "StaffRole">
+	<resultMap id = "staffRoleMap" type = "StaffRole">
 	   	<result property = "role_id" column = "ROLE_ID"/>
    		<result property = "name" column = "NAME"/>
    		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
