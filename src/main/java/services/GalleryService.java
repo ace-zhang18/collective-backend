@@ -24,10 +24,10 @@ public class GalleryService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin
 	public Response getGallery(@PathParam("id") String id) {
-		int gallery_id = Integer.parseInt(id);
+		long gallery_id = Long.parseLong(id);
 		Gallery a = null;
 		try {
-			a = GalleryDAO.get(gallery_id);
+			a = GalleryDAO.getInstance().get(gallery_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,9 +41,9 @@ public class GalleryService {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	@CrossOrigin
 	public Response getThumbnails(@PathParam("id") String id) {
-		int art_id = Integer.parseInt(id);
+		long art_id = Long.parseLong(id);
 		
-		String path = ImageUtility.getThumbnail(art_id, 75).getAbsolutePath();
+		String path = ImageUtility.getImagePath(art_id);
 		
 		try {
 			return Response.status(200).entity(WebUtility.getFileStream(path)).build();

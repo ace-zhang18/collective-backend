@@ -36,7 +36,7 @@ public class ArtworkService {
 		int art_id = Integer.parseInt(id);
 		Artwork a = null;
 		try {
-			a = ArtworkDAO.get(art_id);
+			a = ArtworkDAO.getInstance().get(art_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,16 +50,11 @@ public class ArtworkService {
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	@CrossOrigin
 	public Response getArtworkFile(@PathParam("id") String id) {
+		System.out.println(id);
 		int art_id = Integer.parseInt(id);
-		Artwork a = null;
-		try {
-			a = ArtworkDAO.get(art_id);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		String path = ImageUtility.getImagePath(art_id, 0);
+		String path = ImageUtility.getImagePath(art_id);
+		System.out.println(path);
 		
 		try {
 			return Response.status(200).entity(WebUtility.getFileStream(path)).build();

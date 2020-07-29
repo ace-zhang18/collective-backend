@@ -6,10 +6,10 @@ import java.util.Arrays;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
-import utilities.JSONInterface;
+import utilities.ObjectInterface;
 import utilities.JSONUtility;
 
-public class User implements JSONInterface{
+public class User implements ObjectInterface{
 	long user_id; 
 	String username, icon_url, profile_card, profile_page, custom_url;
 	long[] staff_roles, trade_roles;
@@ -46,11 +46,11 @@ public class User implements JSONInterface{
 		this.login_history = login_history;
 	}
 
-	public long getUser_id() {
+	public long get_id() {
 		return user_id;
 	}
 
-	public void setUser_id(long user_id) {
+	public void set_id(long user_id) {
 		this.user_id = user_id;
 	}
 

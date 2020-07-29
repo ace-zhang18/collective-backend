@@ -4,10 +4,10 @@ import java.util.List;
 import objects.Artwork;
 import utilities.DAOBase;
 
-public class ArtworkDAO extends DAOBase{
-	private static ArtworkDAO dao_instance;
+public class ArtTagDAO extends DAOBase{
+	private static ArtTagDAO dao_instance;
 	
-	private ArtworkDAO() {
+	private ArtTagDAO() {
 		
 	}
 	
@@ -15,9 +15,9 @@ public class ArtworkDAO extends DAOBase{
 		return SqlSessionContainer.getSession().selectOne("Artwork.getByTitle", title);
 	}
 	
-	public static ArtworkDAO getInstance() {
+	public static ArtTagDAO getInstance() {
 		if (dao_instance == null) {
-			dao_instance = new ArtworkDAO();
+			dao_instance = new ArtTagDAO();
 		}
 		return dao_instance;
 	}

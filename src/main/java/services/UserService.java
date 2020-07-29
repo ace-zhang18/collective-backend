@@ -31,10 +31,10 @@ public class UserService {
 		int user_id = json.getInt("id");
 		
 		try {
-			User user = UserDAO.get(user_id);
+			User user = UserDAO.getInstance().get(user_id);
 			String new_text = json.getString("data");
 			user.setProfile_page(new_text);
-			UserDAO.update(user);
+			UserDAO.getInstance().update(user);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +55,7 @@ public class UserService {
 		User user;
 		String return_string = "";
 		try {
-			user = UserDAO.get(user_id);
+			user = UserDAO.getInstance().get(user_id);
 			return_string = user.getProfile_page();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
-import utilities.JSONInterface;
+import utilities.ObjectInterface;
 import utilities.JSONUtility;
 
-public class Post implements JSONInterface {
+public class Post implements ObjectInterface {
 	long post_id, thread, author;
 	Timestamp timestamp;
 	String title, text;
@@ -35,11 +35,11 @@ public class Post implements JSONInterface {
 		this.history = history;
 	}
 
-	public long getPost_id() {
+	public long get_id() {
 		return post_id;
 	}
 
-	public void setPost_id(long post_id) {
+	public void set_id(long post_id) {
 		this.post_id = post_id;
 	}
 

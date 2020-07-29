@@ -5,15 +5,13 @@
 <mapper namespace = "Artwork">
 
    <insert id = "insert" parameterType = "Artwork">
-      	INSERT INTO artworks (artwork_id, owners, permissions, metadata
-      				metadata, history, sale, tags, type, content, nsfw) 
-      	VALUES (	#{artwork_id}, #{owners}, #{permissions}, #{history},
-      				#{metadata}, #{sale}, #{tags}, #{type}, #{content}, #{nsfw});
+      	INSERT INTO artworks (artwork_id, owners, permissions, title, history, sale, tags, file_type) 
+      	VALUES (#{artwork_id}, #{owners}, #{permissions}, #{title}, #{history}, #{sale}, #{tags}, #{file_type});
 	</insert> 
 	
 	<update id = "update" parameterType = "Artwork">
     	UPDATE artworks SET owners = #{owners}, permissions = #{permissions}, history = #{history},
-    	sale = #{sale}, tags = #{tags}, type = #{type}, content = #{content}
+    	content = #{content}, sale = #{sale}, tags = #{tags}, file_type = #{file_type}
     	WHERE artwork_id = #{artwork_id};
 	</update>
     
@@ -23,6 +21,10 @@
     
     <select id="get" parameterType = "long" resultMap="artworkMap">
     	SELECT * FROM artworks where artwork_ID = #{artwork_id};
+	</select>
+	
+	<select id="getIDs" resultType="long">
+    	SELECT artwork_id FROM artworks ORDER BY artwork_id ASC;
 	</select>
     
     <select id="getByTitle" parameterType = "String" resultMap="artworkMap">

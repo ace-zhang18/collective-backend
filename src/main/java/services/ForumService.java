@@ -32,7 +32,7 @@ public class ForumService {
 		int forum_id = Integer.parseInt(id);
 		Forum f = null;
 		try {
-			f = ForumDAO.get(forum_id);
+			f = ForumDAO.getInstance().get(forum_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

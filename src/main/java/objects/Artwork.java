@@ -1,12 +1,14 @@
 package objects;
 
+import java.io.File;
+
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
-import utilities.JSONInterface;
+import utilities.ObjectInterface;
 import utilities.JSONUtility;
 
-public class Artwork implements JSONInterface{
+public class Artwork implements ObjectInterface{
 	long artwork_id;
 	PGobject owners, permissions, history, metadata;
 	PGobject[] sale;
@@ -34,16 +36,20 @@ public class Artwork implements JSONInterface{
 		this.tags = tags;
 	}
 
-	public long getArtwork_id() {
+	public PGobject getOwners() {
+		return owners;
+	}
+
+	public void setOwners(PGobject owners) {
+		this.owners = owners;
+	}
+
+	public long get_id() {
 		return artwork_id;
 	}
 
-	public void setArtwork_id(long artwork_id) {
+	public void set_id(long artwork_id) {
 		this.artwork_id = artwork_id;
-	}
-
-	public PGobject getOwner() {
-		return owners;
 	}
 	
 	public JSONObject getOwnerAsJSONObject() {
@@ -149,6 +155,6 @@ public class Artwork implements JSONInterface{
 	public void printClass() {
 		System.out.println(this.getClass().getName());
 	}
-	
+
 }
 

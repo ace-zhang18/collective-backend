@@ -4,28 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import objects.*;
+import utilities.DAOBase;
 
-public class StaffRoleDAO {
-	public static void insert(StaffRole role){
-		SqlSessionContainer.getSession().insert("StaffRole.insert", role);
-		System.out.println("Role successfully updated");
-	    SqlSessionContainer.getSession().commit();
-	    SqlSessionContainer.getSession().close();
+public class StaffRoleDAO extends DAOBase{
+	private static StaffRoleDAO dao_instance;
+	
+	private StaffRoleDAO() {
+		
 	}
 	
-	public static void update(StaffRole role){
-		SqlSessionContainer.getSession().update("StaffRole.update", role);
-		System.out.println("Role successfully updated");
-	    SqlSessionContainer.getSession().commit();
-	    SqlSessionContainer.getSession().close();
-	}
-	
-	public static StaffRole get(long role_id){
-		return SqlSessionContainer.getSession().selectOne("StaffRole.get", role_id);
-	}
-	
-	
-	public static List<StaffRole> getAll(){
-		return SqlSessionContainer.getSession().selectList("StaffRole.getAll");		
+	public static StaffRoleDAO getInstance() {
+		if (dao_instance == null) {
+			dao_instance = new StaffRoleDAO();
+		}
+		return dao_instance;
 	}
 }

@@ -3,10 +3,10 @@ package objects;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
-import utilities.JSONInterface;
+import utilities.ObjectInterface;
 import utilities.JSONUtility;
 
-public class Gallery implements JSONInterface {
+public class Gallery implements ObjectInterface {
 	long gallery_id, cover;
 	String title;
 	long[] collection, tags;
@@ -36,11 +36,11 @@ public class Gallery implements JSONInterface {
 		this.sale = sale;
 	}
 
-	public long getGallery_id() {
+	public long get_id() {
 		return gallery_id;
 	}
 
-	public void setGallery_id(long gallery_id) {
+	public void set_id(long gallery_id) {
 		this.gallery_id = gallery_id;
 	}
 

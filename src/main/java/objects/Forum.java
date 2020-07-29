@@ -3,10 +3,10 @@ package objects;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
-import utilities.JSONInterface;
+import utilities.ObjectInterface;
 import utilities.JSONUtility;
 
-public class Forum implements JSONInterface {
+public class Forum implements ObjectInterface {
 	long forum_id, parent;
 	PGobject permissions;
 	String name;
@@ -27,11 +27,11 @@ public class Forum implements JSONInterface {
 		this.permissions = permissions;
 	}
 
-	public long getForum_id() {
+	public long get_id() {
 		return forum_id;
 	}
 
-	public void setForum_id(long forum_id) {
+	public void set_id(long forum_id) {
 		this.forum_id = forum_id;
 	}
 

@@ -3,28 +3,23 @@ package dao;
 import java.util.List;
 
 import objects.*;
+import utilities.DAOBase;
 
-public class GalleryDAO {
-	public static void insert(Gallery gallery){
-		SqlSessionContainer.getSession().insert("Gallery.insert", gallery);
-		System.out.println("Gallery successfully updated");
-	    SqlSessionContainer.getSession().commit();
-	    SqlSessionContainer.getSession().close();
+public class GalleryDAO extends DAOBase{
+	private static GalleryDAO dao_instance;
+	
+	private GalleryDAO() {
+		
 	}
 	
-	public static void update(Gallery gallery){
-		SqlSessionContainer.getSession().update("Gallery.update", gallery);
-		System.out.println("Gallery successfully updated");
-	    SqlSessionContainer.getSession().commit();
-	    SqlSessionContainer.getSession().close();
+	public static List<Gallery> getSub(int forum_id){
+		return SqlSessionContainer.getSession().selectList("Gallery.getSub", forum_id);		
 	}
 	
-	public static Gallery get(long gallery_id){
-		return SqlSessionContainer.getSession().selectOne("Gallery.get", gallery_id);
-	}
-	
-	
-	public static List<Gallery> getAll(){
-		return SqlSessionContainer.getSession().selectList("Gallery.getAll");		
+	public static GalleryDAO getInstance() {
+		if (dao_instance == null) {
+			dao_instance = new GalleryDAO();
+		}
+		return dao_instance;
 	}
 }

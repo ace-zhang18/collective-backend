@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
-import utilities.JSONInterface;
+import utilities.ObjectInterface;
 import utilities.JSONUtility;
 
-public class Thread implements JSONInterface {
+public class Thread implements ObjectInterface {
 	long thread_id, forum, author;
 	PGobject permissions;
 	String title;
@@ -32,11 +32,11 @@ public class Thread implements JSONInterface {
 		this.timestamp = timestamp;
 	}
 
-	public long getThread_id() {
+	public long get_id() {
 		return thread_id;
 	}
 
-	public void setThread_id(long thread_id) {
+	public void set_id(long thread_id) {
 		this.thread_id = thread_id;
 	}
 

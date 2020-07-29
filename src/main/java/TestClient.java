@@ -6,12 +6,6 @@ import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyInvocation;
 import org.glassfish.jersey.client.JerseyWebTarget;
 
-import dao.GalleryDAO;
-import dao.UserDAO;
-import objects.ArtworkPreview;
-import objects.Gallery;
-import objects.User;
-
 public class TestClient {
 	public static void main(String[] args) {
 
@@ -24,16 +18,8 @@ public class TestClient {
 			int test = 0;
 			switch(test)
 			{
-			case 0: //get Staff Role
-				ArtworkPreview preview = new ArtworkPreview(1, 75);
-				break;				
-			case 1: //get All Staff Roles
-				Gallery g = GalleryDAO.get(1);
-				System.out.println(g.getCollection()[0]);
-				break;
-			case 2: //get All Staff Roles
-				User u = UserDAO.get(1);
-				System.out.println(u.getUsername());
+			case 0:				
+								
 				break;
 			case 10:			
 				client = JerseyClientBuilder.createClient();

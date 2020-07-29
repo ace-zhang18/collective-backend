@@ -3,32 +3,23 @@ package dao;
 import java.util.List;
 
 import objects.*;
+import utilities.DAOBase;
 
-public class ForumDAO {
-	public static void insert(Forum forum){
-		SqlSessionContainer.getSession().insert("Forum.insert", forum);
-		System.out.println("Forum successfully updated");
-	    SqlSessionContainer.getSession().commit();
-	    SqlSessionContainer.getSession().close();
-	}
+public class ForumDAO extends DAOBase{
+	private static ForumDAO dao_instance;
 	
-	public static void update(Forum forum){
-		SqlSessionContainer.getSession().update("Forum.update", forum);
-		System.out.println("Forum successfully updated");
-	    SqlSessionContainer.getSession().commit();
-	    SqlSessionContainer.getSession().close();
-	}
-	
-	public static Forum get(long forum_id){
-		return SqlSessionContainer.getSession().selectOne("Forum.get", forum_id);
-	}
-	
-	
-	public static List<Forum> getAll(){
-		return SqlSessionContainer.getSession().selectList("Forum.getAll");		
+	private ForumDAO() {
+		
 	}
 	
 	public static List<Forum> getSub(int forum_id){
 		return SqlSessionContainer.getSession().selectList("Forum.getSub", forum_id);		
+	}
+	
+	public static ForumDAO getInstance() {
+		if (dao_instance == null) {
+			dao_instance = new ForumDAO();
+		}
+		return dao_instance;
 	}
 }

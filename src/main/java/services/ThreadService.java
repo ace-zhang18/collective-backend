@@ -28,7 +28,7 @@ public class ThreadService {
 		int thread_id = Integer.parseInt(id);
 		Thread t = null;
 		try {
-			t = ThreadDAO.get(thread_id);
+			t = ThreadDAO.getInstance().get(thread_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,7 +46,7 @@ public class ThreadService {
 		int thread_id = Integer.parseInt(id);
 		ArrayList<Post> list = null;
 		try {
-			list = (ArrayList<Post>) PostDAO.getThreadPosts(thread_id);
+			list = (ArrayList<Post>) PostDAO.getInstance().getThreadPosts(thread_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

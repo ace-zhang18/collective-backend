@@ -10,7 +10,7 @@ import org.postgresql.geometric.PGline;
 import org.postgresql.util.PGobject;
 
 public class JSONUtility {
-	public static <T extends JSONInterface> String ToJSONArray(List<T> list) {
+	public static <T extends ObjectInterface> String ToJSONArray(List<T> list) {
 
 		String json = "[";
 		Iterator i = list.iterator();
