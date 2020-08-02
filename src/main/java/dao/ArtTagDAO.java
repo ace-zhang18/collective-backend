@@ -1,6 +1,8 @@
 package dao;
 
 import java.util.List;
+
+import objects.ArtTag;
 import objects.Artwork;
 import utilities.DAOBase;
 
@@ -11,8 +13,8 @@ public class ArtTagDAO extends DAOBase{
 		
 	}
 	
-	public Artwork getByTitle(String title){
-		return SqlSessionContainer.getSession().selectOne("Artwork.getByTitle", title);
+	public ArtTag getByName(String name){
+		return SqlSessionContainer.getSession().selectOne("ArtTag.getByName", name);
 	}
 	
 	public static ArtTagDAO getInstance() {

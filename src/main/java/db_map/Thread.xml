@@ -23,7 +23,7 @@
 	</select>
     	
 	<select id="getAll" resultMap="threadMap">
-    	SELECT * FROM threads
+    	SELECT * FROM threads ORDER BY thread_id ASC;
 	</select>
 	
 	<select id="getForumThreads" parameterType = "int" resultMap="threadMap">

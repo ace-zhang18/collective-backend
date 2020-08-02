@@ -21,7 +21,7 @@
 	</select>
 
 	<select id="getAll" resultMap="staffRoleMap">
-    	SELECT * FROM staff_roles
+    	SELECT * FROM staff_roles ORDER BY role_id ASC;
 	</select>
     	
 	<resultMap id = "staffRoleMap" type = "StaffRole">

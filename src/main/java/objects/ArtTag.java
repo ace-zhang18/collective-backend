@@ -3,7 +3,8 @@ package objects;
 import utilities.ObjectInterface;
 
 public class ArtTag implements ObjectInterface{
-	long art_tag_id, parent_id;
+	long tag_id;
+	long parent;
 	String name;
 
 	
@@ -12,31 +13,27 @@ public class ArtTag implements ObjectInterface{
 	}
 	
 
-	public ArtTag(long parent_id, String name) {
+	public ArtTag(long parent, String name) {
 		super();
-		this.parent_id = parent_id;
+		this.parent = parent;
 		this.name = name;
 	}
 
 
 
-	public ArtTag(long art_tag_id, long parent_id, String name) {
-		this(parent_id, name);
-		this.art_tag_id = art_tag_id;
+	public ArtTag(long art_tag_id, long parent, String name) {
+		this(parent, name);
+		this.tag_id = art_tag_id;
 	}
 	
 	
-	public long getParent_id() {
-		return parent_id;
+	public long getParent() {
+		return parent;
 	}
 
-
-
-	public void setParent_id(long parent_id) {
-		this.parent_id = parent_id;
+	public void setParent(long parent) {
+		this.parent = parent;
 	}
-
-
 
 	public String getName() {
 		return name;
@@ -59,14 +56,14 @@ public class ArtTag implements ObjectInterface{
 	@Override
 	public long get_id() {
 		// TODO Auto-generated method stub
-		return art_tag_id;
+		return tag_id;
 	}
 
 
 
 	@Override
 	public void set_id(long id) {
-		art_tag_id = id;
+		tag_id = id;
 	}
 
 }

@@ -28,7 +28,7 @@
 	</select>
 
 	<select id="getAll" resultMap="postMap">
-    	SELECT * FROM posts
+    	SELECT * FROM posts ORDER BY post_id ASC;
 	</select>
     	
 	<resultMap id = "postMap" type = "Post">

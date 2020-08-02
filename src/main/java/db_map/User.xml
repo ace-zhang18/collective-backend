@@ -25,7 +25,7 @@
 	</select>
     	
 	<select id="getAll" resultMap="userMap">
-    	SELECT * FROM users
+    	SELECT * FROM users ORDER BY user_id ASC;
 	</select>
     
 	<resultMap id = "userMap" type = "User">

@@ -24,7 +24,7 @@
 	</select>
     
 	<select id="getAll" resultMap="galleryMap">
-    	SELECT * FROM galleries;
+    	SELECT * FROM galleries ORDER BY gallery_id ASC;
 	</select>
     
 	<resultMap id = "galleryMap" type = "Gallery">

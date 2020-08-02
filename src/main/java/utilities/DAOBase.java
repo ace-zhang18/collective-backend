@@ -7,7 +7,7 @@ import org.glassfish.hk2.api.Self;
 import dao.SqlSessionContainer;
 
 public abstract class DAOBase {	
-	public <T extends ObjectInterface> void insert(T obj){
+	public <T extends ObjectInterface> void insertNew(T obj){
 		obj.set_id(generateID());
 		SqlSessionContainer.getSession().insert(getObjName() + ".insert", obj);
 		System.out.println(getObjName() + " successfully inserted");
@@ -15,16 +15,22 @@ public abstract class DAOBase {
 	    SqlSessionContainer.getSession().close();
 	}
 	
-	public <T extends ObjectInterface> void update(T obj){
-		obj.set_id(generateID());
+	public <T extends ObjectInterface> void insert(T obj){
 		SqlSessionContainer.getSession().insert(getObjName() + ".insert", obj);
+		System.out.println(getObjName() + " successfully inserted");
+	    SqlSessionContainer.getSession().commit();
+	    SqlSessionContainer.getSession().close();
+	}
+	
+	public <T extends ObjectInterface> void update(T obj){
+		SqlSessionContainer.getSession().insert(getObjName() + ".update", obj);
 		System.out.println(getObjName() + " successfully updated");
 	    SqlSessionContainer.getSession().commit();
 	    SqlSessionContainer.getSession().close();
 	}
 	
 	public <T extends ObjectInterface> void delete(long id) {
-		SqlSessionContainer.getSession().insert(getObjName() + ".delete", id);
+		SqlSessionContainer.getSession().delete(getObjName() + ".delete", id);
 		System.out.println(getObjName() + " successfully delete");
 		SqlSessionContainer.getSession().commit();
 		SqlSessionContainer.getSession().close();

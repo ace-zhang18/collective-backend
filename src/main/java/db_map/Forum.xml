@@ -23,7 +23,7 @@
 	</select>
       	
 	<select id="getAll" resultMap="forumMap">
-    	SELECT * FROM forums
+    	SELECT * FROM forums ORDER BY forum_id ASC;
 	</select>
 	
 	<select id="getSub" resultMap="forumMap">

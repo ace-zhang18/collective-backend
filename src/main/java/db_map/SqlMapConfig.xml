@@ -6,6 +6,7 @@
       <setting name="logImpl" value="STDOUT_LOGGING"/>
    </settings>
    <typeAliases>
+      <typeAlias alias = "ArtTag" type = "objects.ArtTag"/>  
       <typeAlias alias = "Artwork" type = "objects.Artwork"/>
       <typeAlias alias = "Forum" type = "objects.Forum"/>
       <typeAlias alias = "Gallery" type = "objects.Gallery"/>
@@ -38,6 +39,7 @@
 	
 	
    <mappers>
+      <mapper resource = "db_map/ArtTag.xml"/>
    	  <mapper resource = "db_map/Artwork.xml"/>
    	  <mapper resource = "db_map/Forum.xml"/>
    	  <mapper resource = "db_map/Gallery.xml"/>      
