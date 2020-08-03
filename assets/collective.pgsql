@@ -21,6 +21,19 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: art_tags; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.art_tags (
+    tag_id bigint NOT NULL,
+    name text NOT NULL,
+    parent bigint
+);
+
+
+ALTER TABLE public.art_tags OWNER TO postgres;
+
+--
 -- Name: artworks; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -29,10 +42,10 @@ CREATE TABLE public.artworks (
     owners json,
     permissions json,
     history json,
+    content text,
     sale json[],
     tags bigint[],
     file_type text,
-    metadata json,
     title text
 );
 
@@ -40,10 +53,10 @@ CREATE TABLE public.artworks (
 ALTER TABLE public.artworks OWNER TO postgres;
 
 --
--- Name: artworks_artwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: artwork_artwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.artworks_artwork_id_seq
+CREATE SEQUENCE public.artwork_artwork_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -51,13 +64,13 @@ CREATE SEQUENCE public.artworks_artwork_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.artworks_artwork_id_seq OWNER TO postgres;
+ALTER TABLE public.artwork_artwork_id_seq OWNER TO postgres;
 
 --
--- Name: artworks_artwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: artwork_artwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.artworks_artwork_id_seq OWNED BY public.artworks.artwork_id;
+ALTER SEQUENCE public.artwork_artwork_id_seq OWNED BY public.artworks.artwork_id;
 
 
 --
@@ -93,46 +106,6 @@ ALTER TABLE public.forums_forum_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.forums_forum_id_seq OWNED BY public.forums.forum_id;
-
-
---
--- Name: galleries; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.galleries (
-    gallery_id bigint NOT NULL,
-    collection bigint[],
-    permissions json,
-    cover bigint,
-    history json,
-    tags bigint[],
-    sale json[],
-    owners json,
-    title text
-);
-
-
-ALTER TABLE public.galleries OWNER TO postgres;
-
---
--- Name: galleries_gallery_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.galleries_gallery_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.galleries_gallery_id_seq OWNER TO postgres;
-
---
--- Name: galleries_gallery_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.galleries_gallery_id_seq OWNED BY public.galleries.gallery_id;
 
 
 --
@@ -328,7 +301,7 @@ ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 -- Name: artworks artwork_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.artworks ALTER COLUMN artwork_id SET DEFAULT nextval('public.artworks_artwork_id_seq'::regclass);
+ALTER TABLE ONLY public.artworks ALTER COLUMN artwork_id SET DEFAULT nextval('public.artwork_artwork_id_seq'::regclass);
 
 
 --
@@ -336,13 +309,6 @@ ALTER TABLE ONLY public.artworks ALTER COLUMN artwork_id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.forums ALTER COLUMN forum_id SET DEFAULT nextval('public.forums_forum_id_seq'::regclass);
-
-
---
--- Name: galleries gallery_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.galleries ALTER COLUMN gallery_id SET DEFAULT nextval('public.galleries_gallery_id_seq'::regclass);
 
 
 --
@@ -381,13 +347,102 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 
 
 --
+-- Data for Name: art_tags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.art_tags (tag_id, name, parent) FROM stdin;
+100	Digital Art	0
+101	Traditional Art	0
+102	Literature	0
+103	Voice Acting	0
+104	3D	0
+105	Animation	0
+106	Film	0
+107	Modeling	0
+108	Photography	0
+109	Artisan Crafts	0
+110	Coding and Development	0
+111	Resources and Stock	0
+112	Game Design	0
+156	Political	102
+157	Fantasy	102
+158	Horror	102
+113	Sci_fi	100
+114	Concept Art	100
+115	Illustration	100
+116	Political	100
+117	Pop Art	100
+118	Fantasy	100
+119	Horror	100
+120	Surreal	100
+121	Landscape	100
+122	Emoticons	100
+123	Anime	100
+124	Manga	100
+125	Comics	100
+126	Vectors	100
+127	Fashion	100
+128	Logos	100
+129	Industrial	100
+130	Architecture	100
+131	Wallpaper	100
+132	Character Design	100
+133	Fan Art	100
+134	Costumes	100
+135	Other	100
+136	Visual Novel	100
+159	Comics	102
+160	Fan fiction	102
+161	Poetry	102
+162	Scripts	102
+163	Novel	102
+164	Visual Novel	102
+165	Scripts	103
+166	Anime	103
+167	Cartoon	103
+168	Films	103
+169	Games	103
+170	Movies	103
+171	Sci-fi	104
+172	Concept Art	104
+173	Fantasy	104
+174	Horror	104
+175	Anime	104
+176	Fashion	104
+137	Sci-fi	101
+138	Concept Art	101
+139	Illustration	101
+140	Political	101
+141	Pop Art	101
+142	Fantasy	101
+143	Horror	101
+144	Surreal	101
+145	Landscape	101
+146	Anime	101
+147	Manga	101
+148	Comics	101
+149	Fashion	101
+150	Logos	101
+151	Architecture	101
+152	Tattoo	101
+153	Character Design	101
+154	Costumes	101
+155	Fan Art	101
+177	Architecture	104
+178	Character Design	104
+179	Fan Art	104
+\.
+
+
+--
 -- Data for Name: artworks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.artworks (artwork_id, owners, permissions, history, sale, tags, file_type, metadata, title) FROM stdin;
-1	{"users":[1]}	\N	\N	\N	\N	jpg	\N	Staff of Flowing Water
-3	{"users":[1]}	\N	\N	\N	\N	jpg	\N	Apple
-4	{"users":[1]}	\N	\N	\N	\N	jpg	\N	Orange
+COPY public.artworks (artwork_id, owners, permissions, history, content, sale, tags, file_type, title) FROM stdin;
+100	{"users":[1]}	\N	\N	\N	\N	\N	jpg	Puppeteer
+101	{"users":[1]}	\N	\N	\N	\N	\N	jpg	Crow
+102	{"users":[1]}	\N	\N	\N	\N	\N	jpg	Shrouds
+103	{"users":[1]}	\N	\N	\N	\N	\N	jpg	Couple
 \.
 
 
@@ -403,22 +458,10 @@ COPY public.forums (forum_id, parent, permissions, name) FROM stdin;
 
 
 --
--- Data for Name: galleries; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.galleries (gallery_id, collection, permissions, cover, history, tags, sale, owners, title) FROM stdin;
-1	{3,4}	\N	\N	\N	\N	\N	{"users":[1]}	Fruits
-\.
-
-
---
 -- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.posts (post_id, thread, author, history, "timestamp", title, text, rating) FROM stdin;
-1	1	1	\N	2020-05-14 09:30:20-04	Eminem	Rap God	\N
-2	1	1	\N	2020-05-16 09:30:20-04	Dr. Dre	The Doctor	\N
-3	1	1	\N	2020-05-13 09:30:20-04	Snoop Dogg	High AF	\N
 \.
 
 
@@ -427,8 +470,6 @@ COPY public.posts (post_id, thread, author, history, "timestamp", title, text, r
 --
 
 COPY public.staff_roles (role_id, name, permissions) FROM stdin;
-1	admin	\N
-2	moderator	\N
 \.
 
 
@@ -437,9 +478,6 @@ COPY public.staff_roles (role_id, name, permissions) FROM stdin;
 --
 
 COPY public.threads (thread_id, forum, permissions, title, author, "timestamp") FROM stdin;
-1	0	\N	This Topic	1	2020-05-10 09:30:20-04
-2	0	\N	That Topic	1	2020-04-10 09:30:20-04
-3	0	\N	The Other Topic	1	2020-03-10 09:30:20-04
 \.
 
 
@@ -456,15 +494,15 @@ COPY public.trade_roles (role_id, parent_role, name, description) FROM stdin;
 --
 
 COPY public.users (user_id, username, staff_roles, trade_roles, icon_url, settings, payment_info, profile_card, profile_page, join_date, login_history, social_media, custom_url) FROM stdin;
-1	terabix	[0:1]={1,2}	\N	\N	\N	\N	\N	Hi there <b> from Virginia</b>	\N	\N	\N	\N
+1	terabix	\N	\N	\N	\N	\N	\N	<h1><u>Jesus Christ</u></h1>	\N	\N	\N	\N
 \.
 
 
 --
--- Name: artworks_artwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: artwork_artwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.artworks_artwork_id_seq', 4, true);
+SELECT pg_catalog.setval('public.artwork_artwork_id_seq', 1, false);
 
 
 --
@@ -475,24 +513,17 @@ SELECT pg_catalog.setval('public.forums_forum_id_seq', 2, true);
 
 
 --
--- Name: galleries_gallery_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.galleries_gallery_id_seq', 1, true);
-
-
---
 -- Name: posts_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.posts_post_id_seq', 3, true);
+SELECT pg_catalog.setval('public.posts_post_id_seq', 1, false);
 
 
 --
 -- Name: staff_roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.staff_roles_role_id_seq', 2, true);
+SELECT pg_catalog.setval('public.staff_roles_role_id_seq', 1, false);
 
 
 --
@@ -517,11 +548,19 @@ SELECT pg_catalog.setval('public.users_user_id_seq', 1, true);
 
 
 --
--- Name: artworks artworks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: art_tags art_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.art_tags
+    ADD CONSTRAINT art_tags_pkey PRIMARY KEY (tag_id);
+
+
+--
+-- Name: artworks artwork_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.artworks
-    ADD CONSTRAINT artworks_pkey PRIMARY KEY (artwork_id);
+    ADD CONSTRAINT artwork_pkey PRIMARY KEY (artwork_id);
 
 
 --
@@ -530,14 +569,6 @@ ALTER TABLE ONLY public.artworks
 
 ALTER TABLE ONLY public.forums
     ADD CONSTRAINT forums_pkey PRIMARY KEY (forum_id);
-
-
---
--- Name: galleries galleries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.galleries
-    ADD CONSTRAINT galleries_pkey PRIMARY KEY (gallery_id);
 
 
 --
@@ -586,14 +617,6 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.forums
     ADD CONSTRAINT forums_parent_fkey FOREIGN KEY (parent) REFERENCES public.forums(forum_id);
-
-
---
--- Name: galleries galleries_cover_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.galleries
-    ADD CONSTRAINT galleries_cover_fkey FOREIGN KEY (cover) REFERENCES public.artworks(artwork_id);
 
 
 --
