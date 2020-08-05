@@ -7,12 +7,13 @@ import org.glassfish.hk2.api.Self;
 import dao.SqlSessionContainer;
 
 public abstract class DAOBase {	
-	public <T extends ObjectInterface> void insertNew(T obj){
-		obj.set_id(generateID());
+	public <T extends ObjectInterface> long insertNew(T obj){
+		obj.setId(generateID());
 		SqlSessionContainer.getSession().insert(getObjName() + ".insert", obj);
 		System.out.println(getObjName() + " successfully inserted");
 	    SqlSessionContainer.getSession().commit();
 	    SqlSessionContainer.getSession().close();
+	    return obj.getId();
 	}
 	
 	public <T extends ObjectInterface> void insert(T obj){
@@ -55,7 +56,7 @@ public abstract class DAOBase {
 		List<T> list = getAll();
 		long[] ids = new long[list.size()];
 		for(int i = 0; i < list.size(); i++) {
-			ids[i] = list.get(i).get_id();
+			ids[i] = list.get(i).getId();
 		}
 		long counter = 100;
 		for (long i: ids) {

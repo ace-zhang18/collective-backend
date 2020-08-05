@@ -36,11 +36,11 @@ public class Gallery implements ObjectInterface {
 		this.sale = sale;
 	}
 
-	public long get_id() {
+	public long getId() {
 		return gallery_id;
 	}
 
-	public void set_id(long gallery_id) {
+	public void setId(long gallery_id) {
 		this.gallery_id = gallery_id;
 	}
 

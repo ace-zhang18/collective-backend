@@ -27,11 +27,11 @@ public class Forum implements ObjectInterface {
 		this.permissions = permissions;
 	}
 
-	public long get_id() {
+	public long getId() {
 		return forum_id;
 	}
 
-	public void set_id(long forum_id) {
+	public void setId(long forum_id) {
 		this.forum_id = forum_id;
 	}
 

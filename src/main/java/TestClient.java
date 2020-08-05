@@ -22,42 +22,8 @@ public class TestClient {
 			switch(test)
 			{
 			case 0:
-				ArtTag sci_fi = new ArtTag();
-				sci_fi.setName("Sci-fi");
-				sci_fi.setParent(104);
-				ArtTagDAO.getInstance().insertNew(sci_fi);
-				ArtTag concept_art = new ArtTag();
-				concept_art.setName("Concept Art");
-				concept_art.setParent(104);
-				ArtTagDAO.getInstance().insertNew(concept_art);
-				ArtTag fantasy = new ArtTag();
-				fantasy.setName("Fantasy");
-				fantasy.setParent(104);
-				ArtTagDAO.getInstance().insertNew(fantasy);
-				ArtTag horror = new ArtTag();
-				horror.setName("Horror");
-				horror.setParent(104);
-				ArtTagDAO.getInstance().insertNew(horror);
-				ArtTag anime = new ArtTag();
-				anime.setName("Anime");
-				anime.setParent(104);
-				ArtTagDAO.getInstance().insertNew(anime);
-				ArtTag fashion = new ArtTag();
-				fashion.setName("Fashion");
-				fashion.setParent(104);
-				ArtTagDAO.getInstance().insertNew(fashion);
-				ArtTag architecture = new ArtTag();
-				architecture.setName("Architecture");
-				architecture.setParent(104);
-				ArtTagDAO.getInstance().insertNew(architecture);
-				ArtTag character_design = new ArtTag();
-				character_design.setName("Character Design");
-				character_design.setParent(104);
-				ArtTagDAO.getInstance().insertNew(character_design);
-				ArtTag fan_art = new ArtTag();
-				fan_art.setName("Fan Art");
-				fan_art.setParent(104);
-				ArtTagDAO.getInstance().insertNew(fan_art);
+				ArtTagDAO.getInstance().writeToDBFromFile();
+				
 				break;
 			case 10:			
 				client = JerseyClientBuilder.createClient();

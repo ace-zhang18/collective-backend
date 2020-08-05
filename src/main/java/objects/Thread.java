@@ -32,11 +32,11 @@ public class Thread implements ObjectInterface {
 		this.timestamp = timestamp;
 	}
 
-	public long get_id() {
+	public long getId() {
 		return thread_id;
 	}
 
-	public void set_id(long thread_id) {
+	public void setId(long thread_id) {
 		this.thread_id = thread_id;
 	}
 

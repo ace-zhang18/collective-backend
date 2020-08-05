@@ -5,25 +5,25 @@
 <mapper namespace = "ArtTag">
 
    <insert id = "insert" parameterType = "ArtTag">
-      	INSERT INTO art_tags (tag_id, parent, name) 
-      	VALUES (#{tag_id}, #{parent}, #{name});
+      	INSERT INTO art_tags (id, parent, name) 
+      	VALUES (#{id}, #{parent}, #{name});
 	</insert> 
 	
 	<update id = "update" parameterType = "ArtTag">
     	UPDATE art_tags SET parent = #{parent}, name = #{name}
-    	WHERE tag_id = #{tag_id};
+    	WHERE id = #{id};
 	</update>
     
     <delete id = "delete" parameterType = "long">
-    	DELETE FROM art_tags WHERE artTag_id = #{artTag_id}
+    	DELETE FROM art_tags WHERE id = #{id}
     </delete>
     
     <select id="get" parameterType = "long" resultMap="artTagMap">
-    	SELECT * FROM art_tags where artTag_ID = #{artTag_id};
+    	SELECT * FROM art_tags where ID = #{id};
 	</select>
     
 	<select id="getAll" resultMap="artTagMap">
-    	SELECT * FROM art_tags ORDER BY tag_id ASC
+    	SELECT * FROM art_tags ORDER BY id ASC
 	</select>
 
     <select id="getByName" parameterType = "String" resultMap="artTagMap">
@@ -31,7 +31,7 @@
 	</select>
     
 	<resultMap id = "artTagMap" type = "ArtTag">
-		<result property = "tag_id" column = "TAG_ID"/>
+		<result property = "id" column = "ID"/>
 		<result property = "name" column = "NAME"/>
 		<result property = "parent" column = "PARENT"/>
 	</resultMap>

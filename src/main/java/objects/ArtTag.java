@@ -3,7 +3,7 @@ package objects;
 import utilities.ObjectInterface;
 
 public class ArtTag implements ObjectInterface{
-	long tag_id;
+	long id;
 	long parent;
 	String name;
 
@@ -21,9 +21,9 @@ public class ArtTag implements ObjectInterface{
 
 
 
-	public ArtTag(long art_tag_id, long parent, String name) {
+	public ArtTag(long id, long parent, String name) {
 		this(parent, name);
-		this.tag_id = art_tag_id;
+		this.id = id;
 	}
 	
 	
@@ -54,16 +54,16 @@ public class ArtTag implements ObjectInterface{
 
 
 	@Override
-	public long get_id() {
+	public long getId() {
 		// TODO Auto-generated method stub
-		return tag_id;
+		return id;
 	}
 
 
 
 	@Override
-	public void set_id(long id) {
-		tag_id = id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

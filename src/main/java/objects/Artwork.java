@@ -44,11 +44,11 @@ public class Artwork implements ObjectInterface{
 		this.owners = owners;
 	}
 
-	public long get_id() {
+	public long getId() {
 		return artwork_id;
 	}
 
-	public void set_id(long artwork_id) {
+	public void setId(long artwork_id) {
 		this.artwork_id = artwork_id;
 	}
 	

@@ -46,11 +46,11 @@ public class User implements ObjectInterface{
 		this.login_history = login_history;
 	}
 
-	public long get_id() {
+	public long getId() {
 		return user_id;
 	}
 
-	public void set_id(long user_id) {
+	public void setId(long user_id) {
 		this.user_id = user_id;
 	}
 

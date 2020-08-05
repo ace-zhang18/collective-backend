@@ -35,11 +35,11 @@ public class Post implements ObjectInterface {
 		this.history = history;
 	}
 
-	public long get_id() {
+	public long getId() {
 		return post_id;
 	}
 
-	public void set_id(long post_id) {
+	public void setId(long post_id) {
 		this.post_id = post_id;
 	}
 
