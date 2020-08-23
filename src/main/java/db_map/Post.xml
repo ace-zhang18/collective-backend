@@ -5,8 +5,8 @@
 <mapper namespace = "Post">
 
    <insert id = "insert" parameterType = "Post" useGeneratedKeys="true" keyProperty="role_id" keyColumn="role_id">
-      	INSERT INTO posts (POST ID, THREAD, AUTHOR, TIMESTAMP, TITLE, TEXT, RATING, HISTORY) 
-      	VALUES (#{post id}, #{thread}, #{author}, #{timestamp}, #{title}, #{text}, #{rating}, #{history});
+      	INSERT INTO posts (ID, THREAD, AUTHOR, TIMESTAMP, TITLE, TEXT, RATING, HISTORY) 
+      	VALUES (#{id}, #{thread}, #{author}, #{timestamp}, #{title}, #{text}, #{rating}, #{history});
 	</insert> 
 	
 	<update id = "update" parameterType = "Post">
@@ -16,30 +16,38 @@
 	</update>
 	
     <delete id = "delete" parameterType = "long">
-    	DELETE FROM posts WHERE post_id = #{post_id}
+    	DELETE FROM posts WHERE id = #{id}
     </delete>
     
+	<select id="getThreadPosts" parameterType = "int" resultMap="postMap">
+    	SELECT * FROM posts WHERE thread = #{thread} ORDER BY timestamp;
+	</select>
+    
     <select id="get" parameterType = "long" resultMap="postMap">
-    	SELECT * FROM posts where POST_ID = #{POST_ID};
+    	SELECT * FROM posts where id = #{id};
 	</select>
 
-    <select id="getThreadPosts" parameterType = "int" resultMap="postMap">
-    	SELECT * FROM posts WHERE thread = #{thread} ORDER BY timestamp;
+	<select id="getSet" parameterType = "long" resultMap="postMap">
+    	SELECT * FROM posts WHERE id IN 
+    	<foreach item="item" index="index" collection="array"
+             open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
 	</select>
 
 	<select id="getAll" resultMap="postMap">
-    	SELECT * FROM posts ORDER BY post_id ASC;
+    	SELECT * FROM posts ORDER BY id ASC;
 	</select>
     	
 	<resultMap id = "postMap" type = "Post">
-		<result property = "post_id" column = "POST_ID"/>
+		<result property = "id" column = "ID"/>
 		<result property = "thread" column = "THREAD"/>
 		<result property = "author" column = "AUTHOR"/>
 		<result property = "timestamp" column = "TIMESTAMP"/>
 		<result property = "title" column = "TITLE"/>
 		<result property = "text" column = "TEXT"/>
-		<result property = "rating" column = "RATING" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
-		<result property = "history" column = "HISTORY" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>		
+		<result property = "rating" column = "RATING" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
+		<result property = "history" column = "HISTORY" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>		
 	</resultMap>
 	
 </mapper>

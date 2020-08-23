@@ -1,6 +1,7 @@
 package services;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,23 +34,32 @@ public class GalleryService {
 			e.printStackTrace();
 		}
 
-		return Response.status(200).entity(a.toJSON().toString()).build();
+		return Response.status(200).entity(a.toJSONObject().toString()).build();
 	}
 	
-	@GET
-	@Path("/thumbnails/{id}")
-	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	@POST
+	@Path("/search/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin
-	public Response getThumbnails(@PathParam("id") String id) {
-		long art_id = Long.parseLong(id);
-		
-		String path = ImageUtility.getImagePath(art_id);
-		
+	public Response searchGallery(String query, @PathParam("id") String id) {
+		System.out.println(query + ", " + id);
+		long gallery_id = Long.parseLong(id);
+		Gallery g = null;
 		try {
-			return Response.status(200).entity(WebUtility.getFileStream(path)).build();
+			g = GalleryDAO.getInstance().get(gallery_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return Response.status(500).entity("Failure").build();
+			e.printStackTrace();
 		}
+		String[] criteria = query.split(" ");
+		long[] art = g.getCollection();
+		for(int i = 0; i < art.length; i++) {
+			for(String s: criteria) {
+				long tag = Long.parseLong(s);
+				
+			}
+		}
+
+		return Response.status(200).entity(query).build();
 	}
 }

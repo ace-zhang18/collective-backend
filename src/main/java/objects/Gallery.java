@@ -1,47 +1,30 @@
 package objects;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.postgresql.util.PGobject;
 
-import utilities.ObjectInterface;
+import interfaces.History;
+import interfaces.ObjectInterface;
+import interfaces.Rateable;
 import utilities.JSONUtility;
 
-public class Gallery implements ObjectInterface {
-	long gallery_id, cover;
+public class Gallery implements ObjectInterface, Rateable, History {
+	long id, cover;
 	String title;
 	long[] collection, tags;
-	PGobject permissions, history, owners;
-	PGobject[] sale;
+	JSONObject permissions, history, owners, rating;
+	JSONArray sale;
 
 	public Gallery() {
 		super();
 	}
 	
-	public Gallery(	long gallery_id, long cover, String title, long[] collection, long[] tags,
-			PGobject permissions, PGobject history, PGobject owners, PGobject[] sale) {
-		this(cover, title, collection, tags, permissions, history, owners, sale);
-		this.gallery_id = gallery_id;
-	}
-
-	public Gallery(	long cover, String title, long[] collection, long[] tags,
-			PGobject permissions, PGobject history, PGobject owners, PGobject[] sale) {
-		super();
-		this.cover = cover;
-		this.title = title;
-		this.collection = collection;
-		this.tags = tags;
-		this.permissions = permissions;
-		this.history = history;
-		this.owners = owners;
-		this.sale = sale;
-	}
-
 	public long getId() {
-		return gallery_id;
+		return id;
 	}
 
-	public void setId(long gallery_id) {
-		this.gallery_id = gallery_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getCover() {
@@ -76,54 +59,44 @@ public class Gallery implements ObjectInterface {
 		this.tags = tags;
 	}
 
-	public PGobject getPermissions() {
+	public JSONObject getPermissions() {
 		return permissions;
 	}
 	
-	public JSONObject getPermissionsAsJSONObject() {
-		return JSONUtility.PGtoJSON(permissions);
-	}
-
-	public void setPermissions(PGobject permissions) {
+	public void setPermissions(JSONObject permissions) {
 		this.permissions = permissions;
 	}
 
-	public PGobject getHistory() {
+	public JSONObject getHistory() {
 		return history;
 	}
-	
-	public JSONObject getHistoryAsJSONObject() {
-		return JSONUtility.PGtoJSON(history);
-	}
 
-	public void setHistory(PGobject history) {
+	public void setHistory(JSONObject history) {
 		this.history = history;
 	}
 
-	public PGobject getOwners() {
+	public JSONObject getOwners() {
 		return owners;
 	}
-	
-	public JSONObject getOwnersAsJSONObject() {
-		return JSONUtility.PGtoJSON(owners);
-	}
 
-	public void setOwners(PGobject owners) {
+	public void setOwners(JSONObject owners) {
 		this.owners = owners;
 	}
 
-	public PGobject[] getSale() {
+	public JSONArray getSale() {
 		return sale;
 	}
 	
-	public JSONObject[] getSaleAsJSONObject() {
-		return JSONUtility.PGtoJSON(sale);
-	}
-
-	public void setSale(PGobject[] sale) {
+	public void setSale(JSONArray sale) {
 		this.sale = sale;
 	}
 
-	
+	public JSONObject getRating() {
+		return rating;
+	}
+
+	public void setRating(JSONObject rating) {
+		this.rating = rating;		
+	}	
 }
 

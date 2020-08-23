@@ -17,9 +17,9 @@
    </typeAliases>
 
    <typeHandlers>
+      <typeHandler handler="handlers.JSONObjectTypeHandler"/>
+      <typeHandler handler="handlers.JSONArrayTypeHandler"/>
       <typeHandler handler="handlers.LongArrayTypeHandler"/>
-      <typeHandler handler="handlers.PGObjectArrayTypeHandler"/>      
-      <typeHandler handler="handlers.PGObjectTypeHandler"/>
    </typeHandlers>
 
    <environments default = "development">
@@ -36,8 +36,6 @@
       </environment>
    </environments>
 	
-	
-	
    <mappers>
       <mapper resource = "db_map/ArtTag.xml"/>
    	  <mapper resource = "db_map/Artwork.xml"/>
@@ -48,5 +46,4 @@
       <mapper resource = "db_map/Thread.xml"/> 
    	  <mapper resource = "db_map/User.xml"/>
    </mappers>
-   
 </configuration>

@@ -34,7 +34,7 @@ public class ThreadService {
 			e.printStackTrace();
 		}
 
-		return Response.status(200).entity(t.toJSON().toString()).build();
+		return Response.status(200).entity(t.toJSONObject().toString()).build();
 	}
 	
 	

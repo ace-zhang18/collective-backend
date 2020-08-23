@@ -1,38 +1,25 @@
 package objects;
 
 import org.json.JSONObject;
-import org.postgresql.util.PGobject;
 
-import utilities.ObjectInterface;
+import interfaces.ObjectInterface;
 import utilities.JSONUtility;
 
 public class Forum implements ObjectInterface {
-	long forum_id, parent;
-	PGobject permissions;
+	long id, parent;
+	JSONObject permissions;
 	String name;
 	
 	public Forum() {
 		super();
 	}
 	
-	public Forum(long forum_id, String name, long parent, PGobject permissions) {
-		this(name, parent, permissions);
-		this.forum_id = forum_id;
-	}
-
-	public Forum(String name, long parent, PGobject permissions) {
-		super();
-		this.name = name;
-		this.parent = parent;
-		this.permissions = permissions;
-	}
-
 	public long getId() {
-		return forum_id;
+		return id;
 	}
 
-	public void setId(long forum_id) {
-		this.forum_id = forum_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -51,25 +38,11 @@ public class Forum implements ObjectInterface {
 		this.parent = parent;
 	}
 
-	public PGobject getPermissions() {
+	public JSONObject getPermissions() {
 		return permissions;
 	}
-
-	public JSONObject getPermissionsAsJSONObject() {
-		return JSONUtility.PGtoJSON(permissions);
-	}
-	
-	public void setPermissions(PGobject permissions) {
-		this.permissions = permissions;
-	}	
 	
 	public void setPermissions(JSONObject permissions) {
-		this.permissions = JSONUtility.JSONtoPG(permissions);
-	}
-
-	@Override
-	public String toString() {
-		return "Forum [forum_id=" + forum_id + ", name=" + name + ", parent=" + parent + ", permissions=" + permissions 
-				+ "]";
-	}
+		this.permissions = permissions;
+	}	
 }

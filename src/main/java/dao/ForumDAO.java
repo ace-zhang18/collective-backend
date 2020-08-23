@@ -2,8 +2,8 @@ package dao;
 
 import java.util.List;
 
+import interfaces.DAOBase;
 import objects.*;
-import utilities.DAOBase;
 
 public class ForumDAO extends DAOBase{
 	private static ForumDAO dao_instance;
@@ -12,7 +12,7 @@ public class ForumDAO extends DAOBase{
 		
 	}
 	
-	public static List<Forum> getSub(int forum_id){
+	public List<Forum> getSub(int forum_id){
 		return SqlSessionContainer.getSession().selectList("Forum.getSub", forum_id);		
 	}
 	

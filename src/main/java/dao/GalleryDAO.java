@@ -2,8 +2,8 @@ package dao;
 
 import java.util.List;
 
+import interfaces.DAOBase;
 import objects.*;
-import utilities.DAOBase;
 
 public class GalleryDAO extends DAOBase{
 	private static GalleryDAO dao_instance;
@@ -12,7 +12,7 @@ public class GalleryDAO extends DAOBase{
 		
 	}
 	
-	public static List<Gallery> getSub(int forum_id){
+	public List<Gallery> getSub(int forum_id){
 		return SqlSessionContainer.getSession().selectList("Gallery.getSub", forum_id);		
 	}
 	

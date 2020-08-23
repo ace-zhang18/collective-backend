@@ -2,11 +2,12 @@ package dao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
+import interfaces.DAOBase;
 import objects.ArtTag;
-import utilities.DAOBase;
 
 public class ArtTagDAO extends DAOBase{
 	private static ArtTagDAO dao_instance;
@@ -17,6 +18,12 @@ public class ArtTagDAO extends DAOBase{
 	
 	public ArtTag getByName(String name){
 		return SqlSessionContainer.getSession().selectOne("ArtTag.getByName", name);
+	}
+	
+	public List<ArtTag> getByNameMulti(String names) {
+		String[] tok = names.split(" ");
+		
+		return SqlSessionContainer.getSession().selectList("ArtTag.getByNameMulti", tok);
 	}
 	
 	public void writeToDBFromFile() {

@@ -3,8 +3,8 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.DAOBase;
 import objects.*;
-import utilities.DAOBase;
 
 public class UserDAO extends DAOBase{
 	private static UserDAO dao_instance = null;

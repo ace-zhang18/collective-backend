@@ -2,9 +2,9 @@ package dao;
 
 import java.util.List;
 
+import interfaces.DAOBase;
 import objects.Artwork;
 import objects.Thread;
-import utilities.DAOBase;
 
 public class ThreadDAO extends DAOBase {
 	private static ThreadDAO dao_instance;

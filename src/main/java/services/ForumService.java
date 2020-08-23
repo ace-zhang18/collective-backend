@@ -38,7 +38,7 @@ public class ForumService {
 			e.printStackTrace();
 		}
 
-		return Response.status(200).entity(f.toJSON().toString()).build();
+		return Response.status(200).entity(f.toJSONObject().toString()).build();
 	}
 	
 	@GET
@@ -49,7 +49,7 @@ public class ForumService {
 		int forum_id = Integer.parseInt(id);
 		ArrayList<Forum> list = null;
 		try {
-			list = (ArrayList<Forum>) ForumDAO.getSub(forum_id);
+			list = (ArrayList<Forum>) ForumDAO.getInstance().getSub(forum_id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

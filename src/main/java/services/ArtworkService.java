@@ -41,8 +41,8 @@ public class ArtworkService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return Response.status(200).entity(a.toJSON().toString()).build();
+		
+		return Response.status(200).entity(a.toJSONObject().toString()).build();
 	}
 	
 	@GET

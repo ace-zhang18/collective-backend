@@ -3,41 +3,27 @@ package objects;
 import java.sql.Timestamp;
 
 import org.json.JSONObject;
-import org.postgresql.util.PGobject;
 
-import utilities.ObjectInterface;
+import interfaces.ObjectInterface;
+import interfaces.Rateable;
 import utilities.JSONUtility;
 
-public class Thread implements ObjectInterface {
-	long thread_id, forum, author;
-	PGobject permissions;
+public class Thread implements ObjectInterface, Rateable {
+	long id, forum, author;
+	JSONObject permissions, rating;
 	String title;
 	Timestamp timestamp;
 	
 	public Thread() {
 		super();
 	}
-	
-	public Thread(long thread_id, long forum, long author, PGobject permissions, String title, Timestamp timestamp) {
-		this(forum, author, permissions, title, timestamp);
-		this.thread_id = thread_id;
-	}
-	
-	public Thread(long forum, long author, PGobject permissions, String title, Timestamp timestamp) {
-		super();
-		this.forum = forum;
-		this.author = author;
-		this.permissions = permissions;
-		this.title = title;
-		this.timestamp = timestamp;
-	}
 
 	public long getId() {
-		return thread_id;
+		return id;
 	}
 
-	public void setId(long thread_id) {
-		this.thread_id = thread_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getForum() {
@@ -56,20 +42,12 @@ public class Thread implements ObjectInterface {
 		this.author = author;
 	}
 
-	public PGobject getPermissions() {
+	public JSONObject getPermissions() {
 		return permissions;
 	}
-	
-	public JSONObject getPermissionsAsJSONObject() {
-		return JSONUtility.PGtoJSON(permissions);
-	}
-
-	public void setPermissions(PGobject permissions) {
-		this.permissions = permissions;
-	}
-	
+		
 	public void setPermissions(JSONObject permissions) {
-		this.permissions = JSONUtility.JSONtoPG(permissions);
+		this.permissions = permissions;
 	}
 	
 	public String getTitle() {
@@ -87,5 +65,14 @@ public class Thread implements ObjectInterface {
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-	
+
+	@Override
+	public JSONObject getRating() {
+		return rating;
+	}
+
+	@Override
+	public void setRating(JSONObject rating) {
+		this.rating = rating;
+	}
 }

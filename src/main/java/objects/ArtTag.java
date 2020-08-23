@@ -1,6 +1,6 @@
 package objects;
 
-import utilities.ObjectInterface;
+import interfaces.ObjectInterface;
 
 public class ArtTag implements ObjectInterface{
 	long id;
@@ -10,22 +10,7 @@ public class ArtTag implements ObjectInterface{
 	
 	public ArtTag() {
 		super();
-	}
-	
-
-	public ArtTag(long parent, String name) {
-		super();
-		this.parent = parent;
-		this.name = name;
-	}
-
-
-
-	public ArtTag(long id, long parent, String name) {
-		this(parent, name);
-		this.id = id;
-	}
-	
+	}	
 	
 	public long getParent() {
 		return parent;

@@ -4,30 +4,38 @@
 	
 <mapper namespace = "StaffRole">
 
-   <insert id = "insert" parameterType = "StaffRole" useGeneratedKeys="true" keyProperty="role_id" keyColumn="role_id">
-      	INSERT INTO staff_roles (NAME, PERMISSIONS) VALUES (#{name}, #{permissions});
+   <insert id = "insert" parameterType = "StaffRole">
+      	INSERT INTO staff_roles (ID, NAME, PERMISSIONS) VALUES (#{id}, #{name}, #{permissions});
 	</insert> 
 	
 	<update id = "update" parameterType = "StaffRole">
-    	UPDATE staff_roles SET NAME = #{name}, PERMISSIONS = #{permissions} WHERE ROLE_ID = #{role_id};
+    	UPDATE staff_roles SET NAME = #{name}, PERMISSIONS = #{permissions} WHERE id = #{id};
 	</update>
     
 	<delete id = "delete" parameterType = "long">
-    	DELETE FROM staff_roles WHERE role_id = #{role_id}
+    	DELETE FROM staff_roles WHERE id = #{id}
     </delete>
     
     <select id="get" parameterType = "long" resultMap="staffRoleMap">
-    	SELECT * FROM staff_roles WHERE role_id = #{role_id};
+    	SELECT * FROM staff_roles WHERE id = #{id};
+	</select>
+
+	<select id="getSet" parameterType = "long" resultMap="staffRoleMap">
+    	SELECT * FROM staff_roles WHERE id IN 
+    	<foreach item="item" index="index" collection="array"
+             open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
 	</select>
 
 	<select id="getAll" resultMap="staffRoleMap">
-    	SELECT * FROM staff_roles ORDER BY role_id ASC;
+    	SELECT * FROM staff_roles ORDER BY id ASC;
 	</select>
     	
 	<resultMap id = "staffRoleMap" type = "StaffRole">
-	   	<result property = "role_id" column = "ROLE_ID"/>
+	   	<result property = "id" column = "ID"/>
    		<result property = "name" column = "NAME"/>
-   		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+   		<result property = "permissions" column = "PERMISSIONS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
 	</resultMap>
 	
 </mapper>

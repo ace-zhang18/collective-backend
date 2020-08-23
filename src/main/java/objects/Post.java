@@ -3,44 +3,28 @@ package objects;
 import java.sql.Timestamp;
 
 import org.json.JSONObject;
-import org.postgresql.util.PGobject;
 
-import utilities.ObjectInterface;
+import interfaces.History;
+import interfaces.ObjectInterface;
+import interfaces.Rateable;
 import utilities.JSONUtility;
 
-public class Post implements ObjectInterface {
-	long post_id, thread, author;
+public class Post implements ObjectInterface, Rateable, History {
+	long id, thread, author;
 	Timestamp timestamp;
 	String title, text;
-	PGobject rating, history;
+	JSONObject rating, history;
 	
 	public Post() {
 		super();
 	}
-	
-	public Post(long post_id, long thread, long author, Timestamp timestamp, String title, String text,
-			PGobject rating, PGobject history) {
-		this(thread, author, timestamp, title, text, rating, history);
-		this.post_id = post_id;
-	}
-
-	public Post(long thread, long author, Timestamp timestamp, String title, String text, PGobject rating, PGobject history) {
-		super();
-		this.thread = thread;
-		this.author = author;
-		this.timestamp = timestamp;
-		this.title = title;
-		this.text = text;
-		this.rating = rating;
-		this.history = history;
-	}
 
 	public long getId() {
-		return post_id;
+		return id;
 	}
 
-	public void setId(long post_id) {
-		this.post_id = post_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getThread() {
@@ -83,36 +67,20 @@ public class Post implements ObjectInterface {
 		this.text = text;
 	}
 
-	public PGobject getRating() {
-		return rating;
-	}
-
-	public JSONObject getRatingAsJSONObject() {
-		return JSONUtility.PGtoJSON(rating);
-	}
-
-	public void setRating(PGobject rating) {
-		this.rating = rating;
-	}
-	
-	public void setRating(JSONObject rating) {
-		this.rating = JSONUtility.JSONtoPG(rating);
-	}
-	
-	public PGobject getHistory() {
+	public JSONObject getHistory() {
 		return history;
 	}
 
-	public JSONObject getHistoryAsJSONObject() {
-		return JSONUtility.PGtoJSON(history);
-	}
-	
-	public void setHistory(PGobject history) {
+	public void setHistory(JSONObject history) {
 		this.history = history;
 	}
 	
-	public void setHistory(JSONObject history) {
-		this.history = JSONUtility.JSONtoPG(history);
+	public JSONObject getRating() {
+		return rating;
 	}
+
+	public void setRating(JSONObject rating) {
+		this.rating = rating;		
+	}	
 	
 }

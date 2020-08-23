@@ -3,55 +3,29 @@ package objects;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.postgresql.util.PGobject;
 
-import utilities.ObjectInterface;
+import interfaces.ObjectInterface;
 import utilities.JSONUtility;
 
 public class User implements ObjectInterface{
-	long user_id; 
+	long id; 
 	String username, icon_url, profile_card, profile_page, custom_url;
 	long[] staff_roles, trade_roles;
-	PGobject settings, social_media, payment_info;
-	PGobject[] login_history;
+	JSONObject settings, social_media, payment_info, login_history;
 	Timestamp join_date;
 	
 	public User() {
 		super();
 	}
 
-	public User(long user_id, String name, String icon_url, String profile_card, String profile_page, String custom_url,
-			long[] staff_roles, long[] trade_roles, PGobject settings, PGobject social_media, PGobject payment_info,
-			PGobject[] login_history) {
-		this(name, icon_url, profile_card, profile_page, custom_url, staff_roles, trade_roles, settings, social_media, 
-				payment_info, login_history);
-		this.user_id = user_id;
-	}
-
-	public User(String name, String icon_url, String profile_card, String profile_page, String custom_url,
-			long[] staff_roles, long[] trade_roles, PGobject settings, PGobject social_media, PGobject payment_info,
-			PGobject[] login_history) {
-		super();
-		this.username = name;
-		this.icon_url = icon_url;
-		this.profile_card = profile_card;
-		this.profile_page = profile_page;
-		this.custom_url = custom_url;
-		this.staff_roles = staff_roles;
-		this.trade_roles = trade_roles;
-		this.settings = settings;
-		this.social_media = social_media;
-		this.payment_info = payment_info;
-		this.login_history = login_history;
-	}
-
 	public long getId() {
-		return user_id;
+		return id;
 	}
 
 	public void setId(long user_id) {
-		this.user_id = user_id;
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -110,47 +84,37 @@ public class User implements ObjectInterface{
 		this.trade_roles = trade_roles;
 	}
 
-	public PGobject getSettings() {
+	public JSONObject getSettings() {
 		return settings;
 	}
 
-	public void setSettings(PGobject settings) {
+	public void setSettings(JSONObject settings) {
 		this.settings = settings;
 	}
 
-	public PGobject getSocial_media() {
+	public JSONObject getSocial_media() {
 		return social_media;
 	}
 
-	public void setSocial_media(PGobject social_media) {
+	public void setSocial_media(JSONObject social_media) {
 		this.social_media = social_media;
 	}
 	
-	public PGobject getPayment_info() {
+	public JSONObject getPayment_info() {
 		return payment_info;
 	}
 
-	public void setPayment_info(PGobject payment_info) {
+	public void setPayment_info(JSONObject payment_info) {
 		this.payment_info = payment_info;
 	}
 
-	public PGobject[] getLogin_history() {
+	public JSONObject getLogin_history() {
 		return login_history;
 	}
 
-	public JSONObject[] getLogin_historyAsJSONObject() {
-		return JSONUtility.PGtoJSON(login_history);
-	}
-
-	public void setLogin_history(PGobject[] login_history) {
+	public void setLogin_history(JSONObject login_history) {
 		this.login_history = login_history;
 	}
-
-	
-	public void setLogin_history(JSONObject[] login_history) {
-		this.login_history = JSONUtility.JSONtoPG(login_history);
-	}
-	
 
 	public Timestamp getJoin_date() {
 		return join_date;
@@ -159,15 +123,5 @@ public class User implements ObjectInterface{
 	public void setJoin_date(Timestamp join_date) {
 		this.join_date = join_date;
 	}
-
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", username=" + username + ", icon_url=" + icon_url + ", profile_card="
-				+ profile_card + ", profile_page=" + profile_page + ", custom_url=" + custom_url + ", staff_roles="
-				+ Arrays.toString(staff_roles) + ", trade_roles=" + Arrays.toString(trade_roles) + ", settings="
-				+ settings + ", social_media=" + social_media + ", payment_info=" + payment_info + ", login_history="
-				+ Arrays.toString(login_history) + "]";
-	}
-
 }
 

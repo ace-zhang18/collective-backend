@@ -5,43 +5,74 @@
 <mapper namespace = "Artwork">
 
    <insert id = "insert" parameterType = "Artwork">
-      	INSERT INTO artworks (artwork_id, owners, permissions, title, history, sale, tags, file_type) 
-      	VALUES (#{artwork_id}, #{owners}, #{permissions}, #{title}, #{history}, #{sale}, #{tags}, #{file_type});
+      	INSERT INTO artworks (id, owners, permissions, title, history, sale, tags, file_type) 
+      	VALUES (#{id}, #{owners}, #{permissions}, #{title}, #{history}, #{sale}, #{tags}, #{file_type});
 	</insert> 
 	
 	<update id = "update" parameterType = "Artwork">
     	UPDATE artworks SET owners = #{owners}, permissions = #{permissions}, history = #{history},
     	content = #{content}, sale = #{sale}, tags = #{tags}, file_type = #{file_type}
-    	WHERE artwork_id = #{artwork_id};
+    	WHERE id = #{id};
 	</update>
     
     <delete id = "delete" parameterType = "long">
-    	DELETE FROM artworks WHERE artwork_id = #{artwork_id}
+    	DELETE FROM artworks WHERE id = #{id}
     </delete>
     
     <select id="get" parameterType = "long" resultMap="artworkMap">
-    	SELECT * FROM artworks where artwork_ID = #{artwork_id};
+    	SELECT * FROM artworks where id = #{id};
+	</select>
+	
+	<select id="getAll" resultMap="artworkMap">
+    	SELECT * FROM artworks
+	</select>
+	
+	<select id="getSet" parameterType = "long" resultMap="artworkMap">
+    	SELECT * FROM artworks WHERE id IN 
+    	<foreach item="item" index="index" collection="array"
+             open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
 	</select>
 	
 	<select id="getIDs" resultType="long">
-    	SELECT artwork_id FROM artworks ORDER BY artwork_id ASC;
+    	SELECT id FROM artworks ORDER BY id ASC;
 	</select>
     
     <select id="getByTitle" parameterType = "String" resultMap="artworkMap">
     	SELECT * FROM artworks where title = #{title};
-	</select>
-    	
-	<select id="getAll" resultMap="artworkMap">
-    	SELECT * FROM artworks
+	</select>	
+
+	<select id="getByTag" resultMap="artworkMap">
+		SELECT * FROM artworks
+		<where>
+			<foreach item="tag" index="index" collection="array" separator="AND">
+				#{tag} = ANY(tags)
+			</foreach>
+		</where>
 	</select>
     
+    <select id="getByNotTag" resultMap="artworkMap">
+		SELECT * FROM artworks
+		<where>
+			<foreach item="tag" index="index" collection="array" separator="AND">
+				NOT #{tag} = ANY(tags)
+			</foreach>
+		</where>
+	</select>
+	
+	<select id="doSearch" parameterType = "string" resultMap="artworkMap">
+
+	</select>
+    
+	
 	<resultMap id = "artworkMap" type = "Artwork">
-		<result property = "artwork_id" column = "ARTWORK_ID"/>
-		<result property = "owners" column = "OWNERS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
-		<result property = "metadata" column = "METADATA" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>	
-		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
-		<result property = "history" column = "HISTORY" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
-		<result property = "sale" column = "SALE" typeHandler="handlers.PGObjectArrayTypeHandler"/>
+		<result property = "id" column = "ID"/>
+		<result property = "owners" column = "OWNERS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
+		<result property = "metadata" column = "METADATA" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>	
+		<result property = "permissions" column = "PERMISSIONS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
+		<result property = "history" column = "HISTORY" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
+		<result property = "sale" column = "SALE" javaType="org.json.JSONArray" typeHandler="handlers.JSONArrayTypeHandler"/>
 		<result property = "tags" column = "TAGS" typeHandler="handlers.LongArrayTypeHandler"/>	
 		<result property = "file_type" column = "FILE_TYPE"/>
 	</resultMap>

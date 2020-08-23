@@ -33,4 +33,8 @@ public class WebUtility {
 			}
 	    };
 	}
+	
+	public static void processSearchQuery(String query) {
+		query = query.replace(' ', '&');
+	}
 }

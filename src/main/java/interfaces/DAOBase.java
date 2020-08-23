@@ -1,10 +1,11 @@
-package utilities;
+package interfaces;
 
 import java.util.List;
 
 import org.glassfish.hk2.api.Self;
 
 import dao.SqlSessionContainer;
+import objects.Gallery;
 
 public abstract class DAOBase {	
 	public <T extends ObjectInterface> long insertNew(T obj){
@@ -39,6 +40,10 @@ public abstract class DAOBase {
 	
 	public <T extends ObjectInterface> T get(long id){
 		return SqlSessionContainer.getSession().selectOne(getObjName() + ".get", id);
+	}
+	
+	public <T extends ObjectInterface> List<T> getSet(long[] ids){
+		return SqlSessionContainer.getSession().selectList(getObjName() + ".getSet", ids);		
 	}
 	
 	public <T extends ObjectInterface> List<T> getAll(){

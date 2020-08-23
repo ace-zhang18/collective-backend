@@ -3,8 +3,8 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.DAOBase;
 import objects.*;
-import utilities.DAOBase;
 
 public class StaffRoleDAO extends DAOBase{
 	private static StaffRoleDAO dao_instance;

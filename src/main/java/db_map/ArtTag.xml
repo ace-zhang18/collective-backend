@@ -5,12 +5,12 @@
 <mapper namespace = "ArtTag">
 
    <insert id = "insert" parameterType = "ArtTag">
-      	INSERT INTO art_tags (id, parent, name) 
-      	VALUES (#{id}, #{parent}, #{name});
+      	INSERT INTO art_tags (id, name) 
+      	VALUES (#{id}, #{name});
 	</insert> 
 	
 	<update id = "update" parameterType = "ArtTag">
-    	UPDATE art_tags SET parent = #{parent}, name = #{name}
+    	UPDATE art_tags SET name = #{name}
     	WHERE id = #{id};
 	</update>
     
@@ -33,7 +33,6 @@
 	<resultMap id = "artTagMap" type = "ArtTag">
 		<result property = "id" column = "ID"/>
 		<result property = "name" column = "NAME"/>
-		<result property = "parent" column = "PARENT"/>
 	</resultMap>
 
 	

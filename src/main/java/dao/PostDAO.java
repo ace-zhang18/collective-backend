@@ -2,8 +2,8 @@ package dao;
 
 import java.util.List;
 
+import interfaces.DAOBase;
 import objects.Post;
-import utilities.DAOBase;
 
 public class PostDAO extends DAOBase {
 	private static PostDAO dao_instance = null;

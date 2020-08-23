@@ -5,36 +5,44 @@
 <mapper namespace = "Forum">
 
    <insert id = "insert" parameterType = "Forum">
-      	INSERT INTO forums (forum_id, name, parent, permissions) 
-      	VALUES (#{forum_id}, #{name} #{parent}, #{permissions});
+      	INSERT INTO forums (id, name, parent, permissions) 
+      	VALUES (#{id}, #{name} #{parent}, #{permissions});
 	</insert> 
 	
 	<update id = "update" parameterType = "Forum">
     	UPDATE forums SET name = #{name}, parent = #{parent}, permissions = #{permissions}
-    	WHERE forum_id = #{forum_id};
+    	WHERE id = #{id};
 	</update>
 
     <delete id = "delete" parameterType = "long">
-    	DELETE FROM forums WHERE forum_id = #{forum_id}
+    	DELETE FROM forums WHERE id = #{id}
     </delete>
     
     <select id="get" parameterType = "long" resultMap="forumMap">
-    	SELECT * FROM forums where forum_id = #{forum_id};
+    	SELECT * FROM forums where id = #{id};
 	</select>
-      	
+
+	<select id="getSet" parameterType = "long" resultMap="forumMap">
+    	SELECT * FROM forums WHERE id IN 
+    	<foreach item="item" index="index" collection="array"
+             open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+
 	<select id="getAll" resultMap="forumMap">
-    	SELECT * FROM forums ORDER BY forum_id ASC;
+    	SELECT * FROM forums ORDER BY id ASC;
 	</select>
 	
 	<select id="getSub" resultMap="forumMap">
-		SELECT * FROM forums WHERE parent = #{parent};
+		SELECT * FROM forums WHERE parent = #{id};
 	</select>
     
 	<resultMap id = "forumMap" type = "Forum">
-		<result property = "forum_id" column = "FORUM_ID"/>
+		<result property = "id" column = "ID"/>
 		<result property = "name" column = "NAME"/>
 		<result property = "parent" column = "PARENT"/>
-		<result property = "permissions" column = "PERMISSIONS" javaType="org.postgresql.util.PGobject" typeHandler="handlers.PGObjectTypeHandler"/>
+		<result property = "permissions" column = "PERMISSIONS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
 	</resultMap>
 
 	

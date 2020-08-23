@@ -8,44 +8,20 @@ import org.postgresql.util.PGobject;
 import utilities.JSONUtility;
 
 public class StaffRole {
-	long role_id;
+	long id;
 	String name;
-	PGobject permissions;
+	JSONObject permissions;
 	
 	public StaffRole() {
 		super();
 	}
-	
-	public StaffRole(String name, String permissions) {
-		super();
-		this.name = name;
-		this.permissions = new PGobject();
-		this.permissions.setType("json");
-		try {
-			this.permissions.setValue(permissions);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public StaffRole(String name, PGobject permissions) {
-		super();
-		this.name = name;
-		this.permissions = permissions;
-	}
-
-	public StaffRole(long id, String name, PGobject permissions) {
-		this(name, permissions);
-		this.role_id = id;
-	}
 
 	public long getId() {
-		return role_id;
+		return id;
 	}
 
 	public void setId(long id) {
-		this.role_id = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -56,26 +32,14 @@ public class StaffRole {
 		this.name = name;
 	}
 
-	public PGobject getPermissions() {
+	public JSONObject getPermissions() {
 		return permissions;
 	}
 
-	public JSONObject getPermissionsAsJSONObject() {
-		return JSONUtility.PGtoJSON(permissions);
-	}
-	
-	public void setPermissions(PGobject permissions) {
+	public void setPermissions(JSONObject permissions) {
 		this.permissions = permissions;
 	}
 	
-	public void setPermissions(JSONObject permissions) {
-		this.permissions = JSONUtility.JSONtoPG(permissions);
-	}
-
-	@Override
-	public String toString() {
-		return "StaffRole [id=" + role_id + ", name=" + name + ", permissions=" + permissions + "]";
-	}
 	
 	
 }
