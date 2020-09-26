@@ -32,7 +32,7 @@ public class TestService {
 	@Path("/end1")
 	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin
-	public Response getArtwork(@PathParam("id") String id) {
+	public Response getResponse(@PathParam("id") String id) {
 		return Response.status(200).entity("It works!").build();
 	}
 }
