@@ -34,7 +34,34 @@ public class WebUtility {
 	    };
 	}
 	
-	public static void processSearchQuery(String query) {
-		query = query.replace(' ', '&');
+	public static ArrayTree<String> processSearchQuery(String query) {
+		ArrayTree<String> tree = new ArrayTree<String>();
+		tree.setData("");
+		
+		//LOOP
+		while(true) {
+			if(query.indexOf('}') < 0) {
+				tree.setData(tree.getData() + query);
+				break;
+			}
+			if(query.indexOf('{') > 0 && query.indexOf('{') < query.indexOf('}')) {
+				String[] parts = query.split("\\{",2);
+				query = parts[1];
+				tree.setData(tree.getData() + parts[0] + " {" + (tree.getNodes().size() + 1) + "} ");
+				ArrayTree<String> next = new ArrayTree<String>();
+				next.setData("");
+				tree.addNode(next);
+				next.setParent(tree);
+				tree = next;
+			}else {
+				String[] parts = query.split("\\}",2);
+				query = parts[1];
+				tree.setData(tree.getData() + parts[0]);
+				tree = tree.getParent();
+			}
+		}
+		//END LOOP
+		
+		return tree;
 	}
 }

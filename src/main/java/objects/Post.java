@@ -11,7 +11,6 @@ import utilities.JSONUtility;
 
 public class Post implements ObjectInterface, Rateable, History {
 	long id, thread, author;
-	Timestamp timestamp;
 	String title, text;
 	JSONObject rating, history;
 	
@@ -41,14 +40,6 @@ public class Post implements ObjectInterface, Rateable, History {
 
 	public void setAuthor(long author) {
 		this.author = author;
-	}
-
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	public String getTitle() {

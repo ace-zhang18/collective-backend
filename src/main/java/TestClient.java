@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.ibatis.session.SqlSession;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyInvocation;
@@ -16,11 +17,15 @@ import org.postgresql.util.PGobject;
 import dao.ArtTagDAO;
 import dao.ArtworkDAO;
 import dao.GalleryDAO;
+import dao.SqlSessionContainer;
 import dao.UserDAO;
+import interfaces.Mapper;
+import interfaces.ObjectInterface;
 import objects.ArtTag;
 import objects.Artwork;
 import objects.Gallery;
 import objects.User;
+import utilities.ArrayTree;
 import utilities.JSONUtility;
 import utilities.WebUtility;
 
@@ -33,7 +38,7 @@ public class TestClient {
 			JerseyInvocation.Builder invocationBuilder;
 			Response response;
 			String input, output;
-			int test = 8;
+			int test = 9;
 			switch(test)
 			{
 			case 0:
@@ -71,12 +76,6 @@ public class TestClient {
 				WebUtility.processSearchQuery(query);
 				break;
 			case 5:
-				long[] tags = {125, -150};
-				ArrayList<Artwork> art = (ArrayList) ArtworkDAO.getInstance().getByTag(tags);
-				for(Artwork a: art) {
-					System.out.print(a.getId() + ", ");
-				}
-				System.out.println();
 				
 				break;
 			case 6:
@@ -101,28 +100,10 @@ public class TestClient {
 					System.out.println(a.getId());
 				}
 				break;
-
-			case 10:			
-				client = JerseyClientBuilder.createClient();
-
-				webTarget = client.target("http://localhost:8080/collective-backend/api").path("galleries").path("100");
-
-				invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-
-				response = invocationBuilder
-						.get(Response.class);
-
-				System.out.println(response);
-				
-				if (response.getStatus()/100 != 2) {
-					throw new RuntimeException("Failed : HTTP error code : "
-							+ response.getStatus());
-				}
-
-				System.out.println("Output from Server .... \n");
-				output = response.readEntity(String.class);
-				System.out.println(output);
+			case 9:
+				System.out.println(ArtworkDAO.getInstance().constructQuery(WebUtility.processSearchQuery("air {-horse~train} sea -foot {anchor~{-field gray}}")));
 				break;
+
 			}
 		} catch (Exception e) {
 
@@ -132,6 +113,12 @@ public class TestClient {
 
 	}
 
+	public static void PrintTree(ArrayTree<String> tree) {
+		System.out.println(tree.getData());
+		for(ArrayTree node: tree.getNodes()) {
+			PrintTree(node);
+		}
+	}
 
 }
 

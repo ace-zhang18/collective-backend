@@ -61,11 +61,6 @@
 		</where>
 	</select>
 	
-	<select id="doSearch" parameterType = "string" resultMap="artworkMap">
-
-	</select>
-    
-	
 	<resultMap id = "artworkMap" type = "Artwork">
 		<result property = "id" column = "ID"/>
 		<result property = "owners" column = "OWNERS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>

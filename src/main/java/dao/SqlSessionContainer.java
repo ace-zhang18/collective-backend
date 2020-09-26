@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import interfaces.Mapper;
+
 public class SqlSessionContainer {
 	static Reader reader = null;	
 	static SqlSessionFactory sqlSessionFactory;		
@@ -29,5 +31,9 @@ public class SqlSessionContainer {
 		}
 		session = sqlSessionFactory.openSession();
 		return session;
+	}
+	
+	public static Mapper getMapper() {
+		return getSession().getMapper(Mapper.class);
 	}
 }

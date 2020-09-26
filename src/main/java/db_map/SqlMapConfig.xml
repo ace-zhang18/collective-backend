@@ -30,7 +30,7 @@
             <property name = "driver" value = "org.postgresql.Driver"/>
             <property name = "url" value = "jdbc:postgresql://localhost:5432/collective?autoReconnect=true&amp;tcpKeepAlive=true"/>
             <property name = "username" value = "postgres"/>
-            <property name = "password" value = "bradley01"/>
+            <property name = "password" value = "$$$$$"/>
          </dataSource>   
          
       </environment>
@@ -41,9 +41,10 @@
    	  <mapper resource = "db_map/Artwork.xml"/>
    	  <mapper resource = "db_map/Forum.xml"/>
    	  <mapper resource = "db_map/Gallery.xml"/>      
-      <mapper resource = "db_map/Post.xml"/>   	 
+      <mapper resource = "db_map/Post.xml"/>
       <mapper resource = "db_map/StaffRole.xml"/> 
       <mapper resource = "db_map/Thread.xml"/> 
    	  <mapper resource = "db_map/User.xml"/>
+   	  <mapper class = "interfaces.Mapper"/>
    </mappers>
 </configuration>

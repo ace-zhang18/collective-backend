@@ -4,86 +4,167 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.jdbc.SQL;
+
 import interfaces.DAOBase;
+import interfaces.Mapper;
+import interfaces.ObjectInterface;
 import objects.ArtTag;
 import objects.Artwork;
+import utilities.ArrayTree;
 import utilities.SetUtility;
 
 public class ArtworkDAO extends DAOBase{
 	private static ArtworkDAO dao_instance;
-	
+
 	private ArtworkDAO() {
-		
+
 	}
-	
+
 	public Artwork getByTitle(String title){
 		return SqlSessionContainer.getSession().selectOne("Artwork.getByTitle", title);
 	}
 	
-	
-	public List<Artwork> getByTag(long[] tags) {
-		int in_size = 0, not_size = 0;
-		for(long tag: tags) {
-			if (tag > 0){
-				in_size++;
-			}else {
-				not_size++;
-			}
-		}
+	public ArrayList<Artwork> doSearch(ArrayTree<String> struct){
+		String query = constructQuery(struct);
 		
-		long[] in = new long[in_size];
-		long[] not = new long[not_size];
-		in_size = 0;
-		not_size = 0;
+		ArrayList<Artwork> results = (ArrayList<Artwork>) SqlSessionContainer.getSession().getMapper(Mapper.class).executeImmediate(query, new Artwork());
 		
-		for(long tag: tags) {
-			if (tag > 0){
-				in[in_size] = tag;
-				in_size++;
-			}else {
-				not[not_size] = -tag;
-				not_size++;
-			}
-		}
-		
-		List<Artwork> in_set = SqlSessionContainer.getSession().selectList("Artwork.getByTag", in);
-		List<Artwork> not_set = SqlSessionContainer.getSession().selectList("Artwork.getByNotTag", not);
-		List<Artwork> result = SetUtility.Intersect(in_set, not_set);
-		
-		return result;
-		
+		return results;
+	}
+
+	public String constructQuery(ArrayTree<String> struct) {
+		String query = "SELECT * FROM artworks WHERE id IN (\n";
+		query += queryLevel(struct);
+		return query += "\n)";
 	}
 	
-	public static ArrayList<Artwork> search(String query){
-		String[] toks = query.split(" ");
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		ArrayList<String> tags = new ArrayList<String>();
-		ArrayList<String> ntags = new ArrayList<String>();
-		ArrayList<String> users = new ArrayList<String>();
-		ArrayList<String> nusers = new ArrayList<String>();
-		ArrayList<String> groups = new ArrayList<String>();
-		ArrayList<String> ngroups = new ArrayList<String>();
-		
-		
-		for(String tok: toks) {
-			if(tok.indexOf(':') > 0) {
-				String[] bits = tok.split(":", 2);
-				boolean not = false;
-				if(bits[0].charAt(0) == '-') {
-					not = true;
-					bits[0] = bits[0].substring(1);
+	public String queryLevel(ArrayTree<String> struct) {
+		String query = "";
+		String search = struct.getData().trim();
+
+		while(true) {
+			boolean isOR = false;
+			boolean isNOT = false;
+			if(search.indexOf('~') < search.indexOf(' ')) {
+				isOR = true;
+			}
+
+
+			String[] chunks = search.split("[~ ]", 2);
+			if(chunks.length > 1) search = chunks[1].trim();
+			String term = chunks[0].trim();
+
+
+			if(term.charAt(0) == '-') {
+				isNOT = true;
+				term = term.substring(1, term.length());
+			}
+
+			if(term.matches("\\{\\d+\\}")) {
+				int index = Integer.parseInt(term.trim().substring(1,term.length()-1));
+				ArrayTree node = struct.getNodes().get(index-1);
+
+				query += "(";
+				query += queryLevel(node);
+				query += ")";
+			}else {
+
+				if(term.indexOf(":") <= 0) {
+					query += "SELECT id FROM artworks WHERE (SELECT id FROM art_tags WHERE name='"+ term +"') ";
+					if(isNOT) query += "!= ";
+					else query += "= ";
+					query += "ANY(tags)";
 				}
-				if(bits[0].equals("title")) {
-					params.put("title", bits[1]);
+				String[] parts = term.split(":", 2);
+
+				if(parts[0].equalsIgnoreCase("title")) {
+					query += "SELECT id FROM artworks WHERE title ";
+					if(isNOT) query += "!= ";
+					else query += "= ";
+					query += parts[1];
+				}else if(parts[0].equalsIgnoreCase("filetype")) {
+					query += "SELECT id FROM artworks WHERE file_type ";
+					if(isNOT) query += "!= ";
+					else query += "= ";
+					query += parts[1];
+				}else if(parts[0].equalsIgnoreCase("rating")) {
+					String subquery = "SELECT id FROM artworks WHERE calc_score(rating)";
+					if(parts[1].charAt(parts[1].length()-1) == '-') {
+						subquery += "<=";
+						parts[1] = parts[1].substring(0, parts[1].length()-2);
+					}else {
+						subquery += ">=";
+					}
+					subquery += parts[1];
+					query += subquery;
+				}else if(parts[0].equalsIgnoreCase("user")) {
+					query += "SELECT * FROM artworks, LATERAL json_array_elements_text(owners->'users') AS users GROUP BY id " + 
+							"HAVING (SELECT id FROM users WHERE username ";
+					if(isNOT) query += "!= ";
+					else query += "= ";
+					query += "'" +parts[1] +"') = ANY(array_agg(groups::bigint))";
+				}else if(parts[0].equalsIgnoreCase("group")) {
+					query += "SELECT * FROM artworks, LATERAL json_array_elements_text(owners->'groups') AS groups GROUP BY id " + 
+							"HAVING (SELECT id FROM groups WHERE name ";
+					if(isNOT) query += "!= ";
+					else query += "= ";
+					query += "'" +parts[1] +"') = ANY(array_agg(groups::bigint))";
+				}else if(parts[0].equalsIgnoreCase("before") || parts[0].equalsIgnoreCase("after")) {
+					String subquery = "SELECT id FROM artworks WHERE get_latest(history)";
+					if(parts[0].equalsIgnoreCase("before")) subquery += " < ";
+					else subquery += " > ";
+					subquery += "TO_DATE(" + parts[1] + ", 'YYYY MM DD')";
+					query += subquery;
 				}
 			}
+			if(chunks.length > 1) {
+				if(isOR) query += "\nUNION\n";
+				else query += "\nINTERSECT\n";
+			}else {
+				break;
+			}
 		}
-		
-		
-		
-		return null;
+
+		return query;
 	}
-	
+	/*
+			if(term.indexOf(":") <= 0) {
+				query += "SELECT * FROM artworks WHERE (SELECT id FROM art_tags WHERE name='"+ term +"') = ANY(tags)";
+			}
+
+
+
+			String[] parts = term.split(":", 2);
+			if(parts[0].equalsIgnoreCase("title")) {
+				query += "SELECT * FROM artworks WHERE title=" + parts[1];
+			}else if(parts[0].equalsIgnoreCase("filetype")) {
+				query += "SELECT * FROM artworks WHERE file_type=" + parts[1];
+			}else if(parts[0].equalsIgnoreCase("rating")) {
+				String subquery = "SELECT * FROM artworks WHERE calc_score(rating)";
+				if(parts[1].charAt(parts[1].length()-1) == '-') {
+					subquery += "<=";
+					parts[1] = parts[1].substring(0, parts[1].length()-2);
+				}else {
+					subquery += ">=";
+				}
+				subquery += parts[1];
+				query += subquery;
+			}else if(parts[0].equalsIgnoreCase("user")) {
+				query += "SELECT * FROM artworks, LATERAL json_array_elements_text(owners->'users') AS users GROUP BY id " + 
+						"HAVING (SELECT id FROM users WHERE username='"+ parts[1] +"') = ANY(array_agg(users::bigint))";
+			}else if(parts[0].equalsIgnoreCase("group")) {
+				query += "SELECT * FROM artworks, LATERAL json_array_elements_text(owners->'groups') AS groups GROUP BY id " + 
+						"HAVING (SELECT id FROM groups WHERE name='"+ parts[1] +"') = ANY(array_agg(groups::bigint))";
+			}else if(parts[0].equalsIgnoreCase("before") || parts[0].equalsIgnoreCase("after")) {
+				String subquery = "SELECT * FROM artworks WHERE get_latest(history)";
+				if(parts[0].equalsIgnoreCase("before")) subquery += '<';
+				else subquery += '>';
+				subquery += "TO_DATE(" + parts[1] + ", 'YYYY MM DD')";
+			}
+	 */
+
+
 	public static ArtworkDAO getInstance() {
 		if (dao_instance == null) {
 			dao_instance = new ArtworkDAO();
