@@ -25,7 +25,7 @@ import utilities.ImageUtility;
 import utilities.JSONUtility;
 import utilities.WebUtility;
 
-@Path("test")
+@Path("/test")
 public class TestService {	
 	
 	@GET
