@@ -38,28 +38,9 @@ public class TestClient {
 			JerseyInvocation.Builder invocationBuilder;
 			Response response;
 			String input, output;
-			int test = 9;
+			int test = 10;
 			switch(test)
 			{
-			case 0:
-				//Creating a File object for directory
-				File directoryPath = new File("C:\\collective-backend\\assets\\");
-				//List of all files and directories
-				String contents[] = directoryPath.list();
-				System.out.println("List of files and directories in the specified directory:");
-				for(int i=0; i<contents.length; i++) {
-					String[] tok = contents[i].split("\\.");
-					Artwork art = new Artwork();
-					art.setId(Long.parseLong(tok[0]));
-					art.setFile_type(tok[1]);
-					JSONObject owners = new JSONObject();
-					JSONArray indi = new JSONArray();
-					indi.put(100);
-					owners.put("users", indi);
-					art.setOwners(owners);
-					ArtworkDAO.getInstance().insert(art);
-				}
-				break;
 			case 1:
 				User user = new User();
 				user.setUserame("terabix");
@@ -102,6 +83,27 @@ public class TestClient {
 				break;
 			case 9:
 				System.out.println(ArtworkDAO.getInstance().constructQuery(WebUtility.processSearchQuery("air {-horse~train} sea -foot {anchor~{-field gray}}")));
+				break;
+			case 10:
+				client = JerseyClientBuilder.createClient();
+
+				webTarget = client.target("http://localhost:8080/collective-backend/api/artworks/latest");
+				
+				invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+
+				response = invocationBuilder
+						.get(Response.class);
+
+				System.out.println(response);
+				
+				if (response.getStatus()/100 != 2) {
+					throw new RuntimeException("Failed : HTTP error code : "
+							+ response.getStatus());
+				}
+
+				System.out.println("Output from Server .... \n");
+				output = response.readEntity(String.class);
+				System.out.println(output);
 				break;
 
 			}

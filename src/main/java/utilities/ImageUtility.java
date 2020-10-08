@@ -15,7 +15,7 @@ public class ImageUtility {
     //Setting thumb_size to 0 or below will cause the returned path to refer to the original art asset
     //Any other size will direct you to the thumbnail of that size's location.
     public static String getImagePath(Artwork art) {
-		return "C:\\collective-backend\\assets\\" + art.getId() + "." + art.getFile_type();
+		return "/var/ftp/pub/collective-assets/assets/" + art.getId() + "." + art.getFile_type();
     }
 
     public static String getImagePath(long id) {

@@ -21,6 +21,10 @@ public class ArtworkDAO extends DAOBase{
 
 	}
 
+	public List<Object> getLatest() {
+		return SqlSessionContainer.getSession().selectList("Artwork.getLatest");
+	}
+	
 	public Artwork getByTitle(String title){
 		return SqlSessionContainer.getSession().selectOne("Artwork.getByTitle", title);
 	}

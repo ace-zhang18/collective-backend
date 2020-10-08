@@ -27,6 +27,10 @@
     	SELECT * FROM artworks
 	</select>
 	
+	<select id="getLatest" resultMap="artworkMap">
+    	SELECT * FROM artworks ORDER BY submitted DESC LIMIT 5
+	</select>
+	
 	<select id="getSet" parameterType = "long" resultMap="artworkMap">
     	SELECT * FROM artworks WHERE id IN 
     	<foreach item="item" index="index" collection="array"
@@ -63,13 +67,10 @@
 	
 	<resultMap id = "artworkMap" type = "Artwork">
 		<result property = "id" column = "ID"/>
-		<result property = "owners" column = "OWNERS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
-		<result property = "metadata" column = "METADATA" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>	
-		<result property = "permissions" column = "PERMISSIONS" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
-		<result property = "history" column = "HISTORY" javaType="org.json.JSONObject" typeHandler="handlers.JSONObjectTypeHandler"/>
-		<result property = "sale" column = "SALE" javaType="org.json.JSONArray" typeHandler="handlers.JSONArrayTypeHandler"/>
-		<result property = "tags" column = "TAGS" typeHandler="handlers.LongArrayTypeHandler"/>	
+		<result property = "owner" column = "OWNER"/>
+		<result property = "title" column = "TITLE"/>		
 		<result property = "file_type" column = "FILE_TYPE"/>
+		<result property = "submitted" column = "SUBMITTED"/>	
 	</resultMap>
 
 	

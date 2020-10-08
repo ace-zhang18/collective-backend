@@ -1,5 +1,7 @@
 package objects;
 
+import java.sql.Timestamp;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,9 +11,10 @@ import interfaces.Rateable;
 
 public class Artwork implements ObjectInterface, Rateable, History{
 	long id;
-	JSONObject owners, permissions, history, metadata, rating;
+	JSONObject metadata, rating;
 	JSONArray sale;
-	String file_type, title;
+	String owner, file_type, title;
+	Timestamp submitted;
 	long[] tags;
 	
 	public Artwork() {
@@ -26,12 +29,12 @@ public class Artwork implements ObjectInterface, Rateable, History{
 		this.id = id;
 	}
 		
-	public JSONObject getOwners() {
-		return owners;
+	public String getOwner() {
+		return owner;
 	}
 	
-	public void setOwners(JSONObject owner) {
-		this.owners = owner;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 	public JSONObject getMetadata() {
@@ -50,20 +53,12 @@ public class Artwork implements ObjectInterface, Rateable, History{
 		this.sale = sale;
 	}
 	
-	public JSONObject getPermissions() {
-		return permissions;
-	}
-	
-	public void setPermissions(JSONObject permissions) {
-		this.permissions = permissions;
+	public Timestamp getSubmitted() {
+		return submitted;
 	}
 
-	public JSONObject getHistory() {
-		return history;
-	}
-
-	public void setHistory(JSONObject history) {
-		this.history = history;
+	public void setSubmitted(Timestamp submitted) {
+		this.submitted = submitted;
 	}
 
 	public String getFile_type() {
@@ -102,6 +97,18 @@ public class Artwork implements ObjectInterface, Rateable, History{
 	@Override
 	public void setRating(JSONObject rating) {
 		this.rating = rating;
+	}
+
+	@Override
+	public JSONObject getHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setHistory(JSONObject history) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

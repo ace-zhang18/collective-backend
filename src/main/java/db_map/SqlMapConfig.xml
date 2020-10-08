@@ -30,7 +30,7 @@
             <property name = "driver" value = "org.postgresql.Driver"/>
             <property name = "url" value = "jdbc:postgresql://localhost:5432/collective?autoReconnect=true&amp;tcpKeepAlive=true"/>
             <property name = "username" value = "postgres"/>
-            <property name = "password" value = "$$$$$"/>
+            <property name = "password" value = "password123"/>
          </dataSource>   
          
       </environment>
