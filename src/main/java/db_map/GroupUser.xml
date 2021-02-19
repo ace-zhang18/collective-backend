@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "GroupUser">
+
+	<insert id = "insert" parameterType = "GroupUser">
+		INSERT INTO group_users ("group", "user") 
+		VALUES (#{group}, #{user})
+	</insert>
+
+	<delete id = "delete" parameterType = "GroupUser">
+		DELETE FROM group_users WHERE group #{group} AND user = #{user}
+	</delete>
+
+	<select id="getByGroup" parameterType = "long" resultMap="GroupUserMap">
+		SELECT * FROM group_users WHERE group = #{group}
+	</select>
+
+	<select id="getByUser" parameterType = "long" resultMap="GroupUserMap">
+		SELECT * FROM group_users WHERE "user" = #{user}
+	</select>
+
+	<select id="getAll" resultMap="GroupUserMap">
+		SELECT * FROM group_users
+	</select>
+
+	<resultMap id = "GroupUserMap" type = "GroupUser">
+		<result property = "group" column = "GROUP"/>
+		<result property = "user" column = "USER"/>
+	</resultMap>
+
+</mapper>

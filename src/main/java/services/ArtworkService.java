@@ -1,13 +1,9 @@
 package services;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,9 +15,12 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import dao.ArtworkDAO;
-import dao.ForumDAO;
+import dao.ArtworkUserDAO;
 import dao.UserDAO;
-import objects.*;
+import objects_table.Artwork;
+import objects_table.ArtworkUser;
+import objects_table.User;
+import utilities.CollectiveUtility;
 import utilities.ImageUtility;
 import utilities.JSONUtility;
 import utilities.WebUtility;
@@ -36,38 +35,17 @@ public class ArtworkService {
 	public Response getArtwork(@PathParam("id") String id) {
 		String[] toks = id.split(",");
 		
-		ArrayList<Artwork> art_list = new ArrayList<Artwork>();
-		for(String tok: toks) {
-			int art_id = Integer.parseInt(tok);
-			try {
-				Artwork a = ArtworkDAO.getInstance().get(art_id);
-				art_list.add(a);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		JSONObject jo = new JSONObject();
+		long[] ids = new long[toks.length];
+		for(int i = 0; i < toks.length; i++) {
+			ids[i] = Long.parseLong(toks[i]);
 		}
 		
-		return Response.status(200).entity(JSONUtility.ToJSONArray(art_list)).build();
-	}
-	
-	@GET
-	@Path("/file/{id}")
-	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	@CrossOrigin
-	public Response getArtworkFile(@PathParam("id") String id) {
-		System.out.println(id);
-		int art_id = Integer.parseInt(id);
+		List<Artwork> art_list = (ArrayList)ArtworkDAO.getInstance().getSet(ids);
 		
-		String path = ImageUtility.getImagePath(art_id);
-		System.out.println(path);
+		List<JSONObject> obj_list = (ArrayList)CollectiveUtility.assemble(art_list);
 		
-		try {
-			return Response.status(200).entity(WebUtility.getFileStream(path)).build();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return Response.status(500).entity("Failure").build();
-		}
+		return Response.status(200).entity(obj_list.toString()).build();
 	}
 	
 	@GET
@@ -75,8 +53,20 @@ public class ArtworkService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin
 	public Response getLatestArt() {
-		ArrayList<Artwork> latest = (ArrayList)ArtworkDAO.getInstance().getLatest();
+		int count = 5;
+		
+		ArrayList<Artwork> latest = (ArrayList)ArtworkDAO.getInstance().getLatest(count);
+		
+		JSONObject jo = new JSONObject();
+		
+		JSONArray urls = new JSONArray();
+		
+		for(Artwork a: latest) {
+			urls.put(ImageUtility.getImageUrl(a));
+		}
+		
+		jo.put("urls", urls);
 
-		return Response.status(200).entity(JSONUtility.ToJSONArray(latest)).build();
+		return Response.status(200).entity(jo.toString()).build();
 	}
 }

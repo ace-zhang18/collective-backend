@@ -1,10 +1,7 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import interfaces.DAOBase;
-import objects.*;
+import objects_table.User;
 
 public class UserDAO extends DAOBase{
 	private static UserDAO dao_instance = null;
@@ -18,5 +15,13 @@ public class UserDAO extends DAOBase{
 			dao_instance = new UserDAO();
 		}
 		return dao_instance;
+	}
+	
+	public User getByUsername(String username) {
+		return SqlSessionContainer.getSession().selectOne("User.getByUsername", username);
+	}
+	
+	public User getByEmail(String email) {
+		return SqlSessionContainer.getSession().selectOne("User.getByEmail", email);
 	}
 }

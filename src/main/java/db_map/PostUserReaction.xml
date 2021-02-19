@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "PostUserReaction">
+
+	<insert id = "insert" parameterType = "PostUserReaction">
+		INSERT INTO post_user_reactions (post_id, "user", reaction, post_source)
+		VALUES (#{post_id}, #{user}, #{reaction}, #{post_source})
+	</insert>
+
+	<delete id = "delete" parameterType = "PostUserReaction">
+		DELETE FROM post_user_reactions WHERE post_id = #{post_id} AND post_source = #{post_source} AND user = #{user} AND reaction = #{reaction}
+	</delete>
+
+	<select id="getByPost" parameterType = "long" resultMap="PostUserReactionMap">
+		SELECT * FROM post_user_reactions WHERE post_id = #{post_id} AND post_source = #{post_source}
+	</select>
+
+	<select id="getByUser" parameterType = "long" resultMap="PostUserReactionMap">
+		SELECT * FROM post_user_reactions WHERE user = #{user}
+	</select>
+
+	<select id="getByReaction" parameterType = "long" resultMap="PostUserReactionMap">
+		SELECT * FROM post_user_reactions WHERE reaction = #{reaction}
+	</select>
+
+	<select id="getAll" resultMap="PostUserReactionMap">
+		SELECT * FROM post_user_reactions
+	</select>
+
+	<resultMap id = "PostUserReactionMap" type = "PostUserReaction">
+		<result property = "post_id" column = "POST_ID"/>
+		<result property = "user" column = "USER"/>
+		<result property = "reaction" column = "REACTION"/>
+		<result property = "post_source" column = "POST_SOURCE"/>
+	</resultMap>
+
+</mapper>

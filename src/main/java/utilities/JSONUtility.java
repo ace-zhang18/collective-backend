@@ -26,4 +26,18 @@ public class JSONUtility {
 
 		return json;
 	}
+
+	public static String ToJSONArray(ArrayList<JSONObject> list) {
+		String json = "[";
+		Iterator i = list.iterator();
+
+		while(i.hasNext()) {
+			json += i.next().toString();
+			if(i.hasNext()) json += ",";
+		}
+
+		json += "]";
+
+		return json;
+	}
 }

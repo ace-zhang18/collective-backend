@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Reply">
+
+   <insert id = "insert" parameterType = "Reply">
+      	INSERT INTO replies (id, source_id, author, source, content, timestamp)
+      	VALUES (#{id}, #{source_id}, #{author}, #{source}, #{content}, #{timestamp});
+	</insert> 
+	
+	<update id = "update" parameterType = "Reply">
+    	UPDATE replies SET author = #{author},, content = #{content}, timestamp = #{timestamp}
+    	WHERE id = #{id} AND source = #{source} AND source_id = #{source_id};
+	</update>
+
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM replies WHERE id = #{id} AND source = #{source} AND source_id = #{source_id}
+    </delete>
+
+    <select id="get" parameterType = "Reply" resultMap="replyMap">
+    	SELECT * FROM replies WHERE id = #{id} AND source = #{source} AND source_id = #{source_id};
+	</select>
+
+	<select id="getSet" parameterType = "long" resultMap="replyMap">
+    	SELECT * FROM replies WHERE id IN 
+    	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+
+	<select id="getAll" parameterType="Reply" resultMap="replyMap">
+    	SELECT * FROM replies ORDER BY id;
+	</select>
+    
+	<resultMap id = "replyMap" type = "Reply">
+   		<result property = "id" column = "ID"/>
+   	 	<result property = "source" column = "SOURCE"/>
+   		<result property = "source_id" column = "SOURCE_ID"/>
+   	 	<result property = "author" column = "AUTHOR"/>
+		<result property = "content" column = "CONTENT"/>
+   		<result property = "timestamp" column = "TIMESTAMP"/>
+	</resultMap>
+</mapper>

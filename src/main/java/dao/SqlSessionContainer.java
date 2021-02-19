@@ -2,6 +2,7 @@ package dao;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.LinkedList;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -15,7 +16,7 @@ public class SqlSessionContainer {
 	static SqlSessionFactory sqlSessionFactory;		
 	static SqlSession session;
 	
-	private static void initSqlSession() {
+	private static void initSqlSessionFactory() {
 		try {
 			reader = Resources.getResourceAsReader("db_map/SqlMapConfig.xml");
 		} catch (IOException e) {
@@ -25,11 +26,14 @@ public class SqlSessionContainer {
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader); 
 	}
 	
+	
 	public static SqlSession getSession() {
-		if(session == null) {
-			initSqlSession();
+		if(sqlSessionFactory == null) {
+			initSqlSessionFactory();
 		}
-		session = sqlSessionFactory.openSession();
+		if(session == null) {
+			session = sqlSessionFactory.openSession();
+		}
 		return session;
 	}
 	

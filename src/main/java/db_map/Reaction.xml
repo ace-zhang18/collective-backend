@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Reaction">
+
+   <insert id = "insert" parameterType = "Reaction">
+      	INSERT INTO reactions (id, owner, url, name, timestamp) 
+      	VALUES (#{id}, #{owner}, #{url}, #{name}, #{timestamp});
+	</insert> 
+	
+	<update id = "update" parameterType = "Reaction">
+    	UPDATE reactions SET owner = #{owner}, url = #{url}, name = #{name}, timestamp = #{timestamp}
+    	WHERE id = #{id};
+	</update>
+    
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM reactions WHERE id = #{id}
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="reactionMap">
+    	SELECT * FROM reactions where id = #{id};
+	</select>
+	
+	<select id="getAll" resultMap="reactionMap">
+    	SELECT * FROM reactions
+	</select>
+	
+	<select id="getSet" parameterType = "long" resultMap="reactionMap">
+    	SELECT * FROM reactions WHERE id IN 
+    	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+	
+	<select id="getIDs" resultType="long">
+    	SELECT id FROM reactions ORDER BY id ASC;
+	</select>
+    
+	<resultMap id = "reactionMap" type = "Reaction">
+		<result property = "id" column = "ID"/>	
+		<result property = "file_type" column = "FILE_TYPE"/>	
+		<result property = "title" column = "TITLE"/>	
+		<result property = "timestamp" column = "TIMESTAMP"/>	
+		<result property = "category" column = "CATEGORY"/>	
+		<result property = "url" column = "URL"/>	
+		<result property = "submitter" column = "SUBMITTER"/>
+	</resultMap>
+
+	
+</mapper>

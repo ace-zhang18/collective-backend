@@ -1,18 +1,12 @@
 package dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import org.apache.ibatis.jdbc.SQL;
 
 import interfaces.DAOBase;
 import interfaces.Mapper;
-import interfaces.ObjectInterface;
-import objects.ArtTag;
-import objects.Artwork;
+import objects_table.Artwork;
 import utilities.ArrayTree;
-import utilities.SetUtility;
 
 public class ArtworkDAO extends DAOBase{
 	private static ArtworkDAO dao_instance;
@@ -21,8 +15,8 @@ public class ArtworkDAO extends DAOBase{
 
 	}
 
-	public List<Object> getLatest() {
-		return SqlSessionContainer.getSession().selectList("Artwork.getLatest");
+	public List<Object> getLatest(long count) {
+		return SqlSessionContainer.getSession().selectList("Artwork.getLatest", count);
 	}
 	
 	public Artwork getByTitle(String title){
@@ -32,7 +26,14 @@ public class ArtworkDAO extends DAOBase{
 	public ArrayList<Artwork> doSearch(ArrayTree<String> struct){
 		String query = constructQuery(struct);
 		
-		ArrayList<Artwork> results = (ArrayList<Artwork>) SqlSessionContainer.getSession().getMapper(Mapper.class).executeImmediate(query, new Artwork());
+		long[] ids = SqlSessionContainer.getSession().getMapper(Mapper.class).executeImmediate(query);
+		
+		ArrayList<Artwork> results = new ArrayList<Artwork>();
+		
+		for(long l: ids) {
+			Artwork a = ArtworkDAO.getInstance().get(l);
+			results.add(a);
+		}
 		
 		return results;
 	}

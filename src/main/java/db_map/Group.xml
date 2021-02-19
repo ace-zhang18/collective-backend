@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "Group">
+
+	<insert id = "insert" parameterType = "Group">
+		INSERT INTO groups (id, name, is_private)
+		VALUES (#{id}, #{name}, #{is_private})
+	</insert>
+
+	<update id = "update" parameterType = "Group">
+		UPDATE groups SET name = #{name}, is_private = #{is_private}
+		WHERE id = #{id}
+	</update>
+
+	<delete id = "delete" parameterType = "long">
+		DELETE FROM groups WHERE id = #{id}
+	</delete>
+
+	<select id="get" parameterType = "long" resultMap="groupMap">
+		SELECT * FROM groups where id = #{id};
+	</select>
+
+	<select id="getSet" parameterType = "long" resultMap="groupMap">
+		SELECT * FROM groups where id IN
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="getAll" resultMap="groupMap">
+		SELECT * FROM groups
+	</select>
+
+	<resultMap id = "groupMap" type = "Group">
+		<result property = "id" column = "ID"/>
+		<result property = "name" column = "NAME"/>
+		<result property = "is_private" column = "IS_PRIVATE"/>
+	</resultMap>
+
+</mapper>

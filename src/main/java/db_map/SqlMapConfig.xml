@@ -6,20 +6,27 @@
       <setting name="logImpl" value="STDOUT_LOGGING"/>
    </settings>
    <typeAliases>
-      <typeAlias alias = "ArtTag" type = "objects.ArtTag"/>  
-      <typeAlias alias = "Artwork" type = "objects.Artwork"/>
-      <typeAlias alias = "Forum" type = "objects.Forum"/>
-      <typeAlias alias = "Gallery" type = "objects.Gallery"/>
-      <typeAlias alias = "Post" type = "objects.Post"/>
-      <typeAlias alias = "StaffRole" type = "objects.StaffRole"/>
-      <typeAlias alias = "Thread" type = "objects.Thread"/>
-   	  <typeAlias alias = "User" type = "objects.User"/>
+      <typeAlias alias = "Announcement" type = "objects_table.Announcement"/>   
+      <typeAlias alias = "Artwork" type = "objects_table.Artwork"/>
+      <typeAlias alias = "ArtworkUser" type = "objects_table.ArtworkUser"/>
+      <typeAlias alias = "Category" type = "objects_table.Category"/>
+      <typeAlias alias = "Group" type = "objects_table.Group"/>
+      <typeAlias alias = "GroupReaction" type = "objects_table.GroupReaction"/>  
+      <typeAlias alias = "GroupUser" type = "objects_table.GroupUser"/>
+      <typeAlias alias = "PostUserReaction" type = "objects_table.PostUserReaction"/>      
+      <typeAlias alias = "Reaction" type = "objects_table.Reaction"/>
+      <typeAlias alias = "Reply" type = "objects_table.Reply"/>
+      <typeAlias alias = "Shop" type = "objects_table.Shop"/>
+      <typeAlias alias = "ShopOwner" type = "objects_table.ShopOwner"/>
+      <typeAlias alias = "Status" type = "objects_table.Status"/>
+   	  <typeAlias alias = "User" type = "objects_table.User"/>
    </typeAliases>
 
    <typeHandlers>
       <typeHandler handler="handlers.JSONObjectTypeHandler"/>
       <typeHandler handler="handlers.JSONArrayTypeHandler"/>
       <typeHandler handler="handlers.LongArrayTypeHandler"/>
+      <typeHandler handler="handlers.StringArrayTypeHandler"/>
    </typeHandlers>
 
    <environments default = "development">
@@ -37,13 +44,19 @@
    </environments>
 	
    <mappers>
-      <mapper resource = "db_map/ArtTag.xml"/>
+      <mapper resource = "db_map/Announcement.xml"/>
    	  <mapper resource = "db_map/Artwork.xml"/>
-   	  <mapper resource = "db_map/Forum.xml"/>
-   	  <mapper resource = "db_map/Gallery.xml"/>      
-      <mapper resource = "db_map/Post.xml"/>
-      <mapper resource = "db_map/StaffRole.xml"/> 
-      <mapper resource = "db_map/Thread.xml"/> 
+   	  <mapper resource = "db_map/ArtworkUser.xml"/>
+   	  <mapper resource = "db_map/Category.xml"/>
+   	  <mapper resource = "db_map/Group.xml"/>
+   	  <mapper resource = "db_map/GroupReaction.xml"/>      	  
+   	  <mapper resource = "db_map/GroupUser.xml"/>
+   	  <mapper resource = "db_map/PostUserReaction.xml"/>   
+   	  <mapper resource = "db_map/Reaction.xml"/>
+   	  <mapper resource = "db_map/Reply.xml"/>
+   	  <mapper resource = "db_map/Shop.xml"/>
+   	  <mapper resource = "db_map/ShopOwner.xml"/>	  
+   	  <mapper resource = "db_map/Status.xml"/>	   	  
    	  <mapper resource = "db_map/User.xml"/>
    	  <mapper class = "interfaces.Mapper"/>
    </mappers>

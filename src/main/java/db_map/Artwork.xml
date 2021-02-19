@@ -5,13 +5,13 @@
 <mapper namespace = "Artwork">
 
    <insert id = "insert" parameterType = "Artwork">
-      	INSERT INTO artworks (id, owners, permissions, title, history, sale, tags, file_type) 
-      	VALUES (#{id}, #{owners}, #{permissions}, #{title}, #{history}, #{sale}, #{tags}, #{file_type});
+      	INSERT INTO artworks (id, file_type, title, timestamp, category, url, submitter) 
+      	VALUES (#{id}, #{file_type}, #{title}, #{timestamp}, #{category}, #{url}, #{submitter});
 	</insert> 
 	
 	<update id = "update" parameterType = "Artwork">
-    	UPDATE artworks SET owners = #{owners}, permissions = #{permissions}, history = #{history},
-    	content = #{content}, sale = #{sale}, tags = #{tags}, file_type = #{file_type}
+    	UPDATE artworks SET file_type = #{file_type}, title = #{title}, timestamp = #{timestamp},
+    	category = #{category}, url = #{url}, submitter = #{submitter}
     	WHERE id = #{id};
 	</update>
     
@@ -27,8 +27,8 @@
     	SELECT * FROM artworks
 	</select>
 	
-	<select id="getLatest" resultMap="artworkMap">
-    	SELECT * FROM artworks ORDER BY submitted DESC LIMIT 5
+	<select id="getLatest" parameterType = "long" resultMap="artworkMap">
+    	SELECT * FROM artworks ORDER BY timestamp DESC LIMIT #{count}
 	</select>
 	
 	<select id="getSet" parameterType = "long" resultMap="artworkMap">
@@ -66,11 +66,13 @@
 	</select>
 	
 	<resultMap id = "artworkMap" type = "Artwork">
-		<result property = "id" column = "ID"/>
-		<result property = "owner" column = "OWNER"/>
-		<result property = "title" column = "TITLE"/>		
-		<result property = "file_type" column = "FILE_TYPE"/>
-		<result property = "submitted" column = "SUBMITTED"/>	
+		<result property = "id" column = "ID"/>	
+		<result property = "file_type" column = "FILE_TYPE"/>	
+		<result property = "title" column = "TITLE"/>	
+		<result property = "timestamp" column = "TIMESTAMP"/>	
+		<result property = "category" column = "CATEGORY"/>	
+		<result property = "url" column = "URL"/>	
+		<result property = "submitter" column = "SUBMITTER"/>
 	</resultMap>
 
 	

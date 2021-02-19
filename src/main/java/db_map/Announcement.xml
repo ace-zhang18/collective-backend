@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Announcement">
+
+   <insert id = "insert" parameterType = "Announcement">
+      	INSERT INTO announcements (id, author, title, body, timestamp) 
+      	VALUES (#{id}, #{author}, #{title}, #{body}, #{timestamp});
+	</insert> 
+	
+	<update id = "update" parameterType = "Announcement">
+      	UPDATE announcements SET id = #{id}, author = #{author}, title = #{title}, body = #{body}, timestamp = #{timestamp} 
+      	WHERE id = #{id};
+	</update>
+    
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM announcements WHERE id = #{id}
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="AnnouncementMap">
+    	SELECT * FROM announcements where id = #{id};
+	</select>
+	
+	<select id="getAll" resultMap="AnnouncementMap">
+    	SELECT * FROM announcements
+	</select>
+	
+	<select id="getLatest" resultMap="AnnouncementMap">
+    	SELECT * FROM announcements ORDER BY submitted DESC LIMIT 5
+	</select>
+	
+	<select id="getSet" parameterType = "long" resultMap="AnnouncementMap">
+    	SELECT * FROM announcements WHERE id IN 
+    	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+	
+	<select id="getIDs" resultType="long">
+    	SELECT id FROM announcements ORDER BY id ASC;
+	</select>
+    
+    <select id="getByTitle" parameterType = "String" resultMap="AnnouncementMap">
+    	SELECT * FROM announcements where title = #{title};
+	</select>	
+
+	<select id="getByTag" resultMap="AnnouncementMap">
+		SELECT * FROM announcements
+		<where>
+			<foreach item="tag" index="index" collection="array" separator="AND">
+				#{tag} = ANY(tags)
+			</foreach>
+		</where>
+	</select>
+    
+    <select id="getByNotTag" resultMap="AnnouncementMap">
+		SELECT * FROM announcements
+		<where>
+			<foreach item="tag" index="index" collection="array" separator="AND">
+				NOT #{tag} = ANY(tags)
+			</foreach>
+		</where>
+	</select>
+	
+	<resultMap id = "AnnouncementMap" type = "Announcement">
+		<result property = "id" column = "ID"/>
+		<result property = "author" column = "AUTHOR"/>
+		<result property = "title" column = "TITLE"/>
+		<result property = "body" column = "BODY"/>		
+	</resultMap>
+
+	
+</mapper>

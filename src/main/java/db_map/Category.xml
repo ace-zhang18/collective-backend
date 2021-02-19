@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Category">
+
+   <insert id = "insert" parameterType = "Category">
+      	INSERT INTO categories (id, name, cover, symbol) 
+      	VALUES (#{id}, #{name}, #{cover}, #{symbol});
+	</insert> 
+	
+	<update id = "update" parameterType = "Category">
+    	UPDATE categories SET name = #{name}, cover = #{cover}, symbol = #{symbol}
+    	WHERE id = #{id};
+	</update>
+    
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM categories WHERE id = #{id}
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="categoryMap">
+    	SELECT * FROM categories where id = #{id};
+	</select>
+	
+	<select id="getSet" parameterType = "long" resultMap="categoryMap">
+    	SELECT * FROM categories WHERE id IN 
+    	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+	
+	<select id="getAll" resultMap="categoryMap">
+    	SELECT * FROM categories
+	</select>
+    
+	<resultMap id = "categoryMap" type = "Category">
+		<result property = "id" column = "ID"/>
+		<result property = "name" column = "NAME"/>
+		<result property = "cover" column = "COVER"/>		
+		<result property = "symbol" column = "SYMBOL"/>		
+	</resultMap>
+
+	
+</mapper>

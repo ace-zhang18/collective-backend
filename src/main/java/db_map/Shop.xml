@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Shop">
+
+   <insert id = "insert" parameterType = "Shop">
+      	INSERT INTO shops (id, category, cover, tags) 
+      	VALUES (#{id}, #{category}, #{cover}, #{tags});
+	</insert> 
+	
+	<update id = "update" parameterType = "Shop">
+    	UPDATE shops SET category = #{category}, cover = #{cover}, tags = #{tags}
+    	WHERE id = #{id};
+	</update>
+    
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM shops WHERE id = #{id}
+    </delete>
+    
+    <select id="get" parameterType = "long" resultMap="shopMap">
+    	SELECT * FROM shops WHERE id = #{id};
+	</select>
+	
+	<select id="getSet" parameterType = "long" resultMap="shopMap">
+    	SELECT * FROM shops WHERE id IN 
+    	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+	
+	<select id="getAll" resultMap="shopMap">
+    	SELECT * FROM shops
+	</select>
+	
+	<select id="getByCategory" parameterType = "long" resultMap="shopMap">
+    	SELECT * FROM shops WHERE category = #{category};
+	</select>
+
+	<resultMap id = "shopMap" type = "Shop">
+		<result property = "id" column = "ID"/>
+		<result property = "owner" column = "OWNER"/>
+		<result property = "cover" column = "COVER"/>
+		<result property = "tags" column = "TAGS" typeHandler="handlers.StringArrayTypeHandler"/>
+	</resultMap>
+
+	
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "Status">
+
+   <insert id = "insert" parameterType = "Status">
+      	INSERT INTO statuses (id, author, content, timestamp)
+      	VALUES (#{id}, #{author}, #{content}, #{timestamp});
+	</insert> 
+	
+	<update id = "update" parameterType = "Status">
+    	UPDATE statuses SET author = #{author}, content = #{content}, timestamp = #{timestamp}
+    	WHERE id = #{id};
+	</update>
+
+    <delete id = "delete" parameterType = "long">
+    	DELETE FROM statuses WHERE id = #{id}
+    </delete>
+
+    <select id="get" parameterType = "Status" resultMap="statusMap">
+    	SELECT * FROM statuses WHERE id = #{id};
+	</select>
+	
+	<select id="getSet" parameterType = "long" resultMap="statusMap">
+    	SELECT * FROM statuses WHERE id IN 
+    	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        	#{item}
+    	</foreach>
+	</select>
+
+	<select id="getAll" parameterType="Status" resultMap="statusMap">
+    	SELECT * FROM statuses
+   	</select>
+  
+	<resultMap id = "statusMap" type = "Status">
+   		<result property = "id" column = "ID"/>
+   	 	<result property = "author" column = "AUTHOR"/>
+		<result property = "content" column = "CONTENT"/>
+   		<result property = "timestamp" column = "TIMESTAMP"/>
+	</resultMap>
+</mapper>

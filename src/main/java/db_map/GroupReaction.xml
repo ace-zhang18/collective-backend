@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "GroupReaction">
+
+	<insert id = "insert" parameterType = "GroupReaction">
+		INSERT INTO group_reactions ("group", reaction)
+		VALUES (#{group}, #{reaction})
+	</insert>
+
+	<delete id = "delete" parameterType = "GroupReaction">
+		DELETE FROM group_reactions WHERE "group" = #{group} AND reaction = #{reaction}
+	</delete>
+
+	<select id="getByGroup" parameterType = "long" resultMap="GroupReactionMap">
+		SELECT * FROM group_reactions WHERE "group" = #{group}
+	</select>
+
+	<select id="getByReaction" parameterType = "long" resultMap="GroupReactionMap">
+		SELECT * FROM group_reactions WHERE reaction = #{reaction}
+	</select>
+
+	<select id="getAll" resultMap="GroupReactionMap">
+		SELECT * FROM group_reactions
+	</select>
+
+	<resultMap id = "GroupReactionMap" type = "GroupReaction">
+		<result property = "group" column = "GROUP"/>
+		<result property = "reaction" column = "REACTION"/>
+	</resultMap>
+
+</mapper>

@@ -26,10 +26,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import objects.User;
+import objects_table.User;
 
 public class AuthUtility {
-	static String out_file = "C:\\arenamaster-backend\\auth\\secret-key";
+	static String out_file = "secret-key";
 	static String algo = "HMACSHA512";
 
 	public static boolean verify_token(String token){
